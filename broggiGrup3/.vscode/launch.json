@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080/ProjecteInstitutMoisesBroggi/broggiGrup3/public/",
+            "url": "http://localhost:8080/broggiGrup3/public/",
             "webRoot": "${workspaceFolder}"
         }
     ]
