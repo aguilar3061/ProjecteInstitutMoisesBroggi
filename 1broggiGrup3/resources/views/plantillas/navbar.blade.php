@@ -7,7 +7,6 @@
     <title>@yield('titulo')</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/cosmo.bootstrap.min.css') }}">
-
 </head>
 <body>
 
@@ -16,41 +15,38 @@
             <img src="{{ asset('img/logo.png') }}" alt="logo" width="60" height="60">
         </a>
 
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{{ url('/') }}">Broggi </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                            Servicio 1
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                            Servicio 2
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                            Servicio 3
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                    </li>
-
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ url('/') }}">Broggi </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Servicio 1
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Servicio 2
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Servicio 3
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
 
-
-      <div class="container">
+    <div class="container">
         @yield('body')
-      </div>
+    </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

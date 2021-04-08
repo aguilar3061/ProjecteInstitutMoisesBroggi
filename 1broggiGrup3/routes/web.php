@@ -17,14 +17,14 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('/user', function () {
-    return view('plantillas.UserMod');
+    return view('paginas.Admin.UserMod');
 });
 Route::get('/admin', function () {
-    return view('plantillas.AdminMod');
+    return view('paginas.Admin.AdminMod');
 });
 Route::get('/modificar_alertante', function () {
-    return view('plantillas.AddModifyAlertant');
+    return view('paginas.Admin.AddModifyAlertant');
 });
 Route::get('/modificar_recurso', function () {
-    return view('plantillas.AddModifyRecurso');
+    return view('paginas.Admin.AddModifyRecurso');
 });
