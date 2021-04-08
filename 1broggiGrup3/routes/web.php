@@ -22,3 +22,9 @@ Route::get('/user', function () {
 Route::get('/admin', function () {
     return view('plantillas.AdminMod');
 });
+Route::get('/modificar_alertante', function () {
+    return view('plantillas.AddModifyAlertant');
+});
+Route::get('/modificar_recurso', function () {
+    return view('plantillas.AddModifyRecurso');
+});

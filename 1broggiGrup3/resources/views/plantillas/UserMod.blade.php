@@ -45,12 +45,15 @@
 
 
               <div class="form-group row">
-                <label for="exampleSelect1" class="col-sm-2 col-form-label">Rol</label>
-                <select class="form-control" id="exampleSelect1">
+                <label for="rol" class="col-sm-2 col-form-label">Rol</label>
+                <div class="col-sm-10">
+                <select class="form-control" id="rol">
                   <option>1</option>
                   <option>2</option>
                 </select>
+                </div>
               </div>
+
               <div class="text-right">
                 <button type="button" class="btn btn-primary">Primary</button>
               </div>
