@@ -1,0 +1,23 @@
+Pantalla incial para mas tarde.
+
+-Admin
+	1.Form AddModifyAlertan Fran
+	2.Form AddModifyRecurso Fran
+	3.FormAddModifyUser 	Illya
+	4.TablasModificarAdmin	Illya
+-Incidencia
+	1.Form AddModifyIncidencia	Albert
+	2.PantallaInicialIncidencia	Albert
+-Recurso
+	1.FormRecurso Carlos
+	2.PantallaInicialRecurso Carlos
+
+
+Botones submit primary
+Botones cancelarForm seconday
+La letra la predefinida
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Tittle</h5>
+	
