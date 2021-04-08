@@ -28,3 +28,6 @@ Route::get('/modificar_alertante', function () {
 Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
+Route::get('/formRecursIncidencia', function () {
+    return view('paginas.Recurso.formRecusIncicencia');
+});
