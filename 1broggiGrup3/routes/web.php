@@ -31,3 +31,7 @@ Route::get('/modificar_recurso', function () {
 Route::get('/formRecursIncidencia', function () {
     return view('paginas.Recurso.formRecusIncicencia');
 });
+Route::get('/infoRecursEincidencia', function () {
+    return view('paginas.Recurso.infoRecursEincidencia');
+});
+

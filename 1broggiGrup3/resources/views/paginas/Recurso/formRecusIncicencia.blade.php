@@ -2,7 +2,7 @@
 
 @section('cuerpo')
     <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
-        <div class="card-header">Modificar alertante</div>
+        <div class="card-header">Gestion incidencia 4564 en recurso mobil 45645</div>
         <div class="card-body">
             <form>
                 <fieldset>
@@ -71,7 +71,7 @@
                         <button type="button" class="btn btn-danger" id="cancelar">Atras</button>
                         <button type="button" class="btn btn-primary" id="guardar">Guardar</button>
                     </div>
-                    
+
                 </fieldset>
             </form>
         </div>
