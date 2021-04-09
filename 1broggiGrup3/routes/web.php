@@ -60,7 +60,7 @@ Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
 Route::get('/formRecursIncidencia', function () {
-    return view('paginas.Recurso.formRecusIncicencia');
+    return view('paginas.Recurso.formRecusIncidencia');
 });
 Route::get('/infoRecursEincidencia', function () {
     return view('paginas.Recurso.infoRecursEincidencia');
