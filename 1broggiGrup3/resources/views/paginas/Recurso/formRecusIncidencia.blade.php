@@ -41,7 +41,7 @@
                             <img src="{{ asset('img/loop.png') }}" alt="reset" width="100%" height="100%" onclick="myFunction('HoraInicioTranporte')">
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label for="HoraLlegadaHospital" class="col-4 col-form-label">Hora llegada al hospital</label>
                         <input class="col-5" id="HoraLlegadaHospital" type="time" name="HoraLlegadaHospital" step="2" style="text-align: center">
@@ -57,7 +57,7 @@
                             <img src="{{ asset('img/loop.png') }}" alt="reset" width="100%" height="100%" onclick="myFunction('HoraTransferencia')">
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label for="HoraFinalizacion" class="col-4 col-form-label">Hora finalizacion</label>
                         <input class="col-5" id="HoraFinalizacion" type="time" name="HoraFinalizacion" step="2" style="text-align: center">
@@ -65,8 +65,8 @@
                             <img src="{{ asset('img/loop.png') }}" alt="reset" width="100%" height="100%" onclick="myFunction('HoraFinalizacion')">
                         </div>
                     </div>
-        
-                
+
+
                     <div class="text-right">
                         <button type="button" class="btn btn-danger" id="cancelar">Atras</button>
                         <button type="button" class="btn btn-primary" id="guardar">Guardar</button>
@@ -87,4 +87,3 @@
       document.getElementById(idElemento).value = null;
     }
 </script>
-    
