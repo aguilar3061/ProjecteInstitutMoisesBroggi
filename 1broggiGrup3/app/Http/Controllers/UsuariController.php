@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rol;
+use App\Models\Recurs;
 use App\Models\Usuari;
-use App\Http\Controllers\Controller;
+use App\Clases\Utilidad;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class UsuariController extends Controller
 {
@@ -15,7 +19,9 @@ class UsuariController extends Controller
      */
     public function index()
     {
-        //
+        $usuaris = Usuari::all();
+
+        return view('paginas.Admin.usuarios.index', compact('usuaris'));
     }
 
     /**
@@ -25,7 +31,10 @@ class UsuariController extends Controller
      */
     public function create()
     {
-        //
+        $rols = Rol::all();
+        $recursos = Recurs::all();
+
+        return view('paginas.Admin.usuarios.create', compact('rols','recursos'));
     }
 
     /**
@@ -36,7 +45,32 @@ class UsuariController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuari = new Usuari();
+
+        $usuari->username = $request->input('nombreUsuario');
+        $usuari->contrasenya = $request->input('contrasena');
+        $usuari->email = $request->input('correo');
+        $usuari->nom = $request->input('nombre');
+        $usuari->cognoms = $request->input('apellidos');
+        $usuari->rols_id = $request->input('rol');
+        $usuari->recursos_id = $request->input('recurs');
+
+        try
+        {
+            $usuari->save();
+            $request->session()->flash('mensaje', 'Registro creado correctamente');
+            $response = redirect()->action([UsuariController::class, 'index']);
+        }
+        catch (QueryException $ex)
+        {
+            $mensaje = Utilidad::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+
+            $response = redirect()->action([UsuariController::class, 'create'])->withInput();
+        }
+
+
+        return $response;
     }
 
     /**
@@ -58,7 +92,11 @@ class UsuariController extends Controller
      */
     public function edit(Usuari $usuari)
     {
-        //
+        $rols = Rol::all();
+        $recursos = Recurs::all();
+
+        return view('paginas.Admin.usuarios.edit', compact('rols','recursos','usuari'));
+
     }
 
     /**
@@ -70,7 +108,32 @@ class UsuariController extends Controller
      */
     public function update(Request $request, Usuari $usuari)
     {
-        //
+        $usuariToUpdate = Usuari::find($usuari);
+
+        $usuariToUpdate->username = $request->input('nombreUsuario');
+        $usuariToUpdate->contrasenya = $request->input('contrasena');
+        $usuariToUpdate->email = $request->input('correo');
+        $usuariToUpdate->nom = $request->input('nombre');
+        $usuariToUpdate->cognoms = $request->input('apellidos');
+        $usuariToUpdate->rols_id = $request->input('rol');
+        $usuariToUpdate->recursos_id = $request->input('recurs');
+
+        try
+        {
+            $usuariToUpdate->save();
+            $request->session()->flash('mensaje', 'Registro actualizado correctamente');
+            $response = redirect()->action([UsuariController::class, 'index']);
+        }
+        catch (QueryException $ex)
+        {
+            $mensaje = Utilidad::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+
+            $response = redirect()->action([UsuariController::class, 'edit'])->withInput();
+        }
+
+
+        return $response;
     }
 
     /**
@@ -79,8 +142,23 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuari $usuari)
+    public function destroy(Request $request, Usuari $usuari)
     {
-        //
+
+        try
+        {
+            $usuari->delete();
+            $request->session()->flash('mensaje', 'Registro borrado correctamente');
+        }
+        catch (QueryException $ex)
+        {
+            $mensaje = Utilidad::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+
+        }
+
+
+
+        return redirect()->action([UsuariController::class, 'index']);
     }
 }
