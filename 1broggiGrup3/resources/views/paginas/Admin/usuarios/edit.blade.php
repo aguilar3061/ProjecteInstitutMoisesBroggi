@@ -8,9 +8,9 @@
   <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
     <div class="card-header">Usuario</div>
     <div class="card-body">
-        <form action="{{ action([App\Http\Controllers\UsuariController::class, 'update'], ['usuari' => $usuari->id ]) }}" method="PATCH">
+        <form action="{{ action([App\Http\Controllers\UsuariController::class, 'update'], ['usuari' => $usuari->id ]) }}" method="POST">
             @csrf
-            @method('PATCH')
+            @method('PUT')
             <fieldset>
 
               <div class="form-group row">

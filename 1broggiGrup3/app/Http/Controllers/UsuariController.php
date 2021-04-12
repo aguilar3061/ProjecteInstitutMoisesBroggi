@@ -17,9 +17,11 @@ class UsuariController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $usuaris = Usuari::all();
+        $usuaris = Usuari::paginate(10)->withQueryString();
+
+        $request->session()->flashInput($request->input());
 
         return view('paginas.Admin.usuarios.index', compact('usuaris'));
     }
