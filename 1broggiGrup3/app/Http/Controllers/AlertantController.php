@@ -109,17 +109,17 @@ class AlertantController extends Controller
      */
     public function update(Request $request, Alertant $alertant)
     {
-        $alertantToUpdate = Alertant::find($alertant->id);
-        $alertantToUpdate->telefon = $request->input('telefono');
-        $alertantToUpdate->nom = $request->input('nom');
-        $alertantToUpdate->cognoms = $request->input('apellidos');
-        $alertantToUpdate->adreca = $request->input('direccion');
-        $alertantToUpdate->municipis_id = $request->input('municipi');
-        $alertantToUpdate->tipus_alertants_id = $request->input('tipusAlertant');
+
+        $alertant->telefon = $request->input('telefono');
+        $alertant->nom = $request->input('nom');
+        $alertant->cognoms = $request->input('apellidos');
+        $alertant->adreca = $request->input('direccion');
+        $alertant->municipis_id = $request->input('municipi');
+        $alertant->tipus_alertants_id = $request->input('tipusAlertant');
 
         try
         {
-            $alertantToUpdate->save();
+            $alertant->save();
             $request->session()->flash('mensaje', 'Registro actualizado correctamente');
             $response = redirect()->action([AlertantController::class, 'index']);
         }
@@ -128,7 +128,7 @@ class AlertantController extends Controller
             $mensaje = Utilidad::errorMessage($ex);
             $request->session()->flash('error', $mensaje);
 
-            $response = redirect()->action([AlertantController::class, 'edit'])->withInput();
+            $response = redirect()->action([AlertantController::class, 'edit'], ['alertant' => $alertant->id ])->withInput();
         }
 
 

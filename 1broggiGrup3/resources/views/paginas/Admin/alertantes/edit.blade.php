@@ -86,23 +86,23 @@
               </div>
 
               <div class="form-group row">
-                <label for="recurs" class="col-4 col-form-label">Tipo alertante</label>
+                <label for="tipusAlertant" class="col-4 col-form-label">Tipo alertante</label>
                 <div class="col-8">
-                <select class="form-control" id="recurs" name="recurs">
-                    @if (old('recurs') == null)
+                <select class="form-control" id="tipusAlertant" name="tipusAlertant">
+                    @if (old('tipusAlertant') == null)
                         @foreach ($tipusAlertants as $tipusAlertant)
                             @if ( $alertant->tipus_alertants_id == $tipusAlertant->id)
-                                <option for="recurs" selected value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
+                                <option for="tipusAlertant" selected value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
                             @else
-                                <option for="recurs" value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
+                                <option for="tipusAlertant" value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
                             @endif
                         @endforeach
                     @else
                         @foreach ($tipusAlertants as $tipusAlertant)
-                            @if ( old('recurs') == $tipusAlertant->id)
-                                <option for="recurs" selected value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
+                            @if ( old('tipusAlertant') == $tipusAlertant->id)
+                                <option for="tipusAlertant" selected value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
                             @else
-                                <option for="recurs" value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
+                                <option for="tipusAlertant" value="{{ $tipusAlertant->id }}">{{ $tipusAlertant->tipus }}</option>
                             @endif
                         @endforeach
                     @endif

@@ -110,19 +110,18 @@ class UsuariController extends Controller
      */
     public function update(Request $request, Usuari $usuari)
     {
-        $usuariToUpdate = Usuari::find($usuari);
 
-        $usuariToUpdate->username = $request->input('nombreUsuario');
-        $usuariToUpdate->contrasenya = $request->input('contrasena');
-        $usuariToUpdate->email = $request->input('correo');
-        $usuariToUpdate->nom = $request->input('nombre');
-        $usuariToUpdate->cognoms = $request->input('apellidos');
-        $usuariToUpdate->rols_id = $request->input('rol');
-        $usuariToUpdate->recursos_id = $request->input('recurs');
+        $usuari->username = $request->input('nombreUsuario');
+        $usuari->contrasenya = $request->input('contrasena');
+        $usuari->email = $request->input('correo');
+        $usuari->nom = $request->input('nombre');
+        $usuari->cognoms = $request->input('apellidos');
+        $usuari->rols_id = $request->input('rol');
+        $usuari->recursos_id = $request->input('recurs');
 
         try
         {
-            $usuariToUpdate->save();
+            $usuari->save();
             $request->session()->flash('mensaje', 'Registro actualizado correctamente');
             $response = redirect()->action([UsuariController::class, 'index']);
         }
@@ -131,7 +130,7 @@ class UsuariController extends Controller
             $mensaje = Utilidad::errorMessage($ex);
             $request->session()->flash('error', $mensaje);
 
-            $response = redirect()->action([UsuariController::class, 'edit'])->withInput();
+            $response = redirect()->action([UsuariController::class, 'edit'],['usuari' => $usuari->id ])->withInput();
         }
 
 
