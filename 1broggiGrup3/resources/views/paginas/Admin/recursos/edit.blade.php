@@ -32,9 +32,9 @@
                             @if (old('tipusRecurs') == null)
                                 @foreach ($tipoRecursos as $Trecurs)
                                     @if ( $recur->tipus_recursos_id == $Trecurs->id)
-                                        <option for="tipusRecurs" selected value="{{ $Trecurs->id }}">{{ $Trecurs->nom }}</option>
+                                        <option for="tipusRecurs" selected value="{{ $Trecurs->id }}">{{ $Trecurs->tipus }}</option>
                                     @else
-                                        <option for="tipusRecurs" value="{{ $Trecurs->id }}">{{ $Trecurs->nom }}</option>
+                                        <option for="tipusRecurs" value="{{ $Trecurs->id }}">{{ $Trecurs->tipus }}</option>
                                     @endif
                                 @endforeach
                             @else
@@ -50,7 +50,7 @@
                         </select>
                     </div>
                 </div>
-              
+
                 <div class="text-right">
                     <a href={{ url('recurs') }} class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Aceptar</button>

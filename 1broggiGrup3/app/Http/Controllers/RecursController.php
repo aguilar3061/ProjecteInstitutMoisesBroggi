@@ -82,7 +82,7 @@ class RecursController extends Controller
     public function edit(Recurs $recur)
     {
         $tipoRecursos = Tipus_recurs::all();
-        return view('paginas.Admin.recursos.create', compact('tipoRecursos', 'recur'));
+        return view('paginas.Admin.recursos.edit', compact('tipoRecursos', 'recur'));
     }
 
     /**
@@ -94,8 +94,6 @@ class RecursController extends Controller
      */
     public function update(Request $request, Recurs $recur)
     {
-
-        $recur = new Recurs();
 
         $recur->codi = $request->input('codiID');
         $recur->actiu = 1;
@@ -111,7 +109,7 @@ class RecursController extends Controller
         {
             $mensaje = Utilidad::errorMessage($ex);
             $request->session()->flash('error', $mensaje);
-            $response = redirect()->action([RecursController::class, 'edit'])->withInput();
+            $response = redirect()->action([RecursController::class, 'edit'], ['recur' => $recur->id ])->withInput();
         }
 
         return $response;
