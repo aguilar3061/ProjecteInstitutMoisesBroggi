@@ -27,8 +27,8 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                        Admin
+                    <a class="nav-link " href="{{ url('/incidencia') }}" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        INCIDENCIA
                     </a>
                 </li>
             </ul>

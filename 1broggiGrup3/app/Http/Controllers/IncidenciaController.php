@@ -15,7 +15,7 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
-        //
+        return view('paginas.incidencias.index');
     }
 
     /**

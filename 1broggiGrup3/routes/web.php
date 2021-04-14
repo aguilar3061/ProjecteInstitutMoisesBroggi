@@ -30,9 +30,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/incidencia', function () {
-    return view('paginas.incidencias.index');
-});
+// Route::get('/incidencia', function () {
+//     return view('paginas.incidencias.index');
+// });
 Route::get('/formIncidencia', function () {
     return view('paginas.incidencias.form');
 });
@@ -69,16 +69,16 @@ Route::get('/infoRecursEincidencia', function () {
 
 
 
-Route::resource('afectat', AfectatController::class);
-Route::resource('alertant', AlertantController::class);
-Route::resource('comarca', ComarcaController::class);
-Route::resource('incidencia', IncidenciaController::class);
-Route::resource('municipi', MunicipiController::class);
-Route::resource('provincia', ProvinciaController::class);
-Route::resource('recurs', RecursController::class);
-Route::resource('rol', RolController::class);
-Route::resource('sexe', SexeController::class);
-Route::resource('tipus_alertant', TipusAlertantController::class);
-Route::resource('tipus_incidencia', TipusIncidenciaController::class);
-Route::resource('tipus_recurs', TipusRecursController::class);
-Route::resource('usuari', UsuariController::class);
+Route::resource('afectat',                  AfectatController::class);
+Route::resource('alertant',                 AlertantController::class);
+Route::resource('comarca',                  ComarcaController::class);
+Route::resource('incidencia',               IncidenciaController::class);
+Route::resource('municipi',                 MunicipiController::class);
+Route::resource('provincia',                ProvinciaController::class);
+Route::resource('recurs',                   RecursController::class);
+Route::resource('rol',                      RolController::class);
+Route::resource('sexe',                     SexeController::class);
+Route::resource('tipus_alertant',           TipusAlertantController::class);
+Route::resource('tipus_incidencia',         TipusIncidenciaController::class);
+Route::resource('tipus_recurs',             TipusRecursController::class);
+Route::resource('usuari',                   UsuariController::class);
