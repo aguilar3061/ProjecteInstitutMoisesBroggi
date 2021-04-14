@@ -28,7 +28,12 @@
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link " href="{{ url('/incidencia') }}" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                        INCIDENCIA
+                        Incidencias
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Admin
                     </a>
                 </li>
             </ul>
