@@ -56,9 +56,32 @@ class IncidenciaController extends Controller
         //     "usuaris_id":1
         // }
 
+        // {
+        //     "id": 13,
+        //     "num_incident": 13,
+        //     "data": "2000-10-10",
+        //     "hora": "10:20:00",
+        //     "telefon_alertant": 14234,
+        //     "adreca": "kjh",
+        //     "adreca_complement": "kjkj",
+        //     "descripcio": "kj",
+        //     "nom_metge": "kj",
+        //     "tipus_incidencies_id": 1,
+        //     "alertants_id": 1,
+        //     "municipis_id": 1,
+        //     "usuaris_id": 1,
+        //     "incidencia_has_recursos": [
+        //         {
+        //             "recursos_id": 1,
+        //             "prioritat": 3
+        //         }
+        //     ]
+        // }
 
+        
         //insertar alertante get y insert (eloquent)
         //insertar afectado insert con su relacion (eloquent)
+
 
 
         DB::beginTransaction();
@@ -79,20 +102,20 @@ class IncidenciaController extends Controller
         $incidencia->municipis_id= $request->input('municipis_id');
         $incidencia->usuaris_id= $request->input('usuaris_id');
 
-
         $listaRecursos = $request->input('incidencia_has_recursos');    
 
         try {
 
             $incidencia->save();
 
-            //insert id recurso y id incidencia en incidencia_has_recurso
+            //insert idRecurso, idIncidencia y prioritat en incidencia_has_recurso
             foreach ($listaRecursos as $recurso ) {
 
                 $incidenciaHasRecurso = new IncidenciaHasRecurso();
                 $incidenciaHasRecurso->recursos_id= $recurso['recursos_id'];
                 $incidenciaHasRecurso->incidencies_id = $incidencia->id;
                 $incidenciaHasRecurso->prioritat= $recurso['prioritat'];
+
                 $incidencia->incidencia_has_recursos()->save($incidenciaHasRecurso);
             }
 
@@ -101,6 +124,7 @@ class IncidenciaController extends Controller
             
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
         } catch (QueryException $ex) {
+			DB::rollBack();
             $mensaje = Utilidad::errorMessage($ex);
             $response = \response()->json(['error' => $mensaje], 400);
         }
