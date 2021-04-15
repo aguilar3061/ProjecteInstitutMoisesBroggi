@@ -59,21 +59,21 @@ class IncidenciaController extends Controller
         //insertar alertante
         //insertar id recurso y id incidencia en incidencia_has_recurso
 
-        // $incidencia = new Incidencia();
+        $incidencia = new Incidencia();
 
-        // $incidencia->id = $request->input('id');
-        // $incidencia->num_incident= $request->input('num_incident');
-        // $incidencia->data= $request->input('data');
-        // $incidencia->hora= $request->input('hora');
-        // $incidencia->telefon_alertant= $request->input('telefon_alertant');
-        // $incidencia->adreca= $request->input('adreca');
-        // $incidencia->adreca_complement= $request->input('adreca_complement');
-        // $incidencia->descripcio= $request->input('descripcio');
-        // $incidencia->nom_metge= $request->input('nom_metge');
-        // $incidencia->tipus_incidencies_id= $request->input('tipus_incidencies_id');
-        // $incidencia->alertants_id= $request->input('alertants_id');
-        // $incidencia->municipis_id= $request->input('municipis_id');
-        // $incidencia->usuaris_id= $request->input('usuaris_id');
+        $incidencia->id = $request->input('id');
+        $incidencia->num_incident= $request->input('num_incident');
+        $incidencia->data= $request->input('data');
+        $incidencia->hora= $request->input('hora');
+        $incidencia->telefon_alertant= $request->input('telefon_alertant');
+        $incidencia->adreca= $request->input('adreca');
+        $incidencia->adreca_complement= $request->input('adreca_complement');
+        $incidencia->descripcio= $request->input('descripcio');
+        $incidencia->nom_metge= $request->input('nom_metge');
+        $incidencia->tipus_incidencies_id= $request->input('tipus_incidencies_id');
+        $incidencia->alertants_id= $request->input('alertants_id');
+        $incidencia->municipis_id= $request->input('municipis_id');
+        $incidencia->usuaris_id= $request->input('usuaris_id');
 
 
         // $incidencia->recursos()->hora_activacio=$request->input('hora_activacio');
@@ -85,20 +85,15 @@ class IncidenciaController extends Controller
         // $incidencia->recursos()->hora_activacio=$request->input('prioritat');
         // $incidencia->recursos()->hora_activacio=$request->input('desti');
 
+        try {
+            $incidencia->save();
+            $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
+        } catch (QueryException $ex) {
+            $mensaje = Utilidad::errorMessage($ex);
+            $response = \response()->json(['error' => $mensaje], 400);
+        }
 
-    //     try {
-
-    //         $incidencia->save();
-    //         $response = (new IncidenciaResource($incidencia))
-    //                     ->response()
-    //                     ->setStatusCode(201);
-
-    //     } catch (QueryException $ex) {
-
-    //         $mensaje = Utilidad::errorMessage($ex);
-    //         $response = \response()
-    //                     ->json(['error' => $mensaje], 400);
-    //     }
+        return $response;
 
     }
 
