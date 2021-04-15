@@ -5,12 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Clases\Utilidad;
 use App\Models\Incidencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use function GuzzleHttp\Psr7\try_fopen;
 
+use App\Models\IncidenciaHasRecurso;
+use function GuzzleHttp\Psr7\try_fopen;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\IncidenciaResource;
-use App\Models\IncidenciaHasRecurso;
 
 class IncidenciaController extends Controller
 {
@@ -56,8 +57,11 @@ class IncidenciaController extends Controller
         // }
 
 
-        //insertar alertante
-        //insertar id recurso y id incidencia en incidencia_has_recurso
+        //insertar alertante get y insert (eloquent)
+        //insertar afectado insert con su relacion (eloquent)
+
+
+        DB::beginTransaction();
 
         $incidencia = new Incidencia();
 
@@ -76,17 +80,25 @@ class IncidenciaController extends Controller
         $incidencia->usuaris_id= $request->input('usuaris_id');
 
 
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_activacio');
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_mobilitzacio');
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_assistencia');
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_Transport');
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_transferencia');
-        // $incidencia->recursos()->hora_activacio=$request->input('hora_finalitzacio');
-        // $incidencia->recursos()->hora_activacio=$request->input('prioritat');
-        // $incidencia->recursos()->hora_activacio=$request->input('desti');
+        $listaRecursos = $request->input('incidencia_has_recursos');    
 
         try {
+
             $incidencia->save();
+
+            //insert id recurso y id incidencia en incidencia_has_recurso
+            foreach ($listaRecursos as $recurso ) {
+
+                $incidenciaHasRecurso = new IncidenciaHasRecurso();
+                $incidenciaHasRecurso->recursos_id= $recurso['recursos_id'];
+                $incidenciaHasRecurso->incidencies_id = $incidencia->id;
+                $incidenciaHasRecurso->prioritat= $recurso['prioritat'];
+                $incidencia->incidencia_has_recursos()->save($incidenciaHasRecurso);
+            }
+
+            DB::commit();
+            $incidencia->refresh();
+            
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
         } catch (QueryException $ex) {
             $mensaje = Utilidad::errorMessage($ex);

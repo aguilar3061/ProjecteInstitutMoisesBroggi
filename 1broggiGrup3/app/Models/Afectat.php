@@ -19,4 +19,6 @@ class Afectat extends Model
     public function incidencies(){
         return $this->belongsToMany(Incidencia::class,'incidencias_has_afectats','afectats_id','incidencies_id');
     }
+
+  
 }

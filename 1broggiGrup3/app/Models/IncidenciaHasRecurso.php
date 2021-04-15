@@ -24,5 +24,5 @@ class IncidenciaHasRecurso extends Model
         return $this->belongsTo(Recurs::class,'recursos_id');
     }
 
-
+    
 }
