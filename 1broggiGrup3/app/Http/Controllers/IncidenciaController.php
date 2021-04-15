@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incidencia;
-use App\Http\Controllers\Controller;
+use App\Models\Tipus_recurs;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Recurs;
 
 class IncidenciaController extends Controller
 {
@@ -15,7 +17,10 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
-        return view('paginas.incidencias.index');
+        $tipoRecursos = Tipus_recurs::all();
+        $recursos = Recurs::all();
+
+        return view('paginas.incidencias.index_vue', compact('tipoRecursos','recursos'));
     }
 
     /**
