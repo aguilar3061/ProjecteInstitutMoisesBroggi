@@ -12,8 +12,12 @@ class Recurs extends Model
     protected $table='recursos';
     public $timestamps = false;
 
-    public function incidencies(){
-        return $this->belongsToMany(Incidencia::class,'incidencias_has_recursos','recursos_id','incidencies_id')->withPivot('hora_activacio','hora_mobilitzacio','hora_assistencia','hora_Transport','hora_arribada_hospital','hora_transferencia','hora_finalitzacio','prioritat','desti');
+    // public function incidencies(){
+    //     return $this->belongsToMany(Incidencia::class,'incidencias_has_recursos','recursos_id','incidencies_id')->withPivot('hora_activacio','hora_mobilitzacio','hora_assistencia','hora_Transport','hora_arribada_hospital','hora_transferencia','hora_finalitzacio','prioritat','desti');
+    // }
+
+    public function incidencia_has_recursos(){
+        return $this->hasMany(IncidenciaHasRecurso::class, 'recursos_id');
     }
 
     public function tipus_recurs(){
