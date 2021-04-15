@@ -15,7 +15,7 @@
 <body>
     @yield('navbar')
 
-    <div class="container col-12">
+    <div class="container col-12" id="app">
         @yield('cuerpo')
     </div>
 

@@ -5,6 +5,6 @@
 
 @include('partials.mensajes')
 
-<incidencies-component></incidencies-component>
+<incidencies-component :recursos="recursos" :tipoRecursos="tipoRecursos"></incidencies-component>
 
 @endsection
