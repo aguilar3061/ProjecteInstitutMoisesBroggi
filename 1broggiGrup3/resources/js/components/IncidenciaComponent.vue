@@ -9,7 +9,7 @@
                     <div class="form-group row">
                         <label for="telefonAlertant" class="col-3 col-form-label">Telefono</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="telefonAlertant" name="telefonAlertant">
+                            <input class="form-control" type="number" id="telefonAlertant" name="telefonAlertant" v-model="incidencia.telefon_alertant">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -102,55 +102,112 @@
                     <div class="form-group row">
                         <label for="fechaHora" class="col-3 col-form-label">Fecha y hora</label>
                         <div class="col-9">
-                            <input class="form-control" type="datetime-local"  id="fechaHora" name="fechaHora">
+                            <input class="form-control" type="datetime-local"  id="fechaHora" name="fechaHora" v-model="incidencia.data">
                         </div>
                     </div>
                      <div class="form-group row">
                         <label for="adreca" class="col-3 col-form-label">Dirección</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="adreca" name="adreca">
+                            <input class="form-control" type="text" id="adreca" name="adreca"  v-model="incidencia.adreca">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="adreca_complement" class="col-3 col-form-label">Complemento dirección</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="adreca_complement" name="adreca_complement">
+                            <input class="form-control" type="text" id="adreca_complement" name="adreca_complement"  v-model="incidencia.adreca_complement">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="descripcio" class="col-3 col-form-label">Descripción</label>
                         <div class="col-9">
-                            <textarea class="form-control" id="descripcio" rows="3" name="descripcio"></textarea>
+                            <textarea class="form-control" id="descripcio" rows="3" name="descripcio"  v-model="incidencia.descripcio"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nom_metge" class="col-3 col-form-label">Nombre médico</label>
                         <div class="col-9">
-                            <input class="form-control" type="text"  id="nom_metge" name="nom_metge">
+                            <input class="form-control" type="text"  id="nom_metge" name="nom_metge" v-model="incidencia.nom_metge">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="tipus_incidencia_id" class="col-3 col-form-label">Tipus Incidencia</label>
                         <div class="col-9">
-                            <select class="form-control" id="tipus_incidencia_id" name="tipus_incidencia_id">
-                                <option v-for="tipusincidencia in tipusincidencies" :key="tipusincidencia.id" :value="tipusincidencia.id" >{{ tipusincidencia.tipus }}</option>
+                            <select class="form-control" id="tipus_incidencia_id" name="tipus_incidencia_id" v-model="incidencia.tipus_incidencies_id">
+                                <option v-for="tipus_incidencies_id in tipusincidencies" :key="tipus_incidencies_id.id" :value="tipus_incidencies_id.id">{{ tipus_incidencies_id.tipus }}</option>
                             </select>
                         </div>
                     </div>
                      <div class="form-group row">
                         <label for="municipis_id_Alertant" class="col-3 col-form-label">Municipio</label>
                         <div class="col-9">
-                            <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant">
+                            <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant" v-model="incidencia.municipis_id">
                                 <option v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" >{{ municipio.nom }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card mt-2">
+                <div class="card-header">Recursos</div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="idTipoRecurso" class="col-3 col-form-label">Tipus de recurso</label>
+                        <div class="col-9">
+                            <select class="form-control" id="idTipoRecurso" name="idTipoRecurso" @change="onChange($event)" >
+                                <option v-for="tipusrecurs in tiporecursos" :key="tipusrecurs.id" :value="tipusrecurs.id" >{{ tipusrecurs.tipus }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="recursos_id" class="col-3 col-form-label">Recurso</label>
+                        <div class="col-9">
+                            <select class="form-control" id="selectMedicalitzadaMike" name="selectMedicalitzadaMike" style="display: none;">
+                                <option v-for="recurs in filteredRecursos(1)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
+                            </select>
+                            <select class="form-control" id="selectsanitaritzadaIndia" name="selectsanitaritzadaIndia" style="display: none;">
+                                <option v-for="recurs in filteredRecursos(2)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
+                            </select>
+                            <select class="form-control" id="selectassitencialTango" name="selectassitencialTango"  >
+                                <option v-for="recurs in filteredRecursos(3)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
+                            </select>
+                            <select class="form-control" id="selecthelicopterMedicalitzat" name="selecthelicopterMedicalitzat" style="display: none;">
+                                <option v-for="recurs in filteredRecursos(4)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3">Prioritat: </label>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat1" value="1">
+                                <label class="form-check-label" for="radioPrioritat">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat2" value="2">
+                                <label class="form-check-label" for="radioPrioritat">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat3" value="3">
+                                <label class="form-check-label" for="radioPrioritat">3</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat4" value="4">
+                                <label class="form-check-label" for="radioPrioritat">4</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat5" value="5">
+                                <label class="form-check-label" for="radioPrioritat">5</label>
+                            </div>
+                        </div>
+                        <button type="button" v-on:click="addToRecursos"  class="btn btn-primary" >Añadir recurso</button>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="text-right">
             <button type="button" class="btn btn-secondary" id="Finalizar">Cancelar</button>
-            <button type="submit" class="btn btn-primary" id="Finalizar">Finalizar</button>
+            <button type="button" class="btn btn-primary" id="Finalizar" @click="addIncidencia()">Finalizar</button>
         </div>
     </form>
 </div>
@@ -183,6 +240,29 @@
             tipusincidencies:{
                 type: Array,
                 required: false
+            },
+            recursosToSent:{
+                type: Array,
+                default: () => []
+            }
+        },
+        data(){
+            return {
+                incidencia: {
+                    id:'',
+                    num_incident:99,
+                    data:'',
+                    hora:'2021-04-23T06:21',
+                    telefon_alertant:'',
+                    adreca:'',
+                    adreca_complement:'',
+                    descripcio:'',
+                    nom_metge:'',
+                    tipus_incidencies_id:'',
+                    alertants_id:1,
+                    municipis_id:'',
+                    usuaris_id:1
+                },
             }
         },
         mounted() {
@@ -192,12 +272,119 @@
 
         },
         methods: {
-            selectTipusRecursos() {
+            addIncidencia(){
+                this.errorMessage = '';
+                this.infoMessage = '';
 
+                let me = this;
+
+                axios
+                    .post('api/incidencia', me.incidencia)
+                    .then(function(response) {
+                        console.log(response);
+                        //Aqui hay que hacer un redirect
+                    }).catch(function(error){
+                        console.log(error.response.stats);
+                        console.log(error.response.data);
+                        me.errorMessage = error.response.data.error;
+                    })
             },
-            selectRecursos(){
+            addToRecursos() {
 
-            }
+                var recurs = {
+                    recursos_id: this.returnRecursId(),
+                    prioritat: this.returnPrioritat()
+                }
+
+
+                this.recursosToSent.push(recurs);
+            },
+            returnRecursId(){
+                var medicalitzadaMike = document.getElementById('selectMedicalitzadaMike');
+                var sanitaritzadaIndia = document.getElementById('selectsanitaritzadaIndia');
+                var assitencialTango = document.getElementById('selectassitencialTango');
+                var helicopterMedicalitzat = document.getElementById('selecthelicopterMedicalitzat');
+
+                var id;
+                if (medicalitzadaMike.style.display == 'block'){
+                    id = medicalitzadaMike.value;
+                }
+                if (sanitaritzadaIndia.style.display == 'block'){
+                    id = sanitaritzadaIndia.value;
+                }
+                if (assitencialTango.style.display == 'block'){
+                    id = assitencialTango.value;
+                }
+                if (helicopterMedicalitzat.style.display == 'block'){
+                    id = helicopterMedicalitzat.value;
+                }
+
+                return id;
+            },
+            returnPrioritat(){
+                var radio1 = document.getElementById('prioritat1');
+                var radio2 = document.getElementById('prioritat2');
+                var radio3 = document.getElementById('prioritat3');
+                var radio4 = document.getElementById('prioritat4');
+                var radio5 = document.getElementById('prioritat5');
+                var priority;
+                if (radio1.checked) {
+                    priority = 1;
+                }
+                if (radio2.checked) {
+                    priority = 2;
+                }
+                if (radio3.checked) {
+                    priority = 3;
+                }
+                if (radio4.checked) {
+                    priority = 4;
+                }
+                if (radio5.checked) {
+                    priority = 5;
+                }
+
+                return priority;
+            },
+            filteredRecursos(id){
+                var recursosToReturn = [];
+
+                this.recursos.forEach(element => {
+                    if (element.tipus_recursos_id == id){
+                        recursosToReturn.push(element);
+                }
+                });
+
+                return recursosToReturn;
+            },
+            onChange(event) {
+                var medicalitzadaMike = document.getElementById('selectMedicalitzadaMike');
+                var sanitaritzadaIndia = document.getElementById('selectsanitaritzadaIndia');
+                var assitencialTango = document.getElementById('selectassitencialTango');
+                var helicopterMedicalitzat = document.getElementById('selecthelicopterMedicalitzat');
+                if (event.target.value == 1){
+                    medicalitzadaMike.style.display = "block";
+                    sanitaritzadaIndia.style.display = "none";
+                    assitencialTango.style.display = "none";
+                    helicopterMedicalitzat.style.display = "none";
+                } else if (event.target.value == 2){
+                    medicalitzadaMike.style.display = "none";
+                    sanitaritzadaIndia.style.display = "block";
+                    assitencialTango.style.display = "none";
+                    helicopterMedicalitzat.style.display = "none";
+                } else if (event.target.value == 3){
+                    medicalitzadaMike.style.display = "none";
+                    sanitaritzadaIndia.style.display = "none";
+                    assitencialTango.style.display = "block";
+                    helicopterMedicalitzat.style.display = "none";
+                } else {
+                    medicalitzadaMike.style.display = "none";
+                    sanitaritzadaIndia.style.display = "none";
+                    assitencialTango.style.display = "none";
+                    helicopterMedicalitzat.style.display = "block";
+                }
+        }
         }
     }
+
 </script>
