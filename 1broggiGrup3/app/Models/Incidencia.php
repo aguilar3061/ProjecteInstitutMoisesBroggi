@@ -13,9 +13,9 @@ class Incidencia extends Model
     public $timestamps = false;
 
 
-    // public function afectats(){
-    //     return $this->belongsToMany(Afectat::class,'incidencies_has_afectats','incidencies_id','afectats_id');
-    // }
+    public function afectats(){
+        return $this->belongsToMany(Afectat::class,'incidencias_has_afectats','incidencies_id','afectats_id');
+    }
 
     public function tipus_incidencia(){
         return $this->belongsTo(Tipus_Incidencia::class,'tipus_incidencies_id');
@@ -27,9 +27,6 @@ class Incidencia extends Model
 
     public function incidencia_has_recursos(){
         return $this->hasMany(IncidenciaHasRecurso::class, 'incidencies_id');
-    }
-    public function incidencies_has_afectats(){
-        return $this->hasMany(IncidenciaHasAfectats::class, 'incidencies_id');
     }
 
     public function usuari(){
