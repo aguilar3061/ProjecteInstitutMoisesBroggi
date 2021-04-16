@@ -13,6 +13,7 @@ use function GuzzleHttp\Psr7\try_fopen;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\IncidenciaResource;
 use App\Models\Afectat;
+use App\Models\Alertant;
 
 class IncidenciaController extends Controller
 {
@@ -110,29 +111,46 @@ class IncidenciaController extends Controller
         //insertar alertante get y insert (eloquent)
         //insertar afectado insert con su relacion (eloquent)
 
-        DB::beginTransaction();
-
-        $incidencia = new Incidencia();
-
-        $incidencia->id = $request->input('id');
-        $incidencia->num_incident= $request->input('num_incident');
-        $incidencia->data= $request->input('data');
-        $incidencia->hora= $request->input('hora');
-        $incidencia->telefon_alertant= $request->input('telefon_alertant');
-        $incidencia->adreca= $request->input('adreca');
-        $incidencia->adreca_complement= $request->input('adreca_complement');
-        $incidencia->descripcio= $request->input('descripcio');
-        $incidencia->nom_metge= $request->input('nom_metge');
-        $incidencia->tipus_incidencies_id= $request->input('tipus_incidencies_id');
-        $incidencia->alertants_id= $request->input('alertants_id');
-        $incidencia->municipis_id= $request->input('municipis_id');
-        $incidencia->usuaris_id= $request->input('usuaris_id');
-
+     
         
         try {
+
+            DB::beginTransaction();
+
+            $alertant = new Alertant();
+            $alertant->id =                     $request->input('idAlertant');
+            $alertant->telefon=                 $request->input('telefon_alertant');
+            $alertant->nom=                     $request->input('nomAlertant');
+            $alertant->cognoms=                 $request->input('cognomsAlertant');
+            $alertant->adreca=                  $request->input('adrecaAlertant');
+            $alertant->municipis_id=            $request->input('municipis_idAlertant');
+            $alertant->tipus_alertants_id=      $request->input('tipus_alertants_idAlertant');
+
+            $alertant->save();
+    
+
+            $incidencia = new Incidencia();
+    
+            $incidencia->id = $request->input('id');
+            $incidencia->num_incident= $request->input('num_incident');
+            $incidencia->data= $request->input('data');
+            $incidencia->hora= $request->input('data');
+            $incidencia->telefon_alertant= $request->input('telefon_alertant');
+            $incidencia->adreca= $request->input('adreca');
+            $incidencia->adreca_complement= $request->input('adreca_complement');
+            $incidencia->descripcio= $request->input('descripcio');
+            $incidencia->nom_metge= $request->input('nom_metge');
+            $incidencia->tipus_incidencies_id= $request->input('tipus_incidencies_id');
+            $incidencia->alertants_id= $alertant->id;
+            $incidencia->municipis_id= $request->input('municipis_id');
+            $incidencia->usuaris_id= $request->input('usuaris_id');
+    
+            $incidencia->save();
+
+
             //   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             $listaRecursos = $request->input('incidencia_has_recursos');    
-            $incidencia->save();
+        
 
             //insert idRecurso, idIncidencia y prioritat en incidencia_has_recurso
             foreach ($listaRecursos as $recurso ) {
@@ -152,11 +170,14 @@ class IncidenciaController extends Controller
             //}
 
             DB::commit();
+
+            $alertant->refresh();
             $incidencia->refresh();
             
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
 
         } catch (QueryException $ex) {
+
 			DB::rollBack();
             $mensaje = Utilidad::errorMessage($ex);
             $response = \response()->json(['error' => $mensaje], 400);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Afectat;
 use App\Clases\Utilidad;
+use App\Models\Incidencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -48,28 +49,35 @@ class AfectatsController extends Controller
         DB::beginTransaction();
         try {
 
-
-
             $afectat = new Afectat();
 
-            $afectat->id= $request->input(['id']);
-            $afectat->telefon= $request->input(['telefon']);
-            $afectat->cip= $request->input(['cip']);
-            $afectat->nom= $request->input(['nom']);
-            $afectat->cognoms= $request->input(['cognoms']);
-            $afectat->edat= $request->input(['edat']);
-            $afectat->te_cip= $request->input(['te_cip']);
-            $afectat->sexes_id= $request->input(['sexes_id']);
+            $afectat->id= $request->input(['idAfectat']);
+            $afectat->telefon= $request->input(['telefonAfectat']);
+            $afectat->cip= $request->input(['cipAfectat']);
+            $afectat->nom= $request->input(['nomAfectat']);
+            $afectat->cognoms= $request->input(['cognomsAfectat']);
+            $afectat->edat= $request->input(['edatAfectat']);
+
+            if($request->input(['cipAfectat']) == null){
+                $afectat->te_cip= false;
+            }else{
+                $afectat->te_cip= true;
+            }
+
+            $afectat->sexes_id= $request->input(['sexes_idAfectat']);
           
             $afectat->save();
 
 
+            $incidencias = Incidencia::All();
 
-            $incidencia = $request->input('incidencies_has_afectats');  
+            $idReal = $incidencias[sizeof($incidencias)-1]->id;
+            
+         
             $incidencieHasAfectat = new IncidenciesHasAfectats();
 
             $incidencieHasAfectat->afectats_id= $afectat->id;
-            $incidencieHasAfectat->incidencies_id= $incidencia[0]['incidencies_id'];
+            $incidencieHasAfectat->incidencies_id= $idReal;
     
            
             //$afectat->incidencies_has_afectats()->save($incidencieHasAfectat);

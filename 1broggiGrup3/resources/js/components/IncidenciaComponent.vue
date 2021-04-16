@@ -15,34 +15,34 @@
                     <div class="form-group row">
                         <label for="nomAlertant" class="col-3 col-form-label">Nombre</label>
                         <div class="col-9">
-                            <input class="form-control" type="text"  id="nomAlertant" name="nomAlertant">
+                            <input class="form-control" type="text"  id="nomAlertant" name="nomAlertant" v-model="incidencia.nomAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAlertant" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="cognomsAlertant" name="cognomsAlertant">
+                            <input class="form-control" type="text" id="cognomsAlertant" name="cognomsAlertant" v-model="incidencia.cognomsAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="adrecaAlertant" class="col-3 col-form-label">Dirección</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="adrecaAlertant" name="adrecaAlertant">
+                            <input class="form-control" type="text" id="adrecaAlertant" name="adrecaAlertant" v-model="incidencia.adrecaAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="municipis_id_Alertant" class="col-3 col-form-label">Municipio</label>
                         <div class="col-9">
-                            <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant">
-                                <option v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" >{{ municipio.nom }}</option>
+                            <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant" v-model="incidencia.municipis_idAlertant">
+                                <option v-for="municipis_idAlertant in municipios" :key="municipis_idAlertant.id" :value="municipis_idAlertant.id" >{{ municipis_idAlertant.nom }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="tipus_alertants_id" class="col-3 col-form-label">Tipus alertant</label>
                         <div class="col-9">
-                            <select class="form-control" id="tipus_alertants_id" name="tipus_alertants_id">
-                                <option v-for="tipusalertant in tipusalertants" :key="tipusalertant.id" :value="tipusalertant.id" >{{ tipusalertant.tipus }}</option>
+                            <select class="form-control" id="tipus_alertants_id" name="tipus_alertants_id" v-model="incidencia.tipus_alertants_idAlertant"> 
+                                <option v-for="tipus_alertants_idAlertant in tipusalertants" :key="tipus_alertants_idAlertant.id" :value="tipus_alertants_idAlertant.id" >{{ tipus_alertants_idAlertant.tipus }}</option>
                             </select>
                         </div>
                     </div>
@@ -54,42 +54,42 @@
                     <div class="form-group row">
                         <label for="telefonAfectat" class="col-3 col-form-label">Telefono</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="telefonAfectat" name="telefonAfectat">
+                            <input class="form-control" type="number" id="telefonAfectat" name="telefonAfectat" v-model="afectat.telefonAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cip" class="col-3 col-form-label">Documento (DNI, TS/NSS)</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="cip" name="cip">
+                            <input class="form-control" type="text" id="cip" name="cip" v-model="afectat.cipAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nomAfectat" class="col-3 col-form-label">Nombre</label>
                         <div class="col-9">
-                            <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat">
+                            <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat" v-model="afectat.nomAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAfectat" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
-                            <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat">
+                            <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat" v-model="afectat.cognomsAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="edadAfectat" class="col-3 col-form-label">Edad</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="edadAfectat" name="edadAfectat">
+                            <input class="form-control" type="number" id="edadAfectat" name="edadAfectat" v-model="afectat.edatAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-3">Sexo: </label>
                         <div class="col-9">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sexes_id" id="radioMujer" value="2">
+                                <input class="form-check-input" type="radio" name="sexes_id" id="radioMujer" value="2" v-model="afectat.sexes_idAfectat">
                                 <label class="form-check-label" for="sexes_id">Mujer</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sexes_id" id="radioHombre" value="1">
+                                <input class="form-check-input" type="radio" name="sexes_id" id="radioHombre" value="1" v-model="afectat.sexes_idAfectat">
                                 <label class="form-check-label" for="sexes_id">Hombre</label>
                             </div>
                         </div>
@@ -161,16 +161,16 @@
                     <div class="form-group row">
                         <label for="recursos_id" class="col-3 col-form-label">Recurso</label>
                         <div class="col-9">
-                            <select class="form-control" id="selectMedicalitzadaMike" name="selectMedicalitzadaMike" style="display: none;">
+                            <select class="form-control" id="selectMedicalitzadaMike" name="selectMedicalitzadaMike" style="display: none;" >
                                 <option v-for="recurs in filteredRecursos(1)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
-                            <select class="form-control" id="selectsanitaritzadaIndia" name="selectsanitaritzadaIndia" style="display: none;">
+                            <select class="form-control" id="selectsanitaritzadaIndia" name="selectsanitaritzadaIndia" style="display: none;" >
                                 <option v-for="recurs in filteredRecursos(2)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
-                            <select class="form-control" id="selectassitencialTango" name="selectassitencialTango"  >
+                            <select class="form-control" id="selectassitencialTango" name="selectassitencialTango" >
                                 <option v-for="recurs in filteredRecursos(3)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
-                            <select class="form-control" id="selecthelicopterMedicalitzat" name="selecthelicopterMedicalitzat" style="display: none;">
+                            <select class="form-control" id="selecthelicopterMedicalitzat" name="selecthelicopterMedicalitzat" style="display: none;" >
                                 <option v-for="recurs in filteredRecursos(4)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
                         </div>
@@ -235,8 +235,7 @@
             tipusalertants:{
                 type: Array,
                 required: false
-            }
-            ,
+            },
             tipusincidencies:{
                 type: Array,
                 required: false
@@ -252,7 +251,6 @@
                     id:'',
                     num_incident:99,
                     data:'',
-                    hora:'2021-04-23T06:21',
                     telefon_alertant:'',
                     adreca:'',
                     adreca_complement:'',
@@ -261,8 +259,24 @@
                     tipus_incidencies_id:'',
                     alertants_id:1,
                     municipis_id:'',
-                    usuaris_id:1
+                    usuaris_id:1,
+                    idAlertant:'',
+                    nomAlertant:'',
+                    cognomsAlertant:'',
+                    adrecaAlertant:'',
+                    municipis_idAlertant:'',
+                    tipus_alertants_idAlertant:'',
+                    incidencia_has_recursos: this.recursosToSent
                 },
+                afectat:{
+                    idAfectat:'',
+                    telefonAfectat:'',
+                    cipAfectat:'',
+                    nomAfectat:'',
+                    cognomsAfectat:'',
+                    edatAfectat:'',
+                    sexes_idAfectat:'',
+                }
             }
         },
         mounted() {
@@ -272,17 +286,32 @@
 
         },
         methods: {
+            addAfectat(){
+                this.errorMessage = '';
+                this.infoMessage = '';
+                let me = this;
+                axios
+                    .post('api/afectats', me.afectat)
+                    .then(function(response) {
+                        console.log(response);
+                        //Aqui hay que hacer un redirect
+                    }).catch(function(error){
+                        console.log(error.response.stats);
+                        console.log(error.response.data);
+                        me.errorMessage = error.response.data.error;
+                    })
+
+            },
             addIncidencia(){
                 this.errorMessage = '';
                 this.infoMessage = '';
-
                 let me = this;
-
                 axios
                     .post('api/incidencia', me.incidencia)
                     .then(function(response) {
                         console.log(response);
                         //Aqui hay que hacer un redirect
+                        me.addAfectat();
                     }).catch(function(error){
                         console.log(error.response.stats);
                         console.log(error.response.data);
