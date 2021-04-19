@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AfectatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\IncidenciaController;
@@ -21,3 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::apiResource('incidencia', IncidenciaController::class);
+
+Route::apiResource('afectats', AfectatsController::class);
