@@ -14,6 +14,9 @@ use App\Http\Controllers\TipusIncidenciaController;
 use App\Http\Controllers\TipusRecursController;
 use App\Http\Controllers\UsuariController;
 use App\Models\Alertant;
+use App\Models\Recurs;
+use App\Models\Municipi;
+use App\Models\Tipus_recurs;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,11 +62,18 @@ Route::get('/modificar_alertante', function () {
 Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
-Route::get('/formRecursIncidencia', function () {
-    return view('paginas.Recurso.formRecusIncidencia');
-});
 Route::get('/infoRecursEincidencia', function () {
-    return view('paginas.Recurso.infoRecursEincidencia');
+    $recurso = Recurs::all();
+    $municipios = Municipi::all();
+    $alertantes = Alertant::all();
+    $tipo_recurso = Tipus_recurs::all();
+    return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
+});
+Route::get('/formRecursIncidencia', function () {
+    $recurso = Recurs::all();
+    $alertantes = Alertant::all();
+    $tipo_recurso = Tipus_recurs::all();
+    return view('paginas.Recurso.formRecusIncidencia', compact('recurso', 'alertantes', 'tipo_recurso' ));
 });
 
 
