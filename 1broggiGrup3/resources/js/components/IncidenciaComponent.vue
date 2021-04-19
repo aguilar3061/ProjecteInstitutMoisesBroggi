@@ -2,6 +2,11 @@
 <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
     <form>
         <div class="card-header">Incidencia</div>
+        <div class="btn-group-toggle mt-2 ml-4" data-toggle="buttons">
+            <label class="btn btn-info active">
+                <input type="checkbox" checked autocomplete="off"  @click="showHelp()"> Ayuda Ingles
+            </label>
+        </div>
         <div class="card-body">
             <div class="card mt-2">
                 <div class="card-header">Alertant</div>
@@ -14,19 +19,22 @@
                     </div>
                     <div class="form-group row">
                         <label for="nomAlertant" class="col-3 col-form-label">Nombre</label>
-                        <div class="col-9">
+                        <div class="form-group col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your name ? <img src="img/speaker.png" @click="audioClick('frase1')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text"  id="nomAlertant" name="nomAlertant" v-model="incidencia.nomAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAlertant" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your surname ? <img src="img/speaker.png" @click="audioClick('frase2')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cognomsAlertant" name="cognomsAlertant" v-model="incidencia.cognomsAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="adrecaAlertant" class="col-3 col-form-label">Dirección</label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Where are you now ?  <img src="img/speaker.png" @click="audioClick('frase3')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="adrecaAlertant" name="adrecaAlertant" v-model="incidencia.adrecaAlertant">
                         </div>
                     </div>
@@ -41,7 +49,7 @@
                     <div class="form-group row">
                         <label for="tipus_alertants_id" class="col-3 col-form-label">Tipus alertant</label>
                         <div class="col-9">
-                            <select class="form-control" id="tipus_alertants_id" name="tipus_alertants_id" v-model="incidencia.tipus_alertants_idAlertant"> 
+                            <select class="form-control" id="tipus_alertants_id" name="tipus_alertants_id" v-model="incidencia.tipus_alertants_idAlertant">
                                 <option v-for="tipus_alertants_idAlertant in tipusalertants" :key="tipus_alertants_idAlertant.id" :value="tipus_alertants_idAlertant.id" >{{ tipus_alertants_idAlertant.tipus }}</option>
                             </select>
                         </div>
@@ -60,18 +68,21 @@
                     <div class="form-group row">
                         <label for="cip" class="col-3 col-form-label">Documento (DNI, TS/NSS)</label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me an identification number of the victim ?  <img src="img/speaker.png" @click="audioClick('frase4')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cip" name="cip" v-model="afectat.cipAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nomAfectat" class="col-3 col-form-label">Nombre</label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the name of the victim ?  <img src="img/speaker.png" @click="audioClick('frase5')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat" v-model="afectat.nomAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAfectat" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the surname of the victim ?  <img src="img/speaker.png" @click="audioClick('frase6')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat" v-model="afectat.cognomsAfectat">
                         </div>
                     </div>
@@ -84,6 +95,7 @@
                     <div class="form-group row">
                         <label class="col-3">Sexo: </label>
                         <div class="col-9">
+                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the sex of the victim ?  <img src="img/speaker.png" @click="audioClick('frase7')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="sexes_id" id="radioMujer" value="2" v-model="afectat.sexes_idAfectat">
                                 <label class="form-check-label" for="sexes_id">Mujer</label>
@@ -210,6 +222,28 @@
             <button type="button" class="btn btn-primary" id="Finalizar" @click="addIncidencia()">Finalizar</button>
         </div>
     </form>
+    <audio id="frase1">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase2">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase3">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase4">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase5">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase6">
+          <source src="media/sonido.mp3">
+    </audio>
+    <audio id="frase7">
+          <source src="media/sonido.mp3">
+    </audio>
+
 </div>
 </template>
 
@@ -276,7 +310,8 @@
                     cognomsAfectat:'',
                     edatAfectat:'',
                     sexes_idAfectat:'',
-                }
+                },
+                 ayudaIngles: false,
             }
         },
         mounted() {
@@ -412,7 +447,34 @@
                     assitencialTango.style.display = "none";
                     helicopterMedicalitzat.style.display = "block";
                 }
-        }
+            },
+            audioClick(idAudio){
+                var frase = document.getElementById(idAudio);
+
+                    frase.currentTime = 0;
+                    frase.play();
+                    frase.volume = 0.20;
+            },
+            showHelp(){
+                var labels = document.querySelectorAll('.labelIngles');
+                if(this.ayudaIngles == false){
+                    for(let i = 0; i < labels.length; i++){
+                        let label =labels[i];
+                        label.style.display="block";
+                    }
+
+                    this.ayudaIngles = true;
+                }
+                else {
+                    for(let i = 0; i < labels.length; i++){
+                        let label =labels[i];
+                        label.style.display="none";
+                    }
+
+                    this.ayudaIngles = false;
+                }
+
+            }
         }
     }
 
