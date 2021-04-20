@@ -62,6 +62,7 @@ Route::get('/modificar_alertante', function () {
 Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
+
 Route::get('/infoRecursEincidencia', function () {
     $recurso = Recurs::all();
     $municipios = Municipi::all();
@@ -74,6 +75,12 @@ Route::get('/formRecursIncidencia', function () {
     $alertantes = Alertant::all();
     $tipo_recurso = Tipus_recurs::all();
     return view('paginas.Recurso.formRecusIncidencia', compact('recurso', 'alertantes', 'tipo_recurso' ));
+});
+
+
+
+Route::get('/paginaPrincipalA', function () {
+    return view('paginas.Admin.paginaPrincipal');
 });
 
 

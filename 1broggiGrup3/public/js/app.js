@@ -2095,6 +2095,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     recursos: {
@@ -2159,7 +2193,8 @@ __webpack_require__.r(__webpack_exports__);
         cognomsAfectat: '',
         edatAfectat: '',
         sexes_idAfectat: ''
-      }
+      },
+      ayudaIngles: false
     };
   },
   mounted: function mounted() {
@@ -2290,6 +2325,31 @@ __webpack_require__.r(__webpack_exports__);
         sanitaritzadaIndia.style.display = "none";
         assitencialTango.style.display = "none";
         helicopterMedicalitzat.style.display = "block";
+      }
+    },
+    audioClick: function audioClick(idAudio) {
+      var frase = document.getElementById(idAudio);
+      frase.currentTime = 0;
+      frase.play();
+      frase.volume = 0.20;
+    },
+    showHelp: function showHelp() {
+      var labels = document.querySelectorAll('.labelIngles');
+
+      if (this.ayudaIngles == false) {
+        for (var i = 0; i < labels.length; i++) {
+          var label = labels[i];
+          label.style.display = "block";
+        }
+
+        this.ayudaIngles = true;
+      } else {
+        for (var _i = 0; _i < labels.length; _i++) {
+          var _label = labels[_i];
+          _label.style.display = "none";
+        }
+
+        this.ayudaIngles = false;
       }
     }
   }
@@ -38479,16 +38539,38 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "card border-primary mb-3",
+      staticClass: "border-primary mb-3",
       staticStyle: {
         "margin-top": "2%",
         "margin-right": "5%",
-        "margin-left": "5%"
+        "margin-left": "5%",
+        "margin-bottom": "5%"
       }
     },
     [
       _c("form", [
         _c("div", { staticClass: "card-header" }, [_vm._v("Incidencia")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "btn-group-toggle mt-2 ml-4",
+            attrs: { "data-toggle": "buttons" }
+          },
+          [
+            _c("label", { staticClass: "btn btn-info active" }, [
+              _c("input", {
+                attrs: { type: "checkbox", checked: "", autocomplete: "off" },
+                on: {
+                  click: function($event) {
+                    return _vm.showHelp()
+                  }
+                }
+              }),
+              _vm._v(" Ayuda Ingles\r\n            ")
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "card mt-2" }, [
@@ -38548,7 +38630,32 @@ var render = function() {
                   [_vm._v("Nombre")]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-9" }, [
+                _c("div", { staticClass: "form-group col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("What's your name ? "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase1")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -38592,6 +38699,31 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("What's your surname ? "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase2")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -38635,6 +38767,31 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("Where are you now ?  "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase3")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -38853,6 +39010,33 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v(
+                        "Can you tell me an identification number of the victim ?  "
+                      ),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase4")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -38888,6 +39072,31 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("Can you tell me the name of the victim ?  "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase5")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -38927,6 +39136,31 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("Can you tell me the surname of the victim ?  "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase6")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -39006,6 +39240,31 @@ var render = function() {
                 _c("label", { staticClass: "col-3" }, [_vm._v("Sexo: ")]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-9" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-6 col-form-label labelIngles",
+                      staticStyle: { display: "none", "font-style": "italic" },
+                      attrs: { for: "telefonAlertant" }
+                    },
+                    [
+                      _vm._v("Can you tell me the sex of the victim ?  "),
+                      _c("img", {
+                        attrs: {
+                          src: "img/speaker.png",
+                          alt: "Escuchar frase",
+                          width: "25px",
+                          height: "25px"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.audioClick("frase7")
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-check form-check-inline" }, [
                     _c("input", {
                       directives: [
@@ -39587,7 +39846,21 @@ var render = function() {
             [_vm._v("Finalizar")]
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
+      _vm._m(5),
+      _vm._v(" "),
+      _vm._m(6),
+      _vm._v(" "),
+      _vm._m(7)
     ]
   )
 }
@@ -39687,6 +39960,62 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase1" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase2" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase3" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase4" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase5" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase6" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("audio", { attrs: { id: "frase7" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
   }
 ]
 render._withStripped = true
@@ -39738,7 +40067,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("p", { attrs: { id: "info_recurso" } }, [
-              _vm._v("\n            Info\n        ")
+              _vm._v("\r\n            Info\r\n        ")
             ])
           ])
         ]

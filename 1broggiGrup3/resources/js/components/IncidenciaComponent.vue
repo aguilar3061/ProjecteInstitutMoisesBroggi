@@ -1,5 +1,5 @@
 <template>
-<div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
+<div class="border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; margin-bottom: 5%;">
     <form>
         <div class="card-header">Incidencia</div>
         <div class="btn-group-toggle mt-2 ml-4" data-toggle="buttons">

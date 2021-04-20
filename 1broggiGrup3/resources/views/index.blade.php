@@ -1,5 +1,3 @@
-
-
 @extends("plantillas.plantilla")
 @section('navbar')
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
