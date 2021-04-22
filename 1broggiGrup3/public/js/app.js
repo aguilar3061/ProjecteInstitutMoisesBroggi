@@ -2427,6 +2427,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     recurso: {
@@ -2448,7 +2549,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      incidencias: [],
+      incidencias_has_recursos: [],
+      hospitales: [],
+      miIncidencia_has_recurso: [],
+      recursoLogued: [],
       userLogued: {
         id: 1,
         username: 'Pepe',
@@ -2458,7 +2562,14 @@ __webpack_require__.r(__webpack_exports__);
         cognoms: 'AAAAA',
         rols_id: 3,
         recursos_id: 2
-      }
+      },
+      HoraMovilizacion: '',
+      HoraAsistencia: '',
+      HoraInicioTranporte: '',
+      HoraLlegadaHospital: '',
+      HoraTransferencia: '',
+      HoraFinalizacion: '',
+      Hospital: ''
     };
   },
   mounted: function mounted() {
@@ -2468,51 +2579,57 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var me = this;
-    axios.get('api/incidencia').then(function (response) {
-      me.incidencias = response.data;
+    axios.get('api/recurs').then(function (response) {
+      me.incidencias_has_recursos = response.data;
       var flag = false;
-      me.incidencias.forEach(function (element) {
-        if (element.incidencia_has_recursos[0].recursos_id == _this.userLogued.recursos_id && element.incidencia_has_recursos[0].hora_finalitzacio == null) {
+      me.incidencias_has_recursos.forEach(function (element) {
+        if (element.recursos_id == _this.userLogued.recursos_id && element.hora_finalitzacio == null) {
+          me.miIncidencia_has_recurso = element;
           var alertante = document.getElementById('alertante');
           var telefono = document.getElementById('telefono');
           var municipio = document.getElementById('municipio');
           var direccion = document.getElementById('direccion');
           var direccionCompleta = document.getElementById('dirCompleta');
-          var descripcion = document.getElementById('desc'); // var titulo_info_recurso = document.getElementById('titulo_info_recurso');
-          // var info_recurso = document.getElementById('info_recurso');
-          // this.recurso.forEach(miRecurso => {
-          //     if (miRecurso.id == this.userLogued.recursos_id) {
-          //         recursoLogued = miRecurso;
-          //         titulo_info_recurso.innerHTML = "Info recurso " + miRecurso.codi;
-          //     }
-          // });
-          // this.tipo_recurso.forEach(rec => {
-          //     if (rec.id == recursoLogued.tipus_recursos_id) {
-          //         info_recurso.innerHTML = rec.tipus;
-          //     }
-          // });
+          var descripcion = document.getElementById('desc');
+          var infoIncidencia = document.getElementById('infoIncidencia');
+          var titulo_info_recurso = document.getElementById('titulo_info_recurso');
+          var info_recurso = document.getElementById('info_recurso');
+
+          _this.recurso.forEach(function (miRecurso) {
+            if (miRecurso.id == _this.userLogued.recursos_id) {
+              _this.recursoLogued = miRecurso;
+              titulo_info_recurso.innerHTML = "Info recurso " + miRecurso.codi;
+            }
+          });
+
+          _this.tipo_recurso.forEach(function (rec) {
+            if (rec.id == _this.recursoLogued.tipus_recursos_id) {
+              info_recurso.innerHTML = rec.tipus;
+            }
+          });
 
           var municipioNom;
           var alertanteNom;
 
           _this.municipios.forEach(function (element1) {
-            if (element1.id == element.municipis_id) {
+            if (element1.id == element.incidencia.municipis_id) {
               municipioNom = element1.nom;
             }
           });
 
           _this.alertantes.forEach(function (element2) {
-            if (element2.id == element.alertants_id) {
+            if (element2.id == element.incidencia.alertants_id) {
               alertanteNom = element2.nom;
             }
           });
 
-          alertante.innerHTML = alertanteNom;
-          telefono.innerHTML = element.telefon_alertant;
-          municipio.innerHTML = municipioNom;
-          direccion.innerHTML = element.adreca;
-          direccionCompleta.innerHTML = element.adreca_complement;
-          descripcion.innerHTML = element.descripcio;
+          alertante.value = alertanteNom;
+          telefono.value = element.incidencia.telefon_alertant;
+          municipio.value = municipioNom;
+          direccion.value = element.incidencia.adreca;
+          direccionCompleta.value = element.incidencia.adreca_complement;
+          descripcion.value = element.incidencia.descripcio;
+          infoIncidencia.value = "Info incidencia número: " + element.incidencia.num_incident;
           flag = true;
         } else {
           if (flag == false) {
@@ -2528,8 +2645,91 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    selectTipusRecursos: function selectTipusRecursos() {},
-    selectRecursos: function selectRecursos() {}
+    formRecurso: function formRecurso() {
+      var _this2 = this;
+
+      $('#updateModal').modal('show');
+      this.alertantes.forEach(function (alertante) {
+        if (alertante.tipus_alertants_id == 1) {
+          _this2.hospitales.push(alertante);
+        }
+      });
+      var HoraActivacion = document.getElementById("HoraActivacion");
+      HoraActivacion.value = this.miIncidencia_has_recurso.hora_activacio;
+      var infoGestionIncidencia = document.getElementById("infoGestionIncidencia");
+      infoGestionIncidencia.innerHTML = "Gestion incidencia " + this.miIncidencia_has_recurso.num_incident + " en recurso mobil " + this.recursoLogued.codi;
+    },
+    cerrarModal: function cerrarModal() {
+      $('#updateModal').modal('hide');
+    },
+    selectHoraMovilizacion: function selectHoraMovilizacion() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraMovilizacion = t;
+    },
+    selectHoraAsistencia: function selectHoraAsistencia() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraAsistencia = t;
+    },
+    selectHoraInicioTranporte: function selectHoraInicioTranporte() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraInicioTranporte = t;
+    },
+    selectHoraLlegadaHospital: function selectHoraLlegadaHospital() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraLlegadaHospital = t;
+    },
+    selectHoraTransferencia: function selectHoraTransferencia() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraTransferencia = t;
+    },
+    selectHoraFinalizacion: function selectHoraFinalizacion() {
+      var d = new Date();
+      var t = d.toLocaleTimeString();
+      this.HoraFinalizacion = t;
+    },
+    removetHoraMovilizacion: function removetHoraMovilizacion() {
+      this.HoraMovilizacion = null;
+    },
+    removeHoraAsistencia: function removeHoraAsistencia() {
+      this.HoraAsistencia = null;
+    },
+    removeHoraInicioTranporte: function removeHoraInicioTranporte() {
+      this.HoraInicioTranporte = null;
+    },
+    removeHoraLlegadaHospital: function removeHoraLlegadaHospital() {
+      this.HoraLlegadaHospital = null;
+    },
+    removeHoraTransferencia: function removeHoraTransferencia() {
+      this.HoraTransferencia = null;
+    },
+    removeHoraFinalizacion: function removeHoraFinalizacion() {
+      this.HoraFinalizacion = null;
+    },
+    update: function update() {
+      this.miIncidencia_has_recurso.hora_mobilitzacio = this.HoraMovilizacion;
+      this.miIncidencia_has_recurso.hora_assistencia = this.HoraAsistencia;
+      this.miIncidencia_has_recurso.hora_transport = this.HoraInicioTranporte;
+      this.miIncidencia_has_recurso.hora_arribada_hospital = this.HoraLlegadaHospital;
+      this.miIncidencia_has_recurso.hora_transferencia = this.HoraTransferencia;
+      this.miIncidencia_has_recurso.hora_finalitzacio = this.HoraFinalizacion;
+      this.miIncidencia_has_recurso.desti = this.Hospital;
+      this.errorMessage = '';
+      this.infoMessage = '';
+      var me = this;
+      axios.put('api/recurs/' + me.incidencias_has_recursos.incidencies_id, me.miIncidencia_has_recurso).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error.response.stats);
+        console.log(error.response.data);
+        me.errorMessage = error.response.data.error;
+      });
+      $('#updateModal').modal('hide');
+    }
   }
 });
 
@@ -39959,6 +40159,8 @@ var staticRenderFns = [
           [_vm._v("5")]
         )
       ])
+<<<<<<< Updated upstream
+=======
     ])
   },
   function() {
@@ -39983,12 +40185,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("audio", { attrs: { id: "frase3" } }, [
       _c("source", { attrs: { src: "media/sonido.mp3" } })
+>>>>>>> Stashed changes
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase1" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+    ])
+=======
     return _c("audio", { attrs: { id: "frase4" } }, [
       _c("source", { attrs: { src: "media/sonido.mp3" } })
     ])
@@ -40040,24 +40248,933 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { attrs: { id: "global" } }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "card border-primary mb-3",
+        staticStyle: {
+          "margin-top": "2%",
+          "margin-right": "5%",
+          "margin-left": "5%"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "card-header", attrs: { id: "infoIncidencia" } },
+          [_vm._v("Info incidencia")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary col-12",
+              attrs: { type: "button", id: "guardar" },
+              on: {
+                click: function($event) {
+                  return _vm.formRecurso()
+                }
+              }
+            },
+            [_vm._v("Gestionar incidencia")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal",
+              attrs: { tabindex: "-1", id: "updateModal" }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "card border-primary mb-3",
+                  staticStyle: {
+                    "margin-top": "2%",
+                    "margin-right": "5%",
+                    "margin-left": "5%"
+                  }
+                },
+                [
+                  _c("div", {
+                    staticClass: "card-header",
+                    attrs: { id: "infoGestionIncidencia" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("form", [
+                      _c("fieldset", [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraMovilizacion" }
+                            },
+                            [_vm._v("Hora movilizacion")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraMovilizacion,
+                                expression: "HoraMovilizacion"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraMovilizacion",
+                              type: "time",
+                              name: "HoraMovilizacion",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraMovilizacion },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraMovilizacion = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraMovilizacion()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraMovilizacion()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraAsistencia" }
+                            },
+                            [_vm._v("Hora asistencia")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraAsistencia,
+                                expression: "HoraAsistencia"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraAsistencia",
+                              type: "time",
+                              name: "HoraAsistencia",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraAsistencia },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraAsistencia = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraAsistencia()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraAsistencia()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "DestinoHospital" }
+                            },
+                            [_vm._v("Destino hospital")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.Hospital,
+                                  expression: "Hospital"
+                                }
+                              ],
+                              staticClass: "form-control col-5",
+                              attrs: { id: "hospital" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.Hospital = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Seleccionar hospital")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.hospitales, function(hospital) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: hospital.id,
+                                    domProps: { value: hospital.id }
+                                  },
+                                  [_vm._v(_vm._s(hospital.nom))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraInicioTranporte" }
+                            },
+                            [_vm._v("Hora inicio tranporte")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraInicioTranporte,
+                                expression: "HoraInicioTranporte"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraInicioTranporte",
+                              type: "time",
+                              name: "HoraInicioTranporte",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraInicioTranporte },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraInicioTranporte = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraInicioTranporte()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraInicioTranporte()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraLlegadaHospital" }
+                            },
+                            [_vm._v("Hora llegada al hospital")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraLlegadaHospital,
+                                expression: "HoraLlegadaHospital"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraLlegadaHospital",
+                              type: "time",
+                              name: "HoraLlegadaHospital",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraLlegadaHospital },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraLlegadaHospital = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraLlegadaHospital()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraLlegadaHospital()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraTransferencia" }
+                            },
+                            [_vm._v("Hora transferencia")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraTransferencia,
+                                expression: "HoraTransferencia"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraTransferencia",
+                              type: "time",
+                              name: "HoraTransferencia",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraTransferencia },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraTransferencia = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraTransferencia()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraTransferencia()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-4 col-form-label",
+                              attrs: { for: "HoraFinalizacion" }
+                            },
+                            [_vm._v("Hora finalizacion")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.HoraFinalizacion,
+                                expression: "HoraFinalizacion"
+                              }
+                            ],
+                            staticClass: "col-5",
+                            staticStyle: { "text-align": "center" },
+                            attrs: {
+                              id: "HoraFinalizacion",
+                              type: "time",
+                              name: "HoraFinalizacion",
+                              step: "2"
+                            },
+                            domProps: { value: _vm.HoraFinalizacion },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.HoraFinalizacion = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\loop.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectHoraFinalizacion()
+                                  }
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "35px",
+                                width: "35px",
+                                "margin-left": "20px",
+                                cursor: "pointer"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: "img\\remove.png",
+                                  alt: "reset",
+                                  width: "100%",
+                                  height: "100%"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeHoraFinalizacion()
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-right" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button", id: "cancelar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.cerrarModal()
+                                }
+                              }
+                            },
+                            [_vm._v("Atras")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button", id: "guardar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.update()
+                                }
+                              }
+                            },
+                            [_vm._v("Guardar")]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "global" } }, [
+    return _c(
+      "div",
+      {
+        staticClass: "card border-primary mb-3",
+        staticStyle: {
+          "margin-top": "2%",
+          "margin-right": "5%",
+          "margin-left": "5%"
+        }
+      },
+      [
+        _c("div", { staticClass: "card-header" }, [
+          _c("p", { attrs: { id: "titulo_info_recurso" } }, [
+            _vm._v("Info recurso ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("p", { attrs: { id: "info_recurso" } }, [
+            _vm._v("\n            Info\n        ")
+          ])
+        ])
+      ]
+    )
+>>>>>>> Stashed changes
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase2" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
       _c(
-        "div",
+        "span",
         {
-          staticClass: "card border-primary mb-3",
-          staticStyle: {
-            "margin-top": "2%",
-            "margin-right": "5%",
-            "margin-left": "5%"
-          }
+          staticClass: "input-group-text col-lg-2 col-sm-4",
+          attrs: { id: "inputGroup-sizing-default" }
         },
+        [_vm._v("Alertante")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { "text-align": "center" },
+        attrs: { type: "text", id: "alertante", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase3" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c(
+        "span",
+        {
+          staticClass: "input-group-text col-lg-2 col-sm-4",
+          attrs: { id: "inputGroup-sizing-default" }
+        },
+        [_vm._v("Telefono alertante")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { "text-align": "center" },
+        attrs: { type: "text", id: "telefono", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase4" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c(
+        "span",
+        {
+          staticClass: "input-group-text col-lg-2 col-sm-4",
+          attrs: { id: "inputGroup-sizing-default" }
+        },
+        [_vm._v("Municipio")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { "text-align": "center" },
+        attrs: { type: "text", id: "municipio", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase5" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c(
+        "span",
+        {
+          staticClass: "input-group-text col-lg-2 col-sm-4",
+          attrs: { id: "inputGroup-sizing-default" }
+        },
+        [_vm._v("Direccion")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { "text-align": "center" },
+        attrs: { type: "text", id: "direccion", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase6" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c(
+        "span",
+        {
+          staticClass: "input-group-text col-lg-2 col-sm-4",
+          attrs: { id: "inputGroup-sizing-default" }
+        },
+        [_vm._v("Direccion completa")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { "text-align": "center" },
+        attrs: { type: "text", id: "dirCompleta", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+<<<<<<< Updated upstream
+    return _c("audio", { attrs: { id: "frase7" } }, [
+      _c("source", { attrs: { src: "media/sonido.mp3" } })
+=======
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c("span", { staticClass: "input-group-text col-lg-2 col-sm-4" }, [
+        _vm._v("Descripción")
+      ]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { "aria-label": "With textarea", id: "desc", disabled: "" }
+      })
+>>>>>>> Stashed changes
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-4 col-form-label",
+          attrs: { for: "HoraActivacion" }
+        },
+<<<<<<< Updated upstream
         [
           _c("div", { staticClass: "card-header" }, [
             _c("p", { attrs: { id: "titulo_info_recurso" } }, [
@@ -40071,92 +41188,22 @@ var staticRenderFns = [
             ])
           ])
         ]
+=======
+        [_vm._v("Hora activacion")]
+>>>>>>> Stashed changes
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "card border-primary mb-3",
-          staticStyle: {
-            "margin-top": "2%",
-            "margin-right": "5%",
-            "margin-left": "5%"
-          }
-        },
-        [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Info incidencia")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Alertante")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "alertante" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Telefono alertante")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "telefono" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Municipio")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "municipio" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Direccion")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "direccion" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Direccion completa")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "dirCompleta" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-4 col-form-label" }, [
-                _vm._v("Descripción")
-              ]),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "col-5 col-form-label",
-                attrs: { id: "desc" }
-              })
-            ])
-          ])
-        ]
-      )
+      _c("input", {
+        staticClass: "col-5",
+        staticStyle: { "text-align": "center" },
+        attrs: {
+          id: "HoraActivacion",
+          type: "time",
+          name: "HoraActivacion",
+          step: "2",
+          disabled: ""
+        }
+      })
     ])
   }
 ]
