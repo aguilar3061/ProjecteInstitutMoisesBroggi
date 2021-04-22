@@ -96,7 +96,11 @@ class RecursController extends Controller
     {
 
         $recur->codi = $request->input('codiID');
-        $recur->actiu = 1;
+        if ($request->input('checkboxActiu') == null){
+            $recur->actiu = 0;
+        }else{
+            $recur->actiu = 1;
+        }
         $recur->tipus_recursos_id = $request->input('tipusRecurs');
 
         try

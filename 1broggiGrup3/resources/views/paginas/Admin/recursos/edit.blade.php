@@ -51,6 +51,28 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label for="checkboxActiu" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <div class="form-check">
+                        
+                            <input class="check" type="checkbox" id="checkboxActiu" name="checkboxActiu"
+                            @if ($recur->actiu == true)
+                                value="1" 
+                                checked
+                            @else
+                                value="0" 
+                            @endif
+                            >
+
+                            <label class="form-check-label" for="checkboxActiu">
+                              Activo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="text-right">
                     <a href={{ url('recurs') }} class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Aceptar</button>
