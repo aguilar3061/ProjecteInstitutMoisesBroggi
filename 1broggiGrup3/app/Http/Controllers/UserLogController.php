@@ -14,12 +14,18 @@ class UserLogController extends Controller
     {
         $correu = $request->input('userName');
         $contrasenya = $request->input('contraseña');
+        $rols_id = '1';
 
         $user = userLog::where('username', $correu)->first();
 
         if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
-            Auth::login($user);
-            $response = redirect('/paginaPrincipalA');
+            if($rols_id == $user->rols_id){
+                Auth::login($user);
+                $response = redirect('/paginaPrincipalA');
+            }else{
+                Auth::login($user);
+                $response = redirect('/');
+            }
         }
         else {
             $request->session()->flash('error', 'Usuari o contrasenya incorrectes');
