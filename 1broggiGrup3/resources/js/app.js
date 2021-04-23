@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('incidencies-component', require('./components/IncidenciaComponent.vue').default);
 Vue.component('recurso-component', require('./components/RecursoComponent.vue').default);
 Vue.component('recurso-update-component', require('./components/RecursoUpdateComponent.vue').default);
+Vue.component('videos-component', require('./components/VideoInteractiuComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
