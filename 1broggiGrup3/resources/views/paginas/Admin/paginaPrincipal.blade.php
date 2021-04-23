@@ -2,7 +2,7 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-<div style="text-align:center; padding-top:20em">
+<div style="text-align:center; padding-top:10em">
     <br>
     <h2 class="text-primary" style="font-weight: bold"> Bienvenido a la Administracion del 061 </h2>
 
@@ -23,8 +23,8 @@
                     <button class="btn btn-primary btn-lg" style="border-radius: 20px; margin-top: 2%">Administrar Usuarios</button>
                 </form>
             </ul>
-        </li>   
+        </li>
     </div>
-</div> 
+</div>
   {{-- paginaPrincipalA --}}
 @endsection
