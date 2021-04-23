@@ -2,7 +2,7 @@
 @section('navbar')
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a href="{{ url('/') }}">
-            <img src="{{ asset('img/logo.png') }}" alt="logo" width="60" height="60">
+            <img src="{{ asset('img/BroggiLogo.png') }}" alt="logo" width="60" height="60">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">

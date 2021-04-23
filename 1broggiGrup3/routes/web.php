@@ -13,6 +13,7 @@ use App\Http\Controllers\TipusAlertantController;
 use App\Http\Controllers\TipusIncidenciaController;
 use App\Http\Controllers\TipusRecursController;
 use App\Http\Controllers\UsuariController;
+use App\Http\Controllers\UserLogController;
 use App\Models\Alertant;
 use App\Models\Recurs;
 use App\Models\Municipi;
@@ -83,7 +84,10 @@ Route::get('/paginaPrincipalA', function () {
     return view('paginas.Admin.paginaPrincipal');
 });
 
-
+Route::get('/login',function(){
+    return view('paginas.logIn.index');
+});
+Route::post('/login', [UserLogController::class, 'login'] );
 
 
 Route::resource('afectat',                  AfectatController::class);
