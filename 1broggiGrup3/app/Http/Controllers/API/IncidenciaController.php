@@ -133,19 +133,20 @@ class IncidenciaController extends Controller
 
             $incidencia = new Incidencia();
 
-            $incidencia->id = $request->input('id');
-            $incidencia->num_incident= $request->input('num_incident');
-            $incidencia->data= $request->input('data');
-            $incidencia->hora= $request->input('data');
-            $incidencia->telefon_alertant= $request->input('telefon_alertant');
-            $incidencia->adreca= $request->input('adreca');
-            $incidencia->adreca_complement= $request->input('adreca_complement');
-            $incidencia->descripcio= $request->input('descripcio');
-            $incidencia->nom_metge= $request->input('nom_metge');
-            $incidencia->tipus_incidencies_id= $request->input('tipus_incidencies_id');
-            $incidencia->alertants_id= $alertant->id;
-            $incidencia->municipis_id= $request->input('municipis_id');
-            $incidencia->usuaris_id= $request->input('usuaris_id');
+            $incidencia->id =                   $request->input('id');
+            //comprobar que no se repita ++ extra
+            $incidencia->num_incident=          random_int(0, 2000);
+            $incidencia->data=                  $request->input('data');
+            $incidencia->hora=                  $request->input('data');
+            $incidencia->telefon_alertant=      $request->input('telefon_alertant');
+            $incidencia->adreca=                $request->input('adreca');
+            $incidencia->adreca_complement=     $request->input('adreca_complement');
+            $incidencia->descripcio=            $request->input('descripcio');
+            $incidencia->nom_metge=             $request->input('nom_metge');
+            $incidencia->tipus_incidencies_id=  $request->input('tipus_incidencies_id');
+            $incidencia->alertants_id=          $alertant->id;
+            $incidencia->municipis_id=          $request->input('municipis_id');
+            $incidencia->usuaris_id=            $request->input('usuaris_id');
 
             $incidencia->save();
 

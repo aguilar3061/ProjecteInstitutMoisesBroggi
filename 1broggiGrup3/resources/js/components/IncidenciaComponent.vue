@@ -180,7 +180,7 @@
                             <select class="form-control" id="selectsanitaritzadaIndia" name="selectsanitaritzadaIndia" style="display: none;" >
                                 <option v-for="recurs in filteredRecursos(2)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
-                            <select class="form-control" id="selectassitencialTango" name="selectassitencialTango" >
+                            <select class="form-control" id="selectassitencialTango" name="selectassitencialTango" style="display: block;" >
                                 <option v-for="recurs in filteredRecursos(3)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
                             </select>
                             <select class="form-control" id="selecthelicopterMedicalitzat" name="selecthelicopterMedicalitzat" style="display: none;" >
