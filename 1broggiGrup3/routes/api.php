@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\API\AfectatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('incidencia', IncidenciaController::class);
 
-<<<<<<< Updated upstream
-Route::apiResource('afectats', AfectatsController::class);
-=======
 Route::apiResource('afectats', AfectatsController::class);
 
 Route::apiResource('recurs', RecursController::class);
->>>>>>> Stashed changes
+

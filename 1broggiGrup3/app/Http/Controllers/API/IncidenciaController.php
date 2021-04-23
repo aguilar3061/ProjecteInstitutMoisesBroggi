@@ -14,6 +14,8 @@ use Illuminate\Database\QueryException;
 use App\Http\Resources\IncidenciaResource;
 use App\Models\Afectat;
 use App\Models\Alertant;
+use DateTime;
+use Illuminate\Support\Facades\Date;
 
 class IncidenciaController extends Controller
 {
@@ -59,7 +61,7 @@ class IncidenciaController extends Controller
         // }
 
 
-        
+
         // {
         //     "id": 13,
         //     "num_incident": 13,
@@ -104,15 +106,15 @@ class IncidenciaController extends Controller
         //             "recursos_id": 1,
         //             "prioritat": 3
         //         }
-    
+
         //     ]
         // }
 
         //insertar alertante get y insert (eloquent)
         //insertar afectado insert con su relacion (eloquent)
 
-     
-        
+
+
         try {
 
             DB::beginTransaction();
@@ -127,10 +129,10 @@ class IncidenciaController extends Controller
             $alertant->tipus_alertants_id=      $request->input('tipus_alertants_idAlertant');
 
             $alertant->save();
-    
+
 
             $incidencia = new Incidencia();
-    
+
             $incidencia->id = $request->input('id');
             $incidencia->num_incident= $request->input('num_incident');
             $incidencia->data= $request->input('data');
@@ -144,26 +146,28 @@ class IncidenciaController extends Controller
             $incidencia->alertants_id= $alertant->id;
             $incidencia->municipis_id= $request->input('municipis_id');
             $incidencia->usuaris_id= $request->input('usuaris_id');
-    
+
             $incidencia->save();
 
 
+
             //   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            $listaRecursos = $request->input('incidencia_has_recursos');    
-        
+            $listaRecursos = $request->input('incidencia_has_recursos');
+
 
             //insert idRecurso, idIncidencia y prioritat en incidencia_has_recurso
             foreach ($listaRecursos as $recurso ) {
-                
+
                 $incidenciaHasRecurso = new IncidenciaHasRecurso();
                 $incidenciaHasRecurso->recursos_id= $recurso['recursos_id'];
                 $incidenciaHasRecurso->incidencies_id = $incidencia->id;
                 $incidenciaHasRecurso->prioritat= $recurso['prioritat'];
+                $incidenciaHasRecurso->hora_activacio = new DateTime();
                 $incidencia->incidencia_has_recursos()->save($incidenciaHasRecurso);
 
             }
 
-            //   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
+            //   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
             // $listaAfectados = $request->input('afectats');
             // foreach ($listaAfectados as $afectat ) {
@@ -173,7 +177,7 @@ class IncidenciaController extends Controller
 
             $alertant->refresh();
             $incidencia->refresh();
-            
+
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
 
         } catch (QueryException $ex) {

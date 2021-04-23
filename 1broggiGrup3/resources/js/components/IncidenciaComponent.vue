@@ -62,34 +62,34 @@
                     <div class="form-group row">
                         <label for="telefonAfectat" class="col-3 col-form-label">Telefono</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="telefonAfectat" name="telefonAfectat" v-model="afectat.telefonAfectat">
+                            <input class="form-control" type="number" id="telefonAfectat" name="telefonAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cip" class="col-3 col-form-label">Documento (DNI, TS/NSS)</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me an identification number of the victim ?  <img src="img/speaker.png" @click="audioClick('frase4')" alt="Escuchar frase" width="25px" height="25px"></label>
-                            <input class="form-control" type="text" id="cip" name="cip" v-model="afectat.cipAfectat">
+                            <input class="form-control" type="text" id="cip" name="cip">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nomAfectat" class="col-3 col-form-label">Nombre</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the name of the victim ?  <img src="img/speaker.png" @click="audioClick('frase5')" alt="Escuchar frase" width="25px" height="25px"></label>
-                            <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat" v-model="afectat.nomAfectat">
+                            <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAfectat" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the surname of the victim ?  <img src="img/speaker.png" @click="audioClick('frase6')" alt="Escuchar frase" width="25px" height="25px"></label>
-                            <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat" v-model="afectat.cognomsAfectat">
+                            <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="edadAfectat" class="col-3 col-form-label">Edad</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="edadAfectat" name="edadAfectat" v-model="afectat.edatAfectat">
+                            <input class="form-control" type="number" id="edadAfectat" name="edadAfectat" >
                         </div>
                     </div>
                     <div class="form-group row">
@@ -97,15 +97,16 @@
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the sex of the victim ?  <img src="img/speaker.png" @click="audioClick('frase7')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sexes_id" id="radioMujer" value="2" v-model="afectat.sexes_idAfectat">
+                                <input class="form-check-input" type="radio" name="sexes_id" id="radioMujer" value="2" v-model="sexes_idAfectat" >
                                 <label class="form-check-label" for="sexes_id">Mujer</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sexes_id" id="radioHombre" value="1" v-model="afectat.sexes_idAfectat">
+                                <input class="form-check-input" type="radio" name="sexes_id" id="radioHombre" value="1" v-model="sexes_idAfectat">
                                 <label class="form-check-label" for="sexes_id">Hombre</label>
                             </div>
                         </div>
                     </div>
+                    <button type="button" v-on:click="addToAfectats" class="btn btn-primary" >Añadir afectado</button>
                 </div>
             </div>
             <div class="card mt-2">
@@ -187,6 +188,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label class="col-3">Prioritat: </label>
                         <div class="col-9">
@@ -277,6 +279,10 @@
             recursosToSent:{
                 type: Array,
                 default: () => []
+            },
+            afectatToSent:{
+                type: Array,
+                default: () => []
             }
         },
         data(){
@@ -300,18 +306,13 @@
                     adrecaAlertant:'',
                     municipis_idAlertant:'',
                     tipus_alertants_idAlertant:'',
-                    incidencia_has_recursos: this.recursosToSent
+                    incidencia_has_recursos: this.recursosToSent,
                 },
-                afectat:{
-                    idAfectat:'',
-                    telefonAfectat:'',
-                    cipAfectat:'',
-                    nomAfectat:'',
-                    cognomsAfectat:'',
-                    edatAfectat:'',
-                    sexes_idAfectat:'',
+                sexes_idAfectat:'',
+                afectats :{
+                    incidencia_has_afectats: this.afectatToSent
                 },
-                 ayudaIngles: false,
+                ayudaIngles: false
             }
         },
         mounted() {
@@ -326,7 +327,7 @@
                 this.infoMessage = '';
                 let me = this;
                 axios
-                    .post('api/afectats', me.afectat)
+                    .post('api/afectats', me.afectats)
                     .then(function(response) {
                         console.log(response);
                         //Aqui hay que hacer un redirect
@@ -344,6 +345,7 @@
                 axios
                     .post('api/incidencia', me.incidencia)
                     .then(function(response) {
+
                         console.log(response);
                         //Aqui hay que hacer un redirect
                         me.addAfectat();
@@ -360,8 +362,20 @@
                     prioritat: this.returnPrioritat()
                 }
 
-
                 this.recursosToSent.push(recurs);
+            },
+            addToAfectats() {
+
+                var afectat = {
+                    telefonAfectat: document.getElementById('telefonAfectat').value,
+                    cipAfectat:     document.getElementById('cip').value,
+                    nomAfectat:     document.getElementById('nomAfectat').value,
+                    cognomsAfectat: document.getElementById('cognomsAfectat').value,
+                    edatAfectat:    document.getElementById('edadAfectat').value,
+                    sexes_idAfectat:this.sexes_idAfectat
+                }
+
+                this.afectatToSent.push(afectat);
             },
             returnRecursId(){
                 var medicalitzadaMike = document.getElementById('selectMedicalitzadaMike');

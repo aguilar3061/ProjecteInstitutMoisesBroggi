@@ -8,7 +8,6 @@ use App\Models\Incidencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\IncidenciaHasRecurso;
 use App\Models\IncidenciesHasAfectats;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\AfectatsResource;
@@ -49,41 +48,38 @@ class AfectatsController extends Controller
         DB::beginTransaction();
         try {
 
-            $afectat = new Afectat();
+            $listaAfectados = $request->input('incidencia_has_afectats');
 
-            $afectat->id= $request->input(['idAfectat']);
-            $afectat->telefon= $request->input(['telefonAfectat']);
-            $afectat->cip= $request->input(['cipAfectat']);
-            $afectat->nom= $request->input(['nomAfectat']);
-            $afectat->cognoms= $request->input(['cognomsAfectat']);
-            $afectat->edat= $request->input(['edatAfectat']);
+            //cojer el ultimo id de incidencias para hacer el insertrt en la relacion
+            $incidencias = Incidencia::All();
+            $idReal = $incidencias[sizeof($incidencias)-1]->id;
 
-            if($request->input(['cipAfectat']) == null){
-                $afectat->te_cip= false;
-            }else{
-                $afectat->te_cip= true;
+            foreach ($listaAfectados as $af ) {
+
+                $afectat = new Afectat();
+
+                $afectat->telefon=  $af['telefonAfectat'];
+                $afectat->cip=      $af['cipAfectat'];
+                $afectat->nom=      $af['nomAfectat'];
+                $afectat->cognoms=  $af['cognomsAfectat'];
+                $afectat->edat=     $af['edatAfectat'];
+                $afectat->sexes_id= $af['sexes_idAfectat'];
+
+                if($af['cipAfectat'] == null){
+                    $afectat->te_cip= false;
+                }else{
+                    $afectat->te_cip= true;
+                }
+                $afectat->save();
+
+                $incidencieHasAfectat = new IncidenciesHasAfectats();
+                $incidencieHasAfectat->afectats_id= $afectat->id;
+                $incidencieHasAfectat->incidencies_id= $idReal;
+
+                $incidencieHasAfectat->save();
+
             }
 
-            $afectat->sexes_id= $request->input(['sexes_idAfectat']);
-          
-            $afectat->save();
-
-
-            $incidencias = Incidencia::All();
-
-            $idReal = $incidencias[sizeof($incidencias)-1]->id;
-            
-         
-            $incidencieHasAfectat = new IncidenciesHasAfectats();
-
-            $incidencieHasAfectat->afectats_id= $afectat->id;
-            $incidencieHasAfectat->incidencies_id= $idReal;
-    
-           
-            //$afectat->incidencies_has_afectats()->save($incidencieHasAfectat);
-    
-            $incidencieHasAfectat->save();
-            
             DB::commit();
             $afectat->refresh();
 
