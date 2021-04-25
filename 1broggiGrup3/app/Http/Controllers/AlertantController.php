@@ -82,7 +82,8 @@ class AlertantController extends Controller
      */
     public function show(Alertant $alertant)
     {
-        //
+        // $alert = Alertant::with('afectats')->find($alertant->telefon);
+        // return view()
     }
 
     /**

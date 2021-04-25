@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
+use DateTime;
+use App\Models\Afectat;
 use App\Clases\Utilidad;
+use App\Models\Alertant;
 use App\Models\Incidencia;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
 use App\Models\IncidenciaHasRecurso;
+use Illuminate\Support\Facades\Date;
+use App\Models\IncidenciesHasAfectats;
 use function GuzzleHttp\Psr7\try_fopen;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\IncidenciaResource;
-use App\Models\Afectat;
-use App\Models\Alertant;
-use DateTime;
-use Illuminate\Support\Facades\Date;
 
 class IncidenciaController extends Controller
 {
@@ -119,16 +120,23 @@ class IncidenciaController extends Controller
 
             DB::beginTransaction();
 
-            $alertant = new Alertant();
-            $alertant->id =                     $request->input('idAlertant');
-            $alertant->telefon=                 $request->input('telefon_alertant');
-            $alertant->nom=                     $request->input('nomAlertant');
-            $alertant->cognoms=                 $request->input('cognomsAlertant');
-            $alertant->adreca=                  $request->input('adrecaAlertant');
-            $alertant->municipis_id=            $request->input('municipis_idAlertant');
-            $alertant->tipus_alertants_id=      $request->input('tipus_alertants_idAlertant');
+            
+            $af = Alertant::with('alertants')->find($request->input('telefon_alertant'));
 
-            $alertant->save();
+
+            if (!$request->input('alertantExist')){
+
+                $alertant = new Alertant();
+                $alertant->id =                     $request->input('idAlertant');
+                $alertant->telefon=                 $request->input('telefon_alertant');
+                $alertant->nom=                     $request->input('nomAlertant');
+                $alertant->cognoms=                 $request->input('cognomsAlertant');
+                $alertant->adreca=                  $request->input('adrecaAlertant');
+                $alertant->municipis_id=            $request->input('municipis_idAlertant');
+                $alertant->tipus_alertants_id=      $request->input('tipus_alertants_idAlertant');
+                $alertant->save();
+
+            }
 
 
             $incidencia = new Incidencia();
@@ -168,8 +176,41 @@ class IncidenciaController extends Controller
 
             }
 
+
+
             //   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+            $listaAfectados = $request->input('incidencia_has_afectats');
+
+            //cojer el ultimo id de incidencias para hacer el insertrt en la relacion
+            $incidencias = Incidencia::All();
+            $idReal = $incidencias[sizeof($incidencias)-1]->id;
+
+            foreach ($listaAfectados as $af ) {
+
+                $afectat = new Afectat();
+
+                $afectat->telefon=  $af['telefonAfectat'];
+                $afectat->cip=      $af['cipAfectat'];
+                $afectat->nom=      $af['nomAfectat'];
+                $afectat->cognoms=  $af['cognomsAfectat'];
+                $afectat->edat=     $af['edatAfectat'];
+                $afectat->sexes_id= $af['sexes_idAfectat'];
+
+                if($af['cipAfectat'] == null){
+                    $afectat->te_cip= false;
+                }else{
+                    $afectat->te_cip= true;
+                }
+                $afectat->save();
+
+                $incidencieHasAfectat = new IncidenciesHasAfectats();
+                $incidencieHasAfectat->afectats_id= $afectat->id;
+                $incidencieHasAfectat->incidencies_id= $idReal;
+
+                $incidencieHasAfectat->save();
+
+            }
             // $listaAfectados = $request->input('afectats');
             // foreach ($listaAfectados as $afectat ) {
             //}

@@ -14,27 +14,27 @@
                     <div class="form-group row">
                         <label for="telefonAlertant" class="col-3 col-form-label">Telefono</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="telefonAlertant" name="telefonAlertant" v-model="incidencia.telefon_alertant">
+                            <input class="form-control" type="number" id="telefonAlertant"  v-on:change="busacarAlertante()" name="telefonAlertant" v-model="incidencia.telefon_alertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nomAlertant" class="col-3 col-form-label">Nombre</label>
-                        <div class="form-group col-9">
-                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your name ? <img src="img/speaker.png" @click="audioClick('frase1')" alt="Escuchar frase" width="25px" height="25px"></label>
+                        <div class="col-9">
+                            <label for="nomAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your name ? <img src="img/speaker.png" @click="audioClick('frase1')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text"  id="nomAlertant" name="nomAlertant" v-model="incidencia.nomAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cognomsAlertant" class="col-3 col-form-label">Apellidos</label>
                         <div class="col-9">
-                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your surname ? <img src="img/speaker.png" @click="audioClick('frase2')" alt="Escuchar frase" width="25px" height="25px"></label>
+                            <label for="cognomsAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your surname ? <img src="img/speaker.png" @click="audioClick('frase2')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cognomsAlertant" name="cognomsAlertant" v-model="incidencia.cognomsAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="adrecaAlertant" class="col-3 col-form-label">Dirección</label>
                         <div class="col-9">
-                            <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Where are you now ?  <img src="img/speaker.png" @click="audioClick('frase3')" alt="Escuchar frase" width="25px" height="25px"></label>
+                            <label for="adrecaAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Where are you now ?  <img src="img/speaker.png" @click="audioClick('frase3')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="adrecaAlertant" name="adrecaAlertant" v-model="incidencia.adrecaAlertant">
                         </div>
                     </div>
@@ -252,6 +252,10 @@
 <script>
     export default {
         props: {
+            alertants: {
+                type: Array,
+                required: false
+            },
             recursos: {
                 type: Array,
                 required: false
@@ -284,6 +288,7 @@
                 type: Array,
                 default: () => []
             }
+       
         },
         data(){
             return {
@@ -307,11 +312,10 @@
                     municipis_idAlertant:'',
                     tipus_alertants_idAlertant:'',
                     incidencia_has_recursos: this.recursosToSent,
+                    incidencia_has_afectats: this.afectatToSent,
+                    alertantExist:false
                 },
                 sexes_idAfectat:'',
-                afectats :{
-                    incidencia_has_afectats: this.afectatToSent
-                },
                 ayudaIngles: false
             }
         },
@@ -322,22 +326,22 @@
 
         },
         methods: {
-            addAfectat(){
-                this.errorMessage = '';
-                this.infoMessage = '';
-                let me = this;
-                axios
-                    .post('api/afectats', me.afectats)
-                    .then(function(response) {
-                        console.log(response);
-                        //Aqui hay que hacer un redirect
-                    }).catch(function(error){
-                        console.log(error.response.stats);
-                        console.log(error.response.data);
-                        me.errorMessage = error.response.data.error;
-                    })
+            // addAfectat(){
+            //     this.errorMessage = '';
+            //     this.infoMessage = '';
+            //     let me = this;
+            //     axios
+            //         .post('api/afectats', me.afectats)
+            //         .then(function(response) {
+            //             console.log(response);
+            //             //Aqui hay que hacer un redirect
+            //         }).catch(function(error){
+            //             console.log(error.response.stats);
+            //             console.log(error.response.data);
+            //             me.errorMessage = error.response.data.error;
+            //         })
 
-            },
+            // },
             addIncidencia(){
                 this.errorMessage = '';
                 this.infoMessage = '';
@@ -348,7 +352,7 @@
 
                         console.log(response);
                         //Aqui hay que hacer un redirect
-                        me.addAfectat();
+                        // me.addAfectat();
                     }).catch(function(error){
                         console.log(error.response.stats);
                         console.log(error.response.data);
@@ -356,7 +360,6 @@
                     })
             },
             addToRecursos() {
-
                 var recurs = {
                     recursos_id: this.returnRecursId(),
                     prioritat: this.returnPrioritat()
@@ -428,10 +431,11 @@
                 var recursosToReturn = [];
 
                 this.recursos.forEach(element => {
-                    if (element.tipus_recursos_id == id){
-                        recursosToReturn.push(element);
-                }
-                });
+                        if (element.tipus_recursos_id == id){
+                            recursosToReturn.push(element);
+                        }
+                    }
+                );
 
                 return recursosToReturn;
             },
@@ -465,9 +469,9 @@
             audioClick(idAudio){
                 var frase = document.getElementById(idAudio);
 
-                    frase.currentTime = 0;
-                    frase.play();
-                    frase.volume = 0.20;
+                frase.currentTime = 0;
+                frase.play();
+                frase.volume = 0.20;
             },
             showHelp(){
                 var labels = document.querySelectorAll('.labelIngles');
@@ -488,8 +492,48 @@
                     this.ayudaIngles = false;
                 }
 
+            },
+            busacarAlertante(){
+                var busqueda = false;
+                var telefonAlertant = document.getElementById('telefonAlertant').value;
+
+                var nomAlertant = document.getElementById('nomAlertant');
+                var cognomsAlertant = document.getElementById('cognomsAlertant');
+                var adrecaAlertant = document.getElementById('adrecaAlertant');
+                var municipis_id_Alertant = document.getElementById('municipis_id_Alertant');
+                var tipus_alertants_id = document.getElementById('tipus_alertants_id');
+
+                this.alertants.forEach(alertant => {
+                    if(alertant.telefon == telefonAlertant){
+                        nomAlertant.value = alertant.nom;
+                        nomAlertant.disabled = true;
+                        cognomsAlertant.value = alertant.cognoms;
+                        cognomsAlertant.disabled = true;
+                        adrecaAlertant.value = alertant.adreca;
+                        adrecaAlertant.disabled = true;
+                        municipis_id_Alertant.value = alertant.municipis_id;
+                        municipis_id_Alertant.disabled = true;
+                        tipus_alertants_id.value = alertant.tipus_alertants_id;
+                        tipus_alertants_id.disabled = true;
+                        busqueda=true;
+                        this.incidencia.alertantExist = true;
+                    }
+                });
+                if(!busqueda){
+                    tipus_alertants_id.disabled = false;
+                    municipis_id_Alertant.disabled = false;
+                    adrecaAlertant.disabled = false;
+                    cognomsAlertant.disabled = false;
+                    nomAlertant.disabled = false;
+                    busqueda=false;
+                    this.incidencia.alertantExist = false;
+                }
+       
             }
+          
         }
     }
+
+
 
 </script>

@@ -2133,6 +2133,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    alertants: {
+      type: Array,
+      required: false
+    },
     recursos: {
       type: Array,
       required: false
@@ -2191,12 +2195,11 @@ __webpack_require__.r(__webpack_exports__);
         adrecaAlertant: '',
         municipis_idAlertant: '',
         tipus_alertants_idAlertant: '',
-        incidencia_has_recursos: this.recursosToSent
+        incidencia_has_recursos: this.recursosToSent,
+        incidencia_has_afectats: this.afectatToSent,
+        alertantExist: false
       },
       sexes_idAfectat: '',
-      afectats: {
-        incidencia_has_afectats: this.afectatToSent
-      },
       ayudaIngles: false
     };
   },
@@ -2205,26 +2208,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   methods: {
-    addAfectat: function addAfectat() {
-      this.errorMessage = '';
-      this.infoMessage = '';
-      var me = this;
-      axios.post('api/afectats', me.afectats).then(function (response) {
-        console.log(response); //Aqui hay que hacer un redirect
-      })["catch"](function (error) {
-        console.log(error.response.stats);
-        console.log(error.response.data);
-        me.errorMessage = error.response.data.error;
-      });
-    },
+    // addAfectat(){
+    //     this.errorMessage = '';
+    //     this.infoMessage = '';
+    //     let me = this;
+    //     axios
+    //         .post('api/afectats', me.afectats)
+    //         .then(function(response) {
+    //             console.log(response);
+    //             //Aqui hay que hacer un redirect
+    //         }).catch(function(error){
+    //             console.log(error.response.stats);
+    //             console.log(error.response.data);
+    //             me.errorMessage = error.response.data.error;
+    //         })
+    // },
     addIncidencia: function addIncidencia() {
       this.errorMessage = '';
       this.infoMessage = '';
       var me = this;
       axios.post('api/incidencia', me.incidencia).then(function (response) {
         console.log(response); //Aqui hay que hacer un redirect
-
-        me.addAfectat();
+        // me.addAfectat();
       })["catch"](function (error) {
         console.log(error.response.stats);
         console.log(error.response.data);
@@ -2364,6 +2369,43 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         this.ayudaIngles = false;
+      }
+    },
+    busacarAlertante: function busacarAlertante() {
+      var _this = this;
+
+      var busqueda = false;
+      var telefonAlertant = document.getElementById('telefonAlertant').value;
+      var nomAlertant = document.getElementById('nomAlertant');
+      var cognomsAlertant = document.getElementById('cognomsAlertant');
+      var adrecaAlertant = document.getElementById('adrecaAlertant');
+      var municipis_id_Alertant = document.getElementById('municipis_id_Alertant');
+      var tipus_alertants_id = document.getElementById('tipus_alertants_id');
+      this.alertants.forEach(function (alertant) {
+        if (alertant.telefon == telefonAlertant) {
+          nomAlertant.value = alertant.nom;
+          nomAlertant.disabled = true;
+          cognomsAlertant.value = alertant.cognoms;
+          cognomsAlertant.disabled = true;
+          adrecaAlertant.value = alertant.adreca;
+          adrecaAlertant.disabled = true;
+          municipis_id_Alertant.value = alertant.municipis_id;
+          municipis_id_Alertant.disabled = true;
+          tipus_alertants_id.value = alertant.tipus_alertants_id;
+          tipus_alertants_id.disabled = true;
+          busqueda = true;
+          _this.incidencia.alertantExist = true;
+        }
+      });
+
+      if (!busqueda) {
+        tipus_alertants_id.disabled = false;
+        municipis_id_Alertant.disabled = false;
+        adrecaAlertant.disabled = false;
+        cognomsAlertant.disabled = false;
+        nomAlertant.disabled = false;
+        busqueda = false;
+        this.incidencia.alertantExist = false;
       }
     }
   }
@@ -39020,6 +39062,9 @@ var render = function() {
                     },
                     domProps: { value: _vm.incidencia.telefon_alertant },
                     on: {
+                      change: function($event) {
+                        return _vm.busacarAlertante()
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -39045,13 +39090,13 @@ var render = function() {
                   [_vm._v("Nombre")]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group col-9" }, [
+                _c("div", { staticClass: "col-9" }, [
                   _c(
                     "label",
                     {
                       staticClass: "col-6 col-form-label labelIngles",
                       staticStyle: { display: "none", "font-style": "italic" },
-                      attrs: { for: "telefonAlertant" }
+                      attrs: { for: "nomAlertant" }
                     },
                     [
                       _vm._v("What's your name ? "),
@@ -39119,7 +39164,7 @@ var render = function() {
                     {
                       staticClass: "col-6 col-form-label labelIngles",
                       staticStyle: { display: "none", "font-style": "italic" },
-                      attrs: { for: "telefonAlertant" }
+                      attrs: { for: "cognomsAlertant" }
                     },
                     [
                       _vm._v("What's your surname ? "),
@@ -39187,7 +39232,7 @@ var render = function() {
                     {
                       staticClass: "col-6 col-form-label labelIngles",
                       staticStyle: { display: "none", "font-style": "italic" },
-                      attrs: { for: "telefonAlertant" }
+                      attrs: { for: "adrecaAlertant" }
                     },
                     [
                       _vm._v("Where are you now ?  "),

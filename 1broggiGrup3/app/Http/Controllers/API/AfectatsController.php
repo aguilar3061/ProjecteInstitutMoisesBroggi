@@ -45,57 +45,57 @@ class AfectatsController extends Controller
             //     }
             // ]
 
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
 
-            $listaAfectados = $request->input('incidencia_has_afectats');
+        //     $listaAfectados = $request->input('incidencia_has_afectats');
 
-            //cojer el ultimo id de incidencias para hacer el insertrt en la relacion
-            $incidencias = Incidencia::All();
-            $idReal = $incidencias[sizeof($incidencias)-1]->id;
+        //     //cojer el ultimo id de incidencias para hacer el insertrt en la relacion
+        //     $incidencias = Incidencia::All();
+        //     $idReal = $incidencias[sizeof($incidencias)-1]->id;
 
-            foreach ($listaAfectados as $af ) {
+        //     foreach ($listaAfectados as $af ) {
 
-                $afectat = new Afectat();
+        //         $afectat = new Afectat();
 
-                $afectat->telefon=  $af['telefonAfectat'];
-                $afectat->cip=      $af['cipAfectat'];
-                $afectat->nom=      $af['nomAfectat'];
-                $afectat->cognoms=  $af['cognomsAfectat'];
-                $afectat->edat=     $af['edatAfectat'];
-                $afectat->sexes_id= $af['sexes_idAfectat'];
+        //         $afectat->telefon=  $af['telefonAfectat'];
+        //         $afectat->cip=      $af['cipAfectat'];
+        //         $afectat->nom=      $af['nomAfectat'];
+        //         $afectat->cognoms=  $af['cognomsAfectat'];
+        //         $afectat->edat=     $af['edatAfectat'];
+        //         $afectat->sexes_id= $af['sexes_idAfectat'];
 
-                if($af['cipAfectat'] == null){
-                    $afectat->te_cip= false;
-                }else{
-                    $afectat->te_cip= true;
-                }
-                $afectat->save();
+        //         if($af['cipAfectat'] == null){
+        //             $afectat->te_cip= false;
+        //         }else{
+        //             $afectat->te_cip= true;
+        //         }
+        //         $afectat->save();
 
-                $incidencieHasAfectat = new IncidenciesHasAfectats();
-                $incidencieHasAfectat->afectats_id= $afectat->id;
-                $incidencieHasAfectat->incidencies_id= $idReal;
+        //         $incidencieHasAfectat = new IncidenciesHasAfectats();
+        //         $incidencieHasAfectat->afectats_id= $afectat->id;
+        //         $incidencieHasAfectat->incidencies_id= $idReal;
 
-                $incidencieHasAfectat->save();
+        //         $incidencieHasAfectat->save();
 
-            }
+        //     }
 
-            DB::commit();
-            $afectat->refresh();
+        //     DB::commit();
+        //     $afectat->refresh();
 
-            $response = (new AfectatsResource($afectat))->response()->setStatusCode(201);
+        //     $response = (new AfectatsResource($afectat))->response()->setStatusCode(201);
 
-        } catch (QueryException $ex) {
+        // } catch (QueryException $ex) {
 
-			DB::rollBack();
-            $mensaje = Utilidad::errorMessage($ex);
-            $response = \response()->json(['error' => $mensaje], 400);
-        }
-
-
+		// 	DB::rollBack();
+        //     $mensaje = Utilidad::errorMessage($ex);
+        //     $response = \response()->json(['error' => $mensaje], 400);
+        // }
 
 
-        return $response;
+
+
+        // return $response;
     }
 
     /**
