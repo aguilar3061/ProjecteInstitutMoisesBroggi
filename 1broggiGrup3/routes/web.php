@@ -78,7 +78,9 @@ Route::get('/formRecursIncidencia', function () {
     return view('paginas.Recurso.formRecusIncidencia', compact('recurso', 'alertantes', 'tipo_recurso' ));
 });
 
-
+Route::get('/videos', function (){
+    return view ('paginas.videos.indexVue');
+});
 
 Route::get('/paginaPrincipalA', function () {
     return view('paginas.Admin.paginaPrincipal');
