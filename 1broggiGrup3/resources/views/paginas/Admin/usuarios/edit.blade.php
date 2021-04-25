@@ -77,8 +77,9 @@
               <div class="form-group row">
                 <label for="rol" class="col-4 col-form-label">Rol</label>
                 <div class="col-8">
-                <select class="form-control" id="rol" name="rol">
-                    @if (old('rol') ==null)
+                <select class="form-control" id="rol" name="rol"  onchange="mostrarOnoRecursos()">
+
+                    @if (old('rol') == null)
                         @foreach ($rols as $rol)
                             @if ( $usuari->rols_id == $rol->id)
                                 <option for="rol" selected value="{{ $rol->id }}">{{ $rol->nom }}</option>
@@ -100,32 +101,53 @@
               </div>
 
               <div class="form-group row">
-                <label for="recurs" class="col-4 col-form-label">Recurso</label>
-                <div class="col-8">
-                <select class="form-control" id="recurs" name="recurs">
-                    @if (old('recurs') == null)
-                        @foreach ($recursos as $recurso)
-                            @if ( $usuari->recursos_id == $recurso->id)
-                                <option for="recurs" selected value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
-                            @else
-                                <option for="recurs" value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
-                            @endif
-                        @endforeach
+                <label id="labelRecurso" for="recurs" class="col-4 col-form-label" 
+                    @if($usuari->recursos_id == null)
+                        style="display:none"     
                     @else
-                        @foreach ($recursos as $recurso)
-                            @if ( old('recurs') == $recurso->id)
-                                <option for="recurs" selected value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
-                            @else
-                                <option for="recurs" value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
-                            @endif
-                        @endforeach
+                        style="display:block"          
                     @endif
-                </select>
+                >Recurso</label>
+
+                <div class="col-8">
+                    <select class="form-control" id="recurs" name="recurs" 
+                        @if($usuari->recursos_id == null)
+                            style="display:none"     
+                        @else
+                            style="display:block"          
+                        @endif
+                    >
+                        @if (old('recurs') == null)
+                            @foreach ($recursos as $recurso)
+                                @if ( $usuari->recursos_id == $recurso->id)
+                                    <option for="recurs" selected value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
+                                @else
+                                    <option for="recurs" value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
+                                @endif
+                            @endforeach
+                        @else
+                            @foreach ($recursos as $recurso)
+                                @if ( old('recurs') == $recurso->id)
+                                    <option for="recurs" selected value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
+                                @else
+                                    <option for="recurs" value="{{ $recurso->id }}">{{ $recurso->codi }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                        <option id="sinAsignar"for="recurs" value="" 
+                            @if($usuari->recursos_id == null)
+                                style="display:block"
+                                selected        
+                            @else
+                                style="display:none"            
+                            @endif
+                        >Sin assignar</option>
+
+                    </select>
                 </div>
               </div>
 
               <div class="text-right">
-
                 <a href={{ url('usuari') }} class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Aceptar</button>
               </div>
@@ -134,3 +156,29 @@
     </div>
   </div>
 @endsection
+
+
+
+
+<script>
+    function mostrarOnoRecursos() {
+  
+      if(document.getElementById("rol").value != 3){
+  
+        document.getElementById("labelRecurso").style.display='none';
+        document.getElementById("sinAsignar").selected = true;
+        document.getElementById("sinAsignar").style.display='block'
+        document.getElementById("recurs").style.display='none';
+  
+      }else{
+  
+        document.getElementById("recurs").style.display='block';
+        document.getElementById("sinAsignar").selected = false;
+        document.getElementById("sinAsignar").style.display='none'
+        document.getElementById("labelRecurso").style.display='block';
+  
+      }
+  
+    }
+  </script>
+    

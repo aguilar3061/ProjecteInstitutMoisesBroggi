@@ -3050,37 +3050,204 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {},
   data: function data() {
     return {
+      videoStop: false,
       video1: 'media\\clip1.MOV',
       video2: 'media\\clip2.MOV',
       video3: 'media\\clip3.MOV',
-      video: ''
+      video: '',
+      quizVideo1: {
+        pregunta: '¿Cuál es el primer paso a realizar?',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: 'Realizar las ventilaciones y compresiones correspondientes',
+            "true": 0
+          },
+          resp2: {
+            name: 'preg2',
+            resp: 'Avaluación de la consciencia y la respiración',
+            "true": 1
+          },
+          resp3: {
+            name: 'preg2',
+            resp: 'Poner el DESA',
+            "true": 0
+          }
+        }
+      },
+      quizVideo2: {
+        pregunta: 'Marca el orden correcto de acciones a realizar al utilizar el desfibrilador externo semiautomático.',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: '1-Colocar los electrodos, 2-Realizar RCP, 3-Accionar el DESA',
+            "true": 0
+          },
+          resp2: {
+            name: 'preg2',
+            resp: '1-Colocar los electrodos, 2-Accionar el DESA, 3-Realizar RCP',
+            "true": 0
+          },
+          resp3: {
+            name: 'preg3',
+            resp: '1-Realizar RCP, 2-Colocar los electrodos, 3-Accionar el DESA',
+            "true": 1
+          }
+        }
+      },
+      quizVideo3: {
+        pregunta: 'Cuál de estas es correcta:',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: '2 ventilaciones y 30 compresiones',
+            "true": 1
+          },
+          resp2: {
+            name: 'preg2',
+            resp: '2 ventilaciones y 28 compresiones',
+            "true": 0
+          },
+          resp3: {
+            name: 'preg3',
+            resp: '4 ventilaciones y 30 compresiones',
+            "true": 0
+          }
+        }
+      },
+      quiz: {
+        pregunta: '',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: '',
+            "true": 1
+          },
+          resp2: {
+            name: 'preg2',
+            resp: '',
+            "true": 0
+          },
+          resp3: {
+            name: 'preg3',
+            resp: '',
+            "true": 0
+          }
+        }
+      }
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.iniciar();
   },
   created: function created() {},
   methods: {
     openVideoModal: function openVideoModal(numVideo) {
       if (numVideo == 1) {
         this.video = this.video1;
+        this.quiz = this.quizVideo1;
       }
 
       if (numVideo == 2) {
         this.video = this.video2;
+        this.quiz = this.quizVideo2;
       }
 
       if (numVideo == 3) {
         this.video = this.video3;
+        this.quiz = this.quizVideo3;
       }
 
       $('#videoModal').modal('show');
-      var myVideo = document.getElementById("video-container");
-      myVideo.play();
+      document.getElementById("respuestaCorrect").style.display = "none";
+      document.getElementById("respuestaIncorrect").style.display = "none";
+      var myVideo = document.getElementById("video-container"); //myVideo.play();
+
+      if (this.videoStop == true) {
+        this.videoStop = false;
+      }
+    },
+    iniciar: function iniciar() {
+      setInterval(this.contador, 1000);
+    },
+    contador: function contador() {
+      var medio = document.getElementById('video-container');
+
+      if (medio.currentTime > medio.duration / 2 && this.videoStop == false) {
+        document.getElementById("form").style.display = "block";
+        this.videoStop = true;
+        medio.pause();
+      }
+    },
+    respuesta: function respuesta() {
+      var medio = document.getElementById('video-container');
+      var form = document.getElementById("form");
+      var resposta1 = document.getElementById("preg1");
+      var resposta2 = document.getElementById("preg2");
+      var resposta3 = document.getElementById("preg3");
+      var alertCorrect = document.getElementById("respuestaCorrect");
+      var alertIncorrect = document.getElementById("respuestaIncorrect");
+
+      if (resposta1.value == 1 && resposta1.checked == true) {
+        alertCorrect.style.display = "block";
+        alertIncorrect.style.display = "none";
+        form.style.display = "none";
+        medio.play();
+      } else if (resposta2.value == 1 && resposta2.checked == true) {
+        alertCorrect.style.display = "block";
+        alertIncorrect.style.display = "none";
+        form.style.display = "none";
+        medio.play();
+      } else if (resposta3.value == 1 && resposta3.checked == true) {
+        alertCorrect.style.display = "block";
+        alertIncorrect.style.display = "none";
+        form.style.display = "none";
+        medio.play();
+      } else {
+        alertCorrect.style.display = "none";
+        alertIncorrect.style.display = "block";
+        this.noRespuesta();
+      }
+    },
+    noRespuesta: function noRespuesta() {
+      document.getElementById("form").style.display = "none";
+      var medio = document.getElementById('video-container');
+      medio.currentTime = 0;
+      medio.play();
+      this.videoStop = false;
+    },
+    cerrarVideo: function cerrarVideo() {
+      var medio = document.getElementById('video-container');
+      document.getElementById("respuestaCorrect").style.display = "none";
+      document.getElementById("respuestaIncorrect").style.display = "none";
+      medio.pause();
+      medio.currentTime = 0;
     }
   }
 });
@@ -41926,10 +42093,139 @@ var render = function() {
                       }
                     })
                   ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  { staticStyle: { display: "none" }, attrs: { id: "form" } },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 col-form-label",
+                          attrs: { for: "staticEmail" }
+                        },
+                        [_vm._v("Pregunta")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-10" }, [
+                        _c("input", {
+                          staticClass: "form-control-plaintext",
+                          attrs: { type: "text", readonly: "", id: "pregunta" },
+                          domProps: { value: _vm.quiz.pregunta }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.quiz.respuestas, function(respuesta) {
+                      return _c(
+                        "div",
+                        { key: respuesta.id, staticClass: "form-check" },
+                        [
+                          _c("input", {
+                            staticClass: "form-check-input",
+                            attrs: {
+                              type: "radio",
+                              name: "Radios",
+                              id: respuesta.name
+                            },
+                            domProps: { value: respuesta.true }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: respuesta.name }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                                " +
+                                  _vm._s(respuesta.resp) +
+                                  "\r\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.respuesta()
+                          }
+                        }
+                      },
+                      [_vm._v("Responder")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.noRespuesta()
+                          }
+                        }
+                      },
+                      [_vm._v("No lo sé ")]
+                    )
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-success",
+                    staticStyle: { display: "none" },
+                    attrs: { role: "alert", id: "respuestaCorrect" }
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                        Respuesta correcta!!!\r\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    staticStyle: { display: "none" },
+                    attrs: { role: "alert", id: "respuestaIncorrect" }
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                        Respuesta incorrecta :c ...\r\n                    "
+                    )
+                  ]
                 )
               ]),
               _vm._v(" "),
-              _vm._m(4)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarVideo()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
             ])
           ]
         )
@@ -41989,27 +42285,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
       )
     ])
   }

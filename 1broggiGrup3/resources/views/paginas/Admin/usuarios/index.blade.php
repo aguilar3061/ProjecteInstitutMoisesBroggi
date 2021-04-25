@@ -32,7 +32,15 @@
                     <td>{{ $usuari->nom }}</td>
                     <td>{{ $usuari->cognoms }}</td>
                     <td>{{ $usuari->rol->nom }}</td>
-                    <td>{{ $usuari->recurs->tipus_recurs->tipus }}</td>
+                    @if ($usuari->recurs == null)
+                        <td>
+                            No tiene recurso
+                        </td>
+                    @else
+                        <td>
+                            {{ $usuari->recurs->tipus_recurs->tipus }}
+                        </td>
+                    @endif
                     <td>
                         <form action="{{ action([App\Http\Controllers\UsuariController::class, 'edit'], ['usuari' => $usuari->id ])}}">
                             @csrf
