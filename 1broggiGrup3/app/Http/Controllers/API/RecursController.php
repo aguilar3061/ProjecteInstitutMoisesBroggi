@@ -57,60 +57,64 @@ class RecursController extends Controller
      * @param  \App\Models\IncidenciaHasRecurso  $incidenciaHasRecurso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IncidenciaHasRecurso $incidenciaHasRecurso)
+    //public function update(Request $request, IncidenciaHasRecurso $incidenciaHasRecurso)
+    public function update(Request $request, $incidencia_id, $recurs_id)
     {
-     //$incidenciaRecurs = IncidenciaHasRecurso::where('incidencies_id', '=', $request->input('incidencies_id'))->where('recursos_id', '=', $request->input('recursos_id'))->get();
+     $incidenciaRecurs = IncidenciaHasRecurso::where('incidencies_id', $incidencia_id)->where('recursos_id', $recurs_id)->first();
+
+     $incidenciaRecurs->hora_mobilitzacio = $request->input('hora_mobilitzacio');
+     $incidenciaRecurs->hora_assistencia = $request->input('hora_assistencia');
+     $incidenciaRecurs->hora_transport = $request->input('hora_transport');
+     $incidenciaRecurs->hora_arribada_hospital = $request->input('hora_arribada_hospital');
+     $incidenciaRecurs->hora_transferencia = $request->input('hora_transferencia');
+     $incidenciaRecurs->hora_finalitzacio = $request->input('hora_finalitzacio');
+     $incidenciaRecurs->desti = $request->input('desti');
 
 
 
-     $incidenciaHasRecurso->hora_mobilitzacio = $request->input('hora_mobilitzacio');
 
-     $incidenciaHasRecurso->incidencies_id = $request->input('incidencies_id');
-     $incidenciaHasRecurso->recursos_id = $request->input('recursos_id');
+    //  $hm = new DateTime($request->input('hora_mobilitzacio'));
+    //  $hm->format('H:i:s');
+    //  $incidenciaRecurs->hora_mobilitzacio = $hm;
 
-     $incidenciaHasRecurso->hora_assistencia = $request->input('hora_assistencia');
-     $incidenciaHasRecurso->hora_transport = $request->input('hora_transport');
-     $incidenciaHasRecurso->hora_arribada_hospital = $request->input('hora_arribada_hospital');
-     $incidenciaHasRecurso->hora_transferencia = $request->input('hora_transferencia');
-     $incidenciaHasRecurso->hora_finalitzacio = $request->input('hora_finalitzacio');
-     $incidenciaHasRecurso->desti = $request->input('desti');
+    //  $ha = new DateTime($request->input('hora_assistencia'));
+    //  $ha->format('H:i:s');
+    //  $incidenciaRecurs->hora_assistencia = $ha;
 
-    //  $incidencia = new Incidencia();
-    //  $incidencia = $request->input('incidencia');
-    //  $incidenciaHasRecurso->incidencia = $incidencia;
+    //  $htr = new DateTime($request->input('hora_transport'));
+    //  $htr->format('H:i:s');
+    //  $incidenciaRecurs->hora_transport = $htr;
+
+    //  $hah = new DateTime($request->input('hora_arribada_hospital'));
+    //  $hah->format('H:i:s');
+    //  $incidenciaRecurs->hora_arribada_hospital = $hah;
+
+    //  $ht = new DateTime($request->input('hora_transferencia'));
+    //  $ht->format('H:i:s');
+    //  $incidenciaRecurs->hora_transferencia = $ht;
+
+    //  $hf = new DateTime($request->input('hora_finalitzacio'));
+    //  $hf->format('H:i:s');
+    //  $incidenciaRecurs->hora_finalitzacio = $hf;
+
+     try
+     {
 
 
-
-     try {
-
-         DB::beginTransaction();
+         $incidenciaRecurs->save();
 
 
-
-         $incidenciaHasRecurso->save();
-
-
-         $response = (new IncidenciaHasRecursoResource($incidenciaHasRecurso))->response()->setStatusCode(201);
+         $response = (new IncidenciaHasRecursoResource($incidenciaRecurs))->response()->setStatusCode(201);
 
      } catch (QueryException $ex) {
 
-         DB::rollBack();
+
          $mensaje = Utilidad::errorMessage($ex);
          $response = \response()->json(['error' => $mensaje], 400);
+
      }
 
-
-
-
      return $response;
-
-
-
-
-
-
-
-
     }
 
     /**

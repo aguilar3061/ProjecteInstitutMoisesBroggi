@@ -2584,6 +2584,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     recurso: {
@@ -2601,6 +2613,10 @@ __webpack_require__.r(__webpack_exports__);
     tipo_recurso: {
       type: Array,
       required: false
+    },
+    comarcas: {
+      type: Array,
+      required: false
     }
   },
   data: function data() {
@@ -2609,6 +2625,10 @@ __webpack_require__.r(__webpack_exports__);
       hospitales: [],
       miIncidencia_has_recurso: [],
       recursoLogued: [],
+      miComarca: [],
+      miMunicipio: [],
+      misMunicipios: [],
+      relleno: false,
       userLogued: {
         id: 1,
         username: 'Pepe',
@@ -2638,8 +2658,11 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('api/recurs').then(function (response) {
       me.incidencias_has_recursos = response.data;
       var flag = false;
+      var noIncidencia = document.getElementById("noIncidencia");
+      var pantalla = document.getElementById('global');
       me.incidencias_has_recursos.forEach(function (element) {
         if (element.recursos_id == _this.userLogued.recursos_id && element.hora_finalitzacio == null) {
+          pantalla.style.display = "block";
           me.miIncidencia_has_recurso = element;
           var alertante = document.getElementById('alertante');
           var telefono = document.getElementById('telefono');
@@ -2685,12 +2708,19 @@ __webpack_require__.r(__webpack_exports__);
           direccion.value = element.incidencia.adreca;
           direccionCompleta.value = element.incidencia.adreca_complement;
           descripcion.value = element.incidencia.descripcio;
-          infoIncidencia.value = "Info incidencia número: " + element.incidencia.num_incident;
+          infoIncidencia.innerHTML = "Info incidencia número: " + element.incidencia.num_incident;
+
+          _this.municipios.forEach(function (municipio) {
+            if (element.incidencia.municipis_id == municipio.id) {
+              _this.miMunicipio = municipio;
+            }
+          });
+
           flag = true;
         } else {
           if (flag == false) {
-            var pantalla = document.getElementById('global');
             pantalla.style.display = "none";
+            noIncidencia.style.display = "block";
           }
         }
       });
@@ -2704,51 +2734,171 @@ __webpack_require__.r(__webpack_exports__);
     formRecurso: function formRecurso() {
       var _this2 = this;
 
+      if (this.relleno == false) {
+        this.municipios.forEach(function (m) {
+          if (_this2.miMunicipio.comarques_id == m.comarques_id) {
+            _this2.misMunicipios.push(m);
+          }
+        });
+        this.hospitales = [];
+        this.misMunicipios.forEach(function (mu) {
+          _this2.alertantes.forEach(function (alertante) {
+            if (alertante.tipus_alertants_id == 1 && alertante.municipis_id == mu.id) {
+              _this2.hospitales.push(alertante);
+            }
+          });
+        });
+        this.relleno = true;
+      }
+
       $('#updateModal').modal('show');
-      this.alertantes.forEach(function (alertante) {
-        if (alertante.tipus_alertants_id == 1) {
-          _this2.hospitales.push(alertante);
-        }
-      });
       var HoraActivacion = document.getElementById("HoraActivacion");
       HoraActivacion.value = this.miIncidencia_has_recurso.hora_activacio;
       var infoGestionIncidencia = document.getElementById("infoGestionIncidencia");
-      infoGestionIncidencia.innerHTML = "Gestion incidencia " + this.miIncidencia_has_recurso.num_incident + " en recurso mobil " + this.recursoLogued.codi;
+      infoGestionIncidencia.innerHTML = "Gestion incidencia " + this.miIncidencia_has_recurso.incidencia.num_incident + " en recurso mobil " + this.recursoLogued.codi;
     },
     cerrarModal: function cerrarModal() {
       $('#updateModal').modal('hide');
     },
     selectHoraMovilizacion: function selectHoraMovilizacion() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraMovilizacion = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraMovilizacion = hCompleta;
     },
     selectHoraAsistencia: function selectHoraAsistencia() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraAsistencia = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraAsistencia = hCompleta;
     },
     selectHoraInicioTranporte: function selectHoraInicioTranporte() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraInicioTranporte = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraInicioTranporte = hCompleta;
     },
     selectHoraLlegadaHospital: function selectHoraLlegadaHospital() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraLlegadaHospital = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraLlegadaHospital = hCompleta;
     },
     selectHoraTransferencia: function selectHoraTransferencia() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraTransferencia = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraTransferencia = hCompleta;
     },
     selectHoraFinalizacion: function selectHoraFinalizacion() {
       var d = new Date();
-      var t = d.toLocaleTimeString();
-      this.HoraFinalizacion = t;
+      var hora = d.getHours();
+
+      if (hora < 10) {
+        hora = '0' + hora;
+      }
+
+      var minuto = d.getMinutes();
+
+      if (minuto < 10) {
+        minuto = '0' + minuto;
+      }
+
+      var segundo = d.getSeconds();
+
+      if (segundo < 10) {
+        segundo = '0' + segundo;
+      }
+
+      var hCompleta = hora + ':' + minuto + ':' + segundo;
+      this.HoraFinalizacion = hCompleta;
     },
-    removetHoraMovilizacion: function removetHoraMovilizacion() {
+    removeHoraMovilizacion: function removeHoraMovilizacion() {
       this.HoraMovilizacion = null;
     },
     removeHoraAsistencia: function removeHoraAsistencia() {
@@ -2777,14 +2927,18 @@ __webpack_require__.r(__webpack_exports__);
       this.errorMessage = '';
       this.infoMessage = '';
       var me = this;
-      axios.put('api/recurs/' + me.incidencias_has_recursos.incidencies_id, me.miIncidencia_has_recurso).then(function (response) {
+      axios.put('api/recurs/' + me.miIncidencia_has_recurso.incidencies_id + '/' + me.miIncidencia_has_recurso.recursos_id, me.miIncidencia_has_recurso).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
         console.log(error.response.stats);
         console.log(error.response.data);
         me.errorMessage = error.response.data.error;
       });
-      $('#updateModal').modal('hide');
+
+      if (this.miIncidencia_has_recurso.hora_mobilitzacio != "" && this.miIncidencia_has_recurso.hora_assistencia != "" && this.miIncidencia_has_recurso.hora_transport != "" && this.miIncidencia_has_recurso.hora_arribada_hospital != "" && this.miIncidencia_has_recurso.hora_transferencia != "" && this.miIncidencia_has_recurso.hora_finalitzacio != "" && this.miIncidencia_has_recurso.desti != "") {
+        var btnGuardar = document.getElementById('guardar');
+        btnGuardar.style.display = 'none';
+      }
     }
   }
 });
@@ -40582,737 +40736,763 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "global" } }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "card border-primary mb-3",
-        staticStyle: {
-          "margin-top": "2%",
-          "margin-right": "5%",
-          "margin-left": "5%"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "card-header", attrs: { id: "infoIncidencia" } },
-          [_vm._v("Info incidencia")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm._m(5),
-          _vm._v(" "),
-          _vm._m(6),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary col-12",
-              attrs: { type: "button", id: "guardar" },
-              on: {
-                click: function($event) {
-                  return _vm.formRecurso()
-                }
-              }
-            },
-            [_vm._v("Gestionar incidencia")]
-          ),
-          _vm._v(" "),
+  return _c("div", [
+    _c("div", { staticStyle: { display: "none" }, attrs: { id: "global" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "card border-primary mb-3",
+          staticStyle: {
+            "margin-top": "2%",
+            "margin-right": "5%",
+            "margin-left": "5%"
+          }
+        },
+        [
           _c(
             "div",
-            {
-              staticClass: "modal",
-              attrs: { tabindex: "-1", id: "updateModal" }
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "card border-primary mb-3",
-                  staticStyle: {
-                    "margin-top": "2%",
-                    "margin-right": "5%",
-                    "margin-left": "5%"
+            { staticClass: "card-header", attrs: { id: "infoIncidencia" } },
+            [_vm._v("Info incidencia")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _vm._m(6),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary col-12",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.formRecurso()
                   }
-                },
-                [
-                  _c("div", {
-                    staticClass: "card-header",
-                    attrs: { id: "infoGestionIncidencia" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("form", [
-                      _c("fieldset", [
-                        _vm._m(7),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraMovilizacion" }
-                            },
-                            [_vm._v("Hora movilizacion")]
-                          ),
+                }
+              },
+              [_vm._v("Gestionar incidencia")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal",
+                attrs: { tabindex: "-1", id: "updateModal" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "card border-primary mb-3",
+                    staticStyle: {
+                      "margin-top": "2%",
+                      "margin-right": "5%",
+                      "margin-left": "5%"
+                    }
+                  },
+                  [
+                    _c("div", {
+                      staticClass: "card-header",
+                      attrs: { id: "infoGestionIncidencia" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("form", [
+                        _c("fieldset", [
+                          _vm._m(7),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraMovilizacion,
-                                expression: "HoraMovilizacion"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraMovilizacion",
-                              type: "time",
-                              name: "HoraMovilizacion",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraMovilizacion },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.HoraMovilizacion = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraMovilizacion()
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraMovilizacion()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraAsistencia" }
-                            },
-                            [_vm._v("Hora asistencia")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraAsistencia,
-                                expression: "HoraAsistencia"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraAsistencia",
-                              type: "time",
-                              name: "HoraAsistencia",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraAsistencia },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.HoraAsistencia = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraAsistencia()
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraAsistencia()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "DestinoHospital" }
-                            },
-                            [_vm._v("Destino hospital")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraMovilizacion" }
+                              },
+                              [_vm._v("Hora movilizacion")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
                               directives: [
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.Hospital,
-                                  expression: "Hospital"
+                                  value: _vm.HoraMovilizacion,
+                                  expression: "HoraMovilizacion"
                                 }
                               ],
-                              staticClass: "form-control col-5",
-                              attrs: { id: "hospital" },
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraMovilizacion",
+                                type: "time",
+                                name: "HoraMovilizacion",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraMovilizacion },
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.Hospital = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraMovilizacion = $event.target.value
                                 }
                               }
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Seleccionar hospital")
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(_vm.hospitales, function(hospital) {
-                                return _c(
-                                  "option",
-                                  {
-                                    key: hospital.id,
-                                    domProps: { value: hospital.id }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
                                   },
-                                  [_vm._v(_vm._s(hospital.nom))]
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraInicioTranporte" }
-                            },
-                            [_vm._v("Hora inicio tranporte")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraMovilizacion()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraInicioTranporte,
-                                expression: "HoraInicioTranporte"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraInicioTranporte",
-                              type: "time",
-                              name: "HoraInicioTranporte",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraInicioTranporte },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
                                 }
-                                _vm.HoraInicioTranporte = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraInicioTranporte()
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraMovilizacion()
+                                    }
                                   }
-                                }
-                              })
-                            ]
-                          ),
+                                })
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraInicioTranporte()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraLlegadaHospital" }
-                            },
-                            [_vm._v("Hora llegada al hospital")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraLlegadaHospital,
-                                expression: "HoraLlegadaHospital"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraLlegadaHospital",
-                              type: "time",
-                              name: "HoraLlegadaHospital",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraLlegadaHospital },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraAsistencia" }
+                              },
+                              [_vm._v("Hora asistencia")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.HoraAsistencia,
+                                  expression: "HoraAsistencia"
                                 }
-                                _vm.HoraLlegadaHospital = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraLlegadaHospital()
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraLlegadaHospital()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraTransferencia" }
-                            },
-                            [_vm._v("Hora transferencia")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraTransferencia,
-                                expression: "HoraTransferencia"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraTransferencia",
-                              type: "time",
-                              name: "HoraTransferencia",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraTransferencia },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.HoraTransferencia = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraTransferencia()
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraTransferencia()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "col-4 col-form-label",
-                              attrs: { for: "HoraFinalizacion" }
-                            },
-                            [_vm._v("Hora finalizacion")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.HoraFinalizacion,
-                                expression: "HoraFinalizacion"
-                              }
-                            ],
-                            staticClass: "col-5",
-                            staticStyle: { "text-align": "center" },
-                            attrs: {
-                              id: "HoraFinalizacion",
-                              type: "time",
-                              name: "HoraFinalizacion",
-                              step: "2"
-                            },
-                            domProps: { value: _vm.HoraFinalizacion },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.HoraFinalizacion = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\loop.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectHoraFinalizacion()
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "35px",
-                                width: "35px",
-                                "margin-left": "20px",
-                                cursor: "pointer"
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "img\\remove.png",
-                                  alt: "reset",
-                                  width: "100%",
-                                  height: "100%"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeHoraFinalizacion()
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "text-right" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button", id: "cancelar" },
+                              ],
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraAsistencia",
+                                type: "time",
+                                name: "HoraAsistencia",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraAsistencia },
                               on: {
-                                click: function($event) {
-                                  return _vm.cerrarModal()
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraAsistencia = $event.target.value
                                 }
                               }
-                            },
-                            [_vm._v("Atras")]
-                          ),
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "Añadir",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraAsistencia()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraAsistencia()
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button", id: "guardar" },
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "DestinoHospital" }
+                              },
+                              [_vm._v("Destino hospital")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.Hospital,
+                                    expression: "Hospital"
+                                  }
+                                ],
+                                staticClass: "form-control col-5",
+                                attrs: { id: "hospital" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.Hospital = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Seleccionar hospital")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.hospitales, function(hospital) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: hospital.id,
+                                      domProps: { value: hospital.id }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          hospital.nom +
+                                            " // " +
+                                            hospital.adreca
+                                        )
+                                      )
+                                    ]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraInicioTranporte" }
+                              },
+                              [_vm._v("Hora inicio tranporte")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.HoraInicioTranporte,
+                                  expression: "HoraInicioTranporte"
+                                }
+                              ],
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraInicioTranporte",
+                                type: "time",
+                                name: "HoraInicioTranporte",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraInicioTranporte },
                               on: {
-                                click: function($event) {
-                                  return _vm.update()
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraInicioTranporte = $event.target.value
                                 }
                               }
-                            },
-                            [_vm._v("Guardar")]
-                          )
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraInicioTranporte()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraInicioTranporte()
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraLlegadaHospital" }
+                              },
+                              [_vm._v("Hora llegada al hospital")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.HoraLlegadaHospital,
+                                  expression: "HoraLlegadaHospital"
+                                }
+                              ],
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraLlegadaHospital",
+                                type: "time",
+                                name: "HoraLlegadaHospital",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraLlegadaHospital },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraLlegadaHospital = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraLlegadaHospital()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraLlegadaHospital()
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraTransferencia" }
+                              },
+                              [_vm._v("Hora transferencia")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.HoraTransferencia,
+                                  expression: "HoraTransferencia"
+                                }
+                              ],
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraTransferencia",
+                                type: "time",
+                                name: "HoraTransferencia",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraTransferencia },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraTransferencia = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraTransferencia()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraTransferencia()
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-4 col-form-label",
+                                attrs: { for: "HoraFinalizacion" }
+                              },
+                              [_vm._v("Hora finalizacion")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.HoraFinalizacion,
+                                  expression: "HoraFinalizacion"
+                                }
+                              ],
+                              staticClass: "col-5",
+                              staticStyle: { "text-align": "center" },
+                              attrs: {
+                                id: "HoraFinalizacion",
+                                type: "time",
+                                name: "HoraFinalizacion",
+                                step: "2"
+                              },
+                              domProps: { value: _vm.HoraFinalizacion },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.HoraFinalizacion = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\loop.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectHoraFinalizacion()
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "35px",
+                                  width: "35px",
+                                  "margin-left": "20px",
+                                  cursor: "pointer"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: "img\\remove.png",
+                                    alt: "reset",
+                                    width: "100%",
+                                    height: "100%"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeHoraFinalizacion()
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-right" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: { type: "button", id: "cancelar" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.cerrarModal()
+                                  }
+                                }
+                              },
+                              [_vm._v("Atras")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "button", id: "guardar" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.update()
+                                  }
+                                }
+                              },
+                              [_vm._v("Guardar")]
+                            )
+                          ])
                         ])
                       ])
                     ])
-                  ])
-                ]
-              )
-            ]
-          )
-        ])
-      ]
+                  ]
+                )
+              ]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "alert alert-primary mt-3",
+        staticStyle: {
+          "text-align": "center",
+          "border-color": "black",
+          "border-width": "2px",
+          "border-style": "solid",
+          display: "none"
+        },
+        attrs: { id: "noIncidencia", role: "alert" }
+      },
+      [_vm._v("\n            No hay incidencias asignadas a tu recurso\n    ")]
     )
   ])
 }
@@ -41340,7 +41520,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("p", { attrs: { id: "info_recurso" } }, [
-            _vm._v("\r\n            Info\r\n        ")
+            _vm._v("\n            Info\n        ")
           ])
         ])
       ]

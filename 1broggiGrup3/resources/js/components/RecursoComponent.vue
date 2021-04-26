@@ -1,7 +1,7 @@
 <template>
-<div id="global">
-
-<div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;" >
+<div >
+    <div id="global" style="display: none;">
+        <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;" >
         <div class="card-header" ><p id="titulo_info_recurso">Info recurso </p></div>
         <div class="card-body">
         <p id="info_recurso">
@@ -47,7 +47,7 @@
             </div>
 
 
-            <button type="button" class="btn btn-primary col-12" id="guardar" @click="formRecurso()">Gestionar incidencia</button>
+            <button type="button" class="btn btn-primary col-12" @click="formRecurso()">Gestionar incidencia</button>
 
             <!-- Modal update -->
             <div class="modal" tabindex="-1" id="updateModal">
@@ -76,7 +76,7 @@
                                         <label for="HoraAsistencia" class="col-4 col-form-label">Hora asistencia</label>
                                         <input class="col-5" id="HoraAsistencia" v-model="HoraAsistencia" type="time" name="HoraAsistencia" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraAsistencia()">
+                                            <img src="img\loop.png" alt="Añadir" width="100%" height="100%" @click="selectHoraAsistencia()">
                                         </div>
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraAsistencia()">
@@ -88,7 +88,9 @@
 
                                         <select class="form-control col-5" v-model="Hospital" id="hospital">
                                             <option value="">Seleccionar hospital</option>
-                                            <option v-for="hospital in hospitales" :key="hospital.id" :value="hospital.id" >{{ hospital.nom }}</option>
+                                            <option v-for="hospital in hospitales" :key="hospital.id" :value="hospital.id" >{{ hospital.nom + " // " + hospital.adreca }}</option>
+
+
                                         </select>
                                     </div>
 
@@ -153,6 +155,16 @@
         </div>
     </div>
 
+
+    </div>
+
+
+    <div id="noIncidencia" class="alert alert-primary mt-3" role="alert" style="text-align: center; border-color: black; border-width: 2px; border-style: solid; display: none;">
+            No hay incidencias asignadas a tu recurso
+    </div>
+
+
+
 </div>
 
 
@@ -177,6 +189,10 @@
             tipo_recurso:{
                 type:Array,
                 required:false
+            },
+            comarcas:{
+                type:Array,
+                required:false
             }
         },
         data() {
@@ -186,6 +202,10 @@
                 hospitales: [],
                 miIncidencia_has_recurso: [] ,
                 recursoLogued: [],
+                miComarca: [],
+                miMunicipio: [],
+                misMunicipios: [],
+                relleno: false,
 
                 userLogued:{
                     id: 1,
@@ -228,15 +248,20 @@
 
                         var flag = false;
 
+                        var noIncidencia = document.getElementById("noIncidencia");
+                        var pantalla = document.getElementById('global');
+
+
                         me.incidencias_has_recursos.forEach(element => {
 
 
 
                         if (element.recursos_id == this.userLogued.recursos_id && element.hora_finalitzacio == null) {
 
-
+                            pantalla.style.display = "block";
 
                             me.miIncidencia_has_recurso = element;
+
                             var alertante = document.getElementById('alertante');
                             var telefono = document.getElementById('telefono');
                             var municipio = document.getElementById('municipio');
@@ -288,7 +313,20 @@
                             direccion.value = element.incidencia.adreca;
                             direccionCompleta.value = element.incidencia.adreca_complement;
                             descripcion.value = element.incidencia.descripcio;
-                            infoIncidencia.value = "Info incidencia número: " + element.incidencia.num_incident;
+                            infoIncidencia.innerHTML = "Info incidencia número: " + element.incidencia.num_incident;
+
+
+
+                            this.municipios.forEach(municipio => {
+
+                                if (element.incidencia.municipis_id == municipio.id) {
+                                    this.miMunicipio = municipio;
+                                }
+
+
+
+                            });
+
 
 
 
@@ -298,8 +336,9 @@
                         }else{
 
                             if (flag == false) {
-                                var pantalla = document.getElementById('global');
+
                                 pantalla.style.display = "none";
+                                noIncidencia.style.display = "block";
                             }
 
 
@@ -320,19 +359,49 @@
         methods: {
             formRecurso: function(){
 
+
+                if (this.relleno == false) {
+
+                    this.municipios.forEach(m => {
+                        if (this.miMunicipio.comarques_id == m.comarques_id) {
+                            this.misMunicipios.push(m);
+                        }
+                    });
+
+
+
+                    this.hospitales = [];
+
+                        this.misMunicipios.forEach(mu => {
+
+                            this.alertantes.forEach(alertante => {
+
+                                if (alertante.tipus_alertants_id == 1 && alertante.municipis_id == mu.id) {
+                                    this.hospitales.push(alertante);
+                                }
+
+
+                            });
+
+
+                        });
+
+
+
+
+
+                    this.relleno = true;
+                }
+
                 $('#updateModal').modal('show');
 
-                this.alertantes.forEach(alertante => {
-                            if (alertante.tipus_alertants_id == 1) {
-                                this.hospitales.push(alertante);
-                            }
-                        });
+
 
                 var HoraActivacion = document.getElementById("HoraActivacion");
                 HoraActivacion.value = this.miIncidencia_has_recurso.hora_activacio;
 
                 var infoGestionIncidencia = document.getElementById("infoGestionIncidencia");
-                infoGestionIncidencia.innerHTML = "Gestion incidencia " + this.miIncidencia_has_recurso.num_incident +
+                infoGestionIncidencia.innerHTML = "Gestion incidencia " + this.miIncidencia_has_recurso.incidencia.num_incident +
                  " en recurso mobil " +  this.recursoLogued.codi
 
             },
@@ -344,52 +413,147 @@
             selectHoraMovilizacion(){
 
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraMovilizacion = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+                this.HoraMovilizacion = hCompleta;
 
 
             },
 
             selectHoraAsistencia(){
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraAsistencia = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+
+                this.HoraAsistencia = hCompleta;
 
             },
 
             selectHoraInicioTranporte(){
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraInicioTranporte = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+
+                this.HoraInicioTranporte = hCompleta;
             },
 
             selectHoraLlegadaHospital(){
 
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraLlegadaHospital = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+
+                this.HoraLlegadaHospital = hCompleta;
             },
 
             selectHoraTransferencia(){
 
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraTransferencia = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+
+                this.HoraTransferencia = hCompleta;
             },
 
             selectHoraFinalizacion(){
                 var d = new Date();
-                var t = d.toLocaleTimeString();
 
-                this.HoraFinalizacion = t;
+                var hora = d.getHours();
+                if (hora < 10) {
+                    hora = '0' + hora;
+                }
+
+                var minuto = d.getMinutes();
+                if (minuto < 10) {
+                    minuto = '0' + minuto;
+                }
+
+                var segundo = d.getSeconds();
+                if (segundo < 10) {
+                    segundo = '0' + segundo;
+                }
+
+                var hCompleta = hora + ':' + minuto + ':' + segundo;
+
+                this.HoraFinalizacion = hCompleta;
 
             },
-            removetHoraMovilizacion(){
+            removeHoraMovilizacion(){
 
 
 
@@ -448,7 +612,7 @@
 
 
                 axios
-                    .put('api/recurs/' +  me.incidencias_has_recursos.incidencies_id, me.miIncidencia_has_recurso)
+                    .put('api/recurs/' +  me.miIncidencia_has_recurso.incidencies_id + '/' + me.miIncidencia_has_recurso.recursos_id, me.miIncidencia_has_recurso)
                     .then(function(response) {
                         console.log(response);
                     }).catch(function(error){
@@ -456,7 +620,18 @@
                         console.log(error.response.data);
                         me.errorMessage = error.response.data.error;
                     })
-                $('#updateModal').modal('hide');
+
+
+                    if (this.miIncidencia_has_recurso.hora_mobilitzacio != "" && this.miIncidencia_has_recurso.hora_assistencia != "" && this.miIncidencia_has_recurso.hora_transport
+                     != "" && this.miIncidencia_has_recurso.hora_arribada_hospital != "" && this.miIncidencia_has_recurso.hora_transferencia != "" && this.miIncidencia_has_recurso.hora_finalitzacio != ""
+                     && this.miIncidencia_has_recurso.desti != "")
+                    {
+
+                        var btnGuardar = document.getElementById('guardar');
+                        btnGuardar.style.display = 'none';
+
+                    }
+
             }
 
 

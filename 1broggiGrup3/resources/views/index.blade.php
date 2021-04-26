@@ -30,6 +30,11 @@
                     </a>
                 </li>
                 <li class="nav-item ">
+                    <a class="nav-link " href="{{ url('/infoRecursEincidencia') }}" id="." role="button"  aria-haspopup="true" aria-expanded="false">
+                        Recurso
+                    </a>
+                </li>
+                <li class="nav-item ">
                     <a class="nav-link " href="#" id="." role="button"  aria-haspopup="true" aria-expanded="false">
                         Admin
                     </a>

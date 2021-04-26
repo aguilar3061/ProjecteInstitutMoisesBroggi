@@ -26,3 +26,5 @@ Route::apiResource('afectats', AfectatsController::class);
 
 Route::apiResource('recurs', RecursController::class);
 
+Route::put('recurs/{incidencia_id}/{recurs_id}',[RecursController::class, 'update']);
+
