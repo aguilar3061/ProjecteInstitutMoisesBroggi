@@ -1,8 +1,8 @@
 <template>
 <div >
     <div id="global" style="display: none;">
-        <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;" >
-        <div class="card-header" ><p id="titulo_info_recurso">Info recurso </p></div>
+        <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; border-color: #0edcd8 !important;" >
+        <div class="card-header" ><p id="titulo_info_recurso" style="color: #2780e3; font-weight: bold; font-size:20px;">Info recurso </p></div>
         <div class="card-body">
         <p id="info_recurso">
             Info
@@ -10,39 +10,39 @@
 
         </div>
 </div>
-    <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; ">
-        <div class="card-header" id="infoIncidencia">Info incidencia</div>
+    <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; border-color: #0edcd8 !important;">
+        <div class="card-header" id="infoIncidencia" style="color: #2780e3; font-weight: bold; font-size:20px;">Info incidencia</div>
         <div class="card-body">
 
 
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4" id="inputGroup-sizing-default">Alertante</span>
+                <span class="input-group-text col-lg-3 col-sm-4" id="inputGroup-sizing-default" style="color: #d53677; font-weight: bold;">Alertante</span>
                 <input type="text" class="form-control" id="alertante" disabled style="text-align: center;">
 
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4" id="inputGroup-sizing-default">Telefono alertante</span>
+                <span class="input-group-text col-lg-3 col-sm-4" id="inputGroup-sizing-default" style="color: #d53677; font-weight: bold;">Telefono alertante</span>
                 <input type="text" class="form-control" id="telefono" disabled style="text-align: center;">
 
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4" id="inputGroup-sizing-default">Municipio</span>
+                <span class="input-group-text col-lg-3 col-sm-4" id="inputGroup-sizing-default" style="color: #d53677; font-weight: bold;">Municipio</span>
                 <input type="text" class="form-control" id="municipio" disabled style="text-align: center;">
 
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4" id="inputGroup-sizing-default">Direccion</span>
+                <span class="input-group-text col-lg-3 col-sm-4" id="inputGroup-sizing-default" style="color: #d53677; font-weight: bold;">Direccion</span>
                 <input type="text" class="form-control" id="direccion" disabled style="text-align: center;">
 
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4" id="inputGroup-sizing-default">Direccion completa</span>
+                <span class="input-group-text col-lg-3 col-sm-4" id="inputGroup-sizing-default" style="color: #d53677; font-weight: bold;">Direccion completa</span>
                 <input type="text" class="form-control" id="dirCompleta" disabled style="text-align: center;">
 
             </div>
 
             <div class="input-group mb-3">
-                <span class="input-group-text col-lg-2 col-sm-4">Descripción</span>
+                <span class="input-group-text col-lg-3 col-sm-4" style="color: #d53677; font-weight: bold;">Descripción</span>
                 <textarea class="form-control" aria-label="With textarea" id="desc" disabled></textarea>
             </div>
 
@@ -52,18 +52,18 @@
             <!-- Modal update -->
             <div class="modal" tabindex="-1" id="updateModal">
                 <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
-                    <div class="card-header" id="infoGestionIncidencia"></div>
+                    <div class="card-header" id="infoGestionIncidencia" style="color: #2780e3; font-weight: bold; font-size:20px;"></div>
                         <div class="card-body">
                             <form>
                                 <fieldset>
                                     <div class="form-group row">
-                                        <label for="HoraActivacion" class="col-4 col-form-label">Hora activacion</label>
-                                        <input class="col-5" id="HoraActivacion" type="time" name="HoraActivacion" step="2" style="text-align: center" disabled>
+                                        <label for="HoraActivacion" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora activacion</label>
+                                        <input class="col-6" id="HoraActivacion" type="time" name="HoraActivacion" step="2" style="text-align: center" disabled>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraMovilizacion" class="col-4 col-form-label">Hora movilizacion</label>
-                                        <input class="col-5" v-model="HoraMovilizacion" id="HoraMovilizacion" type="time" name="HoraMovilizacion" step="2" style="text-align: center">
+                                        <label for="HoraMovilizacion" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora movilizacion</label>
+                                        <input class="col-6" v-model="HoraMovilizacion" id="HoraMovilizacion" type="time" name="HoraMovilizacion" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraMovilizacion()">
                                         </div>
@@ -73,8 +73,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraAsistencia" class="col-4 col-form-label">Hora asistencia</label>
-                                        <input class="col-5" id="HoraAsistencia" v-model="HoraAsistencia" type="time" name="HoraAsistencia" step="2" style="text-align: center">
+                                        <label for="HoraAsistencia" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora asistencia</label>
+                                        <input class="col-6" id="HoraAsistencia" v-model="HoraAsistencia" type="time" name="HoraAsistencia" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="Añadir" width="100%" height="100%" @click="selectHoraAsistencia()">
                                         </div>
@@ -84,9 +84,9 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="DestinoHospital" class="col-4 col-form-label">Destino hospital</label>
+                                        <label for="DestinoHospital" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Destino hospital</label>
 
-                                        <select class="form-control col-5" v-model="Hospital" id="hospital">
+                                        <select class="form-control col-6" v-model="Hospital" id="hospital">
                                             <option value="">Seleccionar hospital</option>
                                             <option v-for="hospital in hospitales" :key="hospital.id" :value="hospital.id" >{{ hospital.nom + " // " + hospital.adreca }}</option>
 
@@ -95,8 +95,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraInicioTranporte" class="col-4 col-form-label">Hora inicio tranporte</label>
-                                        <input class="col-5" id="HoraInicioTranporte" v-model="HoraInicioTranporte" type="time" name="HoraInicioTranporte" step="2" style="text-align: center">
+                                        <label for="HoraInicioTranporte" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora inicio tranporte</label>
+                                        <input class="col-6" id="HoraInicioTranporte" v-model="HoraInicioTranporte" type="time" name="HoraInicioTranporte" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraInicioTranporte()">
                                         </div>
@@ -106,8 +106,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraLlegadaHospital" class="col-4 col-form-label">Hora llegada al hospital</label>
-                                        <input class="col-5" id="HoraLlegadaHospital" v-model="HoraLlegadaHospital" type="time" name="HoraLlegadaHospital" step="2" style="text-align: center">
+                                        <label for="HoraLlegadaHospital" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora llegada al hospital</label>
+                                        <input class="col-6" id="HoraLlegadaHospital" v-model="HoraLlegadaHospital" type="time" name="HoraLlegadaHospital" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraLlegadaHospital()">
                                         </div>
@@ -117,8 +117,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraTransferencia" class="col-4 col-form-label">Hora transferencia</label>
-                                        <input class="col-5" id="HoraTransferencia" v-model="HoraTransferencia" type="time" name="HoraTransferencia" step="2" style="text-align: center">
+                                        <label for="HoraTransferencia" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora transferencia</label>
+                                        <input class="col-6" id="HoraTransferencia" v-model="HoraTransferencia" type="time" name="HoraTransferencia" step="2" style="text-align: center">
                                        <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraTransferencia()">
                                         </div>
@@ -128,8 +128,8 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="HoraFinalizacion" class="col-4 col-form-label">Hora finalizacion</label>
-                                        <input class="col-5" id="HoraFinalizacion" v-model="HoraFinalizacion" type="time" name="HoraFinalizacion" step="2" style="text-align: center">
+                                        <label for="HoraFinalizacion" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Hora finalizacion</label>
+                                        <input class="col-6" id="HoraFinalizacion" v-model="HoraFinalizacion" type="time" name="HoraFinalizacion" step="2" style="text-align: center">
                                         <div style="height:35px; width:35px; margin-left: 20px; cursor: pointer;">
                                             <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraFinalizacion()">
                                         </div>

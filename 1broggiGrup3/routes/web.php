@@ -71,12 +71,6 @@ Route::get('/infoRecursEincidencia', function () {
     $tipo_recurso = Tipus_recurs::all();
     return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
 });
-Route::get('/formRecursIncidencia', function () {
-    $recurso = Recurs::all();
-    $alertantes = Alertant::all();
-    $tipo_recurso = Tipus_recurs::all();
-    return view('paginas.Recurso.formRecusIncidencia', compact('recurso', 'alertantes', 'tipo_recurso' ));
-});
 
 Route::get('/videos', function (){
     return view ('paginas.videos.indexVue');
@@ -92,6 +86,7 @@ Route::get('/login',function(){
 Route::post('/login', [UserLogController::class, 'login'] );
 Route::get('/logout', [UserLogController::class, 'logout']);
 Route::get('/formulario-incidencias', [IncidenciaController::class,'index']);
+
 
 Route::resource('afectat',                  AfectatController::class);
 Route::resource('alertant',                 AlertantController::class);
