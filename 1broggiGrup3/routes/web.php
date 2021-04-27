@@ -90,7 +90,8 @@ Route::get('/login',function(){
     return view('paginas.logIn.index');
 });
 Route::post('/login', [UserLogController::class, 'login'] );
-
+Route::get('/logout', [UserLogController::class, 'logout']);
+Route::get('/formulario-incidencias', [IncidenciaController::class,'index']);
 
 Route::resource('afectat',                  AfectatController::class);
 Route::resource('alertant',                 AlertantController::class);

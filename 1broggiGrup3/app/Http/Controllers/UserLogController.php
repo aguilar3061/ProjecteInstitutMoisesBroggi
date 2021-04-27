@@ -22,9 +22,12 @@ class UserLogController extends Controller
             if($rols_id == $user->rols_id){
                 Auth::login($user);
                 $response = redirect('/paginaPrincipalA');
+            }elseif($user->rols_id == '3'){
+                Auth::login($user);
+                $response = redirect('/infoRecursEincidencia');
             }else{
                 Auth::login($user);
-                $response = redirect('/');
+                $response = redirect('/formulario-incidencias');
             }
         }
         else {
@@ -34,6 +37,11 @@ class UserLogController extends Controller
         }
 
         return $response;
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
     }
 
 
