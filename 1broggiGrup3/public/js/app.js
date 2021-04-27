@@ -40592,7 +40592,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraMovilizacion" }
                               },
@@ -40631,8 +40632,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40658,8 +40659,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40689,7 +40690,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraAsistencia" }
                               },
@@ -40728,8 +40730,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40755,8 +40757,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40786,7 +40788,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "DestinoHospital" }
                               },
@@ -40858,7 +40861,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraInicioTranporte" }
                               },
@@ -40897,8 +40901,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40924,8 +40928,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -40955,7 +40959,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraLlegadaHospital" }
                               },
@@ -40994,8 +40999,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -41021,8 +41026,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -41052,7 +41057,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraTransferencia" }
                               },
@@ -41091,8 +41097,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -41118,8 +41124,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -41149,7 +41155,8 @@ var render = function() {
                                 staticClass: "col-3 col-form-label",
                                 staticStyle: {
                                   color: "#d53677",
-                                  "font-weight": "bold"
+                                  "font-weight": "bold",
+                                  "font-size": "16px"
                                 },
                                 attrs: { for: "HoraFinalizacion" }
                               },
@@ -41188,8 +41195,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
@@ -41215,8 +41222,8 @@ var render = function() {
                               "div",
                               {
                                 staticStyle: {
-                                  height: "35px",
-                                  width: "35px",
+                                  height: "33px",
+                                  width: "33px",
                                   "margin-left": "20px",
                                   cursor: "pointer"
                                 }
