@@ -215,7 +215,7 @@
                     nom:'PEPE' ,
                     cognoms: 'AAAAA',
                     rols_id: 3,
-                    recursos_id: 2
+                    recursos_id: 1
 
                 },
 

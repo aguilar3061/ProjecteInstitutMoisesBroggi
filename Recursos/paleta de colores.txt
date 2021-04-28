@@ -1,0 +1,4 @@
+amarillo: fab813
+turquesa: 0edcd8
+rosa: d53677
+azul nav: 2780e3
