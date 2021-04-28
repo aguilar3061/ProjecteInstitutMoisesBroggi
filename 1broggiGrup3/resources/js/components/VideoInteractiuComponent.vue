@@ -70,9 +70,7 @@
                     <form id="form" style="display: none;">
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Pregunta</label>
-                            <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="pregunta" :value="quiz.pregunta">
-                            </div>
+                            <label class="col-sm-10 col-form-label" id="pregunta">{{quiz.pregunta}}</label>
                         </div>
                         <div class="form-check" v-for="respuesta in quiz.respuestas" :key="respuesta.id">
                             <input class="form-check-input" type="radio" name="Radios" v-bind:id="respuesta.name"  :value="respuesta.true">
