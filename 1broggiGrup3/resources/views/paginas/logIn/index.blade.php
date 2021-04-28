@@ -1,7 +1,7 @@
 
 @extends('index')
 @section('cuerpo')
-
+@include('partials.mensajes')
 <div class="container" style="padding-left:25%; padding-top:2%;
 justify-content: center;
 align-items: center;">
