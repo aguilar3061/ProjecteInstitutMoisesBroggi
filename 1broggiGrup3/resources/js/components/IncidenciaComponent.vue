@@ -1,45 +1,44 @@
 <template>
 <div class="border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; margin-bottom: 5%;">
     <form>
-        <div class="card-header">Incidencia</div>
         <div class="btn-group-toggle mt-2 ml-4" data-toggle="buttons">
             <label class="btn btn-info active">
                 <input type="checkbox" checked autocomplete="off"  @click="showHelp()"> Ayuda Ingles
             </label>
         </div>
         <div class="card-body">
-            <div class="card mt-2">
-                <div class="card-header">Alertant</div>
+            <div class="card mt-2" style="border-color: #0edcd8 !important;">
+                <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Alertant</div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="telefonAlertant" class="col-3 col-form-label">Telefono</label>
+                        <label for="telefonAlertant" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;" >Telefono</label>
                         <div class="col-9">
                             <input class="form-control" type="number" id="telefonAlertant" v-on:change="busacarAlertante()" name="telefonAlertant" v-model="incidencia.telefon_alertant">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="nomAlertant" class="col-3 col-form-label">Nombre</label>
+                        <label for="nomAlertant" class="col-3 col-form-label"  style="color: #d53677; font-weight: bold;" >Nombre</label>
                         <div class="col-9">
                             <label for="nomAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your name ? <img src="img/speaker.png" @click="audioClick('frase1')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text"  id="nomAlertant" name="nomAlertant" v-model="incidencia.nomAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="cognomsAlertant" class="col-3 col-form-label">Apellidos</label>
+                        <label for="cognomsAlertant" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Apellidos</label>
                         <div class="col-9">
                             <label for="cognomsAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">What's your surname ? <img src="img/speaker.png" @click="audioClick('frase2')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cognomsAlertant" name="cognomsAlertant" v-model="incidencia.cognomsAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="adrecaAlertant" class="col-3 col-form-label">Dirección</label>
+                        <label for="adrecaAlertant" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Dirección</label>
                         <div class="col-9">
                             <label for="adrecaAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Where are you now ?  <img src="img/speaker.png" @click="audioClick('frase3')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="adrecaAlertant" name="adrecaAlertant" v-model="incidencia.adrecaAlertant">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="municipis_id_Alertant" class="col-3 col-form-label">Municipio</label>
+                        <label for="municipis_id_Alertant" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Municipio</label>
                         <div class="col-9">
                             <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant" v-model="incidencia.municipis_idAlertant">
                                 <option v-for="municipis_idAlertant in municipios" :key="municipis_idAlertant.id" :value="municipis_idAlertant.id" >{{ municipis_idAlertant.nom }}</option>
@@ -47,7 +46,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="tipus_alertants_id" class="col-3 col-form-label">Tipus alertant</label>
+                        <label for="tipus_alertants_id" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Tipus alertant</label>
                         <div class="col-9">
                             <select class="form-control" id="tipus_alertants_id" name="tipus_alertants_id" v-model="incidencia.tipus_alertants_idAlertant">
                                 <option v-for="tipus_alertants_idAlertant in tipusalertants" :key="tipus_alertants_idAlertant.id" :value="tipus_alertants_idAlertant.id" >{{ tipus_alertants_idAlertant.tipus }}</option>
@@ -56,44 +55,44 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-2">
-                <div class="card-header">Afectat</div>
+            <div class="card mt-2" style="border-color: #0edcd8 !important;">
+                <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Afectat</div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="telefonAfectat" class="col-3 col-form-label">Telefono</label>
+                        <label for="telefonAfectat" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Telefono</label>
                         <div class="col-9">
                             <input class="form-control" type="number" id="telefonAfectat" name="telefonAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="cip" class="col-3 col-form-label">Documento (DNI, TS/NSS)</label>
+                        <label for="cip" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Documento (DNI, TS/NSS)</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me an identification number of the victim ?  <img src="img/speaker.png" @click="audioClick('frase4')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cip" name="cip">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="nomAfectat" class="col-3 col-form-label">Nombre</label>
+                        <label for="nomAfectat" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Nombre</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the name of the victim ?  <img src="img/speaker.png" @click="audioClick('frase5')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text"  id="nomAfectat" name="nomAfectat">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="cognomsAfectat" class="col-3 col-form-label">Apellidos</label>
+                        <label for="cognomsAfectat" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Apellidos</label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the surname of the victim ?  <img src="img/speaker.png" @click="audioClick('frase6')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <input class="form-control" type="text" id="cognomsAfectat" name="cognomsAfectat" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="edadAfectat" class="col-3 col-form-label">Edad</label>
+                        <label for="edadAfectat" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Edad</label>
                         <div class="col-9">
                             <input class="form-control" type="number" id="edadAfectat" name="edadAfectat" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-3">Sexo: </label>
+                        <label class="col-3"  style="color: #d53677; font-weight: bold;">Sexo: </label>
                         <div class="col-9">
                             <label for="telefonAlertant" class="col-6 col-form-label labelIngles" style="display: none; font-style: italic;">Can you tell me the sex of the victim ?  <img src="img/speaker.png" @click="audioClick('frase7')" alt="Escuchar frase" width="25px" height="25px"></label>
                             <div class="form-check form-check-inline">
@@ -110,63 +109,58 @@
                     <div style=" text-align: center;">
                         <button type="button" v-on:click="addToAfectats" class="btn-primary" style="width: 50%; " >Añadir afectado</button>
                     </div>
-
                     <table class="table col-12" id="tablaAfectat">
                         <thead>
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Nombre afectado</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Cip</th>
-                                <th scope="col">Sexo</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Nombre afectado</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Apellido</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Telefono</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Cip</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Sexo</th>
                                 <!-- <th scope="col">Eliminar</th> -->
-
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
-
-
                 </div>
             </div>
-            <div class="card mt-2">
-                <div class="card-header">Incidencia</div>
+            <div class="card mt-2" style="border-color: #0edcd8 !important;">
+                <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Incidencia</div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="fechaHora" class="col-3 col-form-label">Fecha y hora</label>
+                        <label for="fechaHora" class="col-3 col-form-label"  style="color: #d53677; font-weight: bold;">Fecha y hora</label>
                         <div class="col-9">
                             <input class="form-control" type="datetime-local"  id="fechaHora" name="fechaHora" v-model="incidencia.data">
                         </div>
                     </div>
                      <div class="form-group row">
-                        <label for="adreca" class="col-3 col-form-label">Dirección</label>
+                        <label for="adreca" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Dirección</label>
                         <div class="col-9">
                             <input class="form-control" type="text" id="adreca" name="adreca"  v-model="incidencia.adreca">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="adreca_complement" class="col-3 col-form-label">Complemento dirección</label>
+                        <label for="adreca_complement" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Complemento dirección</label>
                         <div class="col-9">
                             <input class="form-control" type="text" id="adreca_complement" name="adreca_complement"  v-model="incidencia.adreca_complement">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="descripcio" class="col-3 col-form-label">Descripción</label>
+                        <label for="descripcio" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Descripción</label>
                         <div class="col-9">
                             <textarea class="form-control" id="descripcio" rows="3" name="descripcio"  v-model="incidencia.descripcio"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="nom_metge" class="col-3 col-form-label">Nombre médico</label>
+                        <label for="nom_metge" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Nombre médico</label>
                         <div class="col-9">
                             <input class="form-control" type="text"  id="nom_metge" name="nom_metge" v-model="incidencia.nom_metge">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="tipus_incidencia_id" class="col-3 col-form-label">Tipus Incidencia</label>
+                        <label for="tipus_incidencia_id" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Tipus Incidencia</label>
                         <div class="col-9">
                             <select class="form-control" id="tipus_incidencia_id" name="tipus_incidencia_id" v-model="incidencia.tipus_incidencies_id">
                                 <option v-for="tipus_incidencies_id in tipusincidencies" :key="tipus_incidencies_id.id" :value="tipus_incidencies_id.id">{{ tipus_incidencies_id.tipus }}</option>
@@ -174,7 +168,7 @@
                         </div>
                     </div>
                      <div class="form-group row">
-                        <label for="municipis_id_Alertant" class="col-3 col-form-label">Municipio</label>
+                        <label for="municipis_id_Alertant" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Municipio</label>
                         <div class="col-9">
                             <select class="form-control" id="municipis_id_Alertant" name="municipis_id_Alertant" v-model="incidencia.municipis_id">
                                 <option v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" >{{ municipio.nom }}</option>
@@ -183,11 +177,11 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-2">
-                <div class="card-header">Recursos</div>
+            <div class="card mt-2" style="border-color: #0edcd8 !important;">
+                <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Recursos</div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="idTipoRecurso" class="col-3 col-form-label">Tipus de recurso</label>
+                        <label for="idTipoRecurso" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Tipus de recurso</label>
                         <div class="col-9">
                             <select class="form-control" id="idTipoRecurso" name="idTipoRecurso" @change="onChange($event)" >
                                 <option v-for="tipusrecurs in tiporecursos" :key="tipusrecurs.id" :value="tipusrecurs.id" >{{ tipusrecurs.tipus }}</option>
@@ -195,7 +189,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="recursos_id" class="col-3 col-form-label">Recurso</label>
+                        <label for="recursos_id" class="col-3 col-form-label" style="color: #d53677; font-weight: bold;">Recurso</label>
                         <div class="col-9">
                             <select class="form-control" id="selectMedicalitzadaMike" name="selectMedicalitzadaMike" style="display: none;" >
                                 <option v-for="recurs in filteredRecursos(1)" :key="recurs.id" :value="recurs.id" >{{ recurs.codi }}</option>
@@ -213,7 +207,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-3">Prioritat: </label>
+                        <label class="col-3"  style="color: #d53677; font-weight: bold;">Prioritat </label>
                         <div class="col-9">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat1" value="1" checked>
@@ -241,20 +235,18 @@
                     <div style="text-align: center;">
                         <button type="button" v-on:click="addToRecursos" class="btn-primary" style="width: 50%;" >Añadir recurso</button>
                     </div>
-
                     <table class="table col-12" id="tablaRecursos">
                         <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Codigo del recurso</th>
-                                <th scope="col">Tipo de recurso</th>
-                                <th scope="col">Prioridad</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;" ></th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Codigo del recurso</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Tipo de recurso</th>
+                                <th scope="col" style="color: #d53677; font-weight: bold;">Prioridad</th>
                                 <!-- <th scope="col">Eliminar</th> -->
 
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
 
@@ -262,7 +254,7 @@
             </div>
         </div>
         <div class="text-right">
-            <button type="button" class="btn btn-secondary" id="Finalizar">Cancelar</button>
+            <button type="button" class="btn btn-secondary" id="Finalizar" @click="refresh()">Cancelar</button>
             <button type="button" class="btn btn-primary" id="Finalizar" @click="addIncidencia()">Finalizar</button>
         </div>
     </form>
@@ -384,6 +376,7 @@
                         console.log(response);
                         //Aqui hay que hacer un redirect
                         // me.addAfectat();
+                        location.reload();
                     }).catch(function(error){
                         console.log(error.response.stats);
                         console.log(error.response.data);
@@ -727,6 +720,9 @@
                     this.incidencia.alertantExist = false;
                 }
 
+            },
+            refresh(){
+                location.reload();
             }
 
         }
