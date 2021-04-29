@@ -24,6 +24,7 @@ class UserLogController extends Controller
                 $response = redirect('/paginaPrincipalA');
             }elseif($user->rols_id == '3'){
                 Auth::login($user);
+                $_SESSION["user"]=Auth::user($user);
                 $response = redirect('/infoRecursEincidencia');
             }else{
                 Auth::login($user);
