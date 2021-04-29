@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Alertant;
+use App\Models\Recurs;
+use App\Models\Municipi;
+use App\Models\Tipus_recurs;
+
+
 
 class UserLogController extends Controller
 {
@@ -21,13 +27,17 @@ class UserLogController extends Controller
         if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
             if($rols_id == $user->rols_id){
                 Auth::login($user);
-                $response = redirect('/paginaPrincipalA');
+                $response =  view('paginas.Admin.paginaPrincipal');
             }elseif($user->rols_id == '3'){
+
+
+
                 Auth::login($user);
-                $response = redirect('/infoRecursEincidencia');
+                 $response = redirect('/infoRecursEincidencia');
             }else{
                 Auth::login($user);
-                $response = redirect('/formulario-incidencias');
+                $response = app(IncidenciaController::class)->index();
+
             }
         }
         else {

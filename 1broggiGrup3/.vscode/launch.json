@@ -8,7 +8,7 @@
             "name": "Launch Chrome",
             "request": "launch",
             "type": "pwa-chrome",
-            "url": "http://localhost:80/1broggiGrup3/public",
+            "url": "http://localhost:80/1broggiGrup3/public/login",
             "webRoot": "${workspaceFolder}"
         },
         {
