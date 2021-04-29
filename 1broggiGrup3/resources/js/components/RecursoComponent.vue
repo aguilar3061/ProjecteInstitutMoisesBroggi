@@ -65,10 +65,10 @@
                                         <label for="HoraMovilizacion" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora movilizacion</label>
                                         <input class="col-6" v-model="HoraMovilizacion" id="HoraMovilizacion" type="time" name="HoraMovilizacion" step="2" style="text-align: center">
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraMovilizacion()">
+                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraMovilizacion()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraMovilizacion()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraMovilizacion()">
                                         </div>
                                     </div>
 
@@ -76,10 +76,10 @@
                                         <label for="HoraAsistencia" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora asistencia</label>
                                         <input class="col-6" id="HoraAsistencia" v-model="HoraAsistencia" type="time" name="HoraAsistencia" step="2" style="text-align: center">
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="Añadir" width="100%" height="100%" @click="selectHoraAsistencia()">
+                                            <img src="img\loop.png" alt="Añadir" width="100%" height="100%" @click="selectHoraAsistencia()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraAsistencia()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraAsistencia()">
                                         </div>
                                     </div>
 
@@ -98,10 +98,10 @@
                                         <label for="HoraInicioTranporte" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora inicio tranporte</label>
                                         <input class="col-6" id="HoraInicioTranporte" v-model="HoraInicioTranporte" type="time" name="HoraInicioTranporte" step="2" style="text-align: center">
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraInicioTranporte()">
+                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraInicioTranporte()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraInicioTranporte()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraInicioTranporte()">
                                         </div>
                                     </div>
 
@@ -109,10 +109,10 @@
                                         <label for="HoraLlegadaHospital" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora llegada al hospital</label>
                                         <input class="col-6" id="HoraLlegadaHospital" v-model="HoraLlegadaHospital" type="time" name="HoraLlegadaHospital" step="2" style="text-align: center">
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraLlegadaHospital()">
+                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraLlegadaHospital()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraLlegadaHospital()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraLlegadaHospital()">
                                         </div>
                                     </div>
 
@@ -120,10 +120,10 @@
                                         <label for="HoraTransferencia" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora transferencia</label>
                                         <input class="col-6" id="HoraTransferencia" v-model="HoraTransferencia" type="time" name="HoraTransferencia" step="2" style="text-align: center">
                                        <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraTransferencia()">
+                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraTransferencia()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraTransferencia()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraTransferencia()">
                                         </div>
                                     </div>
 
@@ -131,10 +131,10 @@
                                         <label for="HoraFinalizacion" class="col-3 col-form-label" style="color: #d53677; font-weight: bold; font-size:16px;">Hora finalizacion</label>
                                         <input class="col-6" id="HoraFinalizacion" v-model="HoraFinalizacion" type="time" name="HoraFinalizacion" step="2" style="text-align: center">
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraFinalizacion()">
+                                            <img src="img\loop.png" alt="reset" width="100%" height="100%" @click="selectHoraFinalizacion()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraFinalizacion()">
+                                            <img src="img\remove.png" alt="reset" width="100%" height="100%" @click="removeHoraFinalizacion()">
                                         </div>
                                     </div>
 
@@ -190,9 +190,8 @@
                 type:Array,
                 required:false
             },
-
-            userLogued:{
-                type:Object,
+            comarcas:{
+                type:Array,
                 required:false
             }
         },
@@ -208,7 +207,17 @@
                 misMunicipios: [],
                 relleno: false,
 
+                userLogued:{
+                    id: 1,
+                    username: 'Pepe',
+                    contrasenya: 'aaaaaaaaaa',
+                    email: 'aaaaaaaaaaaa@aaaaa.com',
+                    nom:'PEPE' ,
+                    cognoms: 'AAAAA',
+                    rols_id: 3,
+                    recursos_id: 2
 
+                },
 
                 HoraMovilizacion: '',
                 HoraAsistencia: '',

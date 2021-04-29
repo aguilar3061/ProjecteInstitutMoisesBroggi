@@ -1,25 +1,24 @@
 <?php
 
-use App\Models\Recurs;
-use App\Models\Alertant;
-use App\Models\Municipi;
-use App\Models\Tipus_recurs;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RolController;
-use App\Http\Controllers\SexeController;
-use App\Http\Controllers\RecursController;
-use App\Http\Controllers\UsuariController;
 use App\Http\Controllers\AfectatController;
-use App\Http\Controllers\ComarcaController;
-use App\Http\Controllers\UserLogController;
 use App\Http\Controllers\AlertantController;
+use App\Http\Controllers\ComarcaController;
+use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\MunicipiController;
 use App\Http\Controllers\ProvinciaController;
-use App\Http\Controllers\IncidenciaController;
-use App\Http\Controllers\TipusRecursController;
+use App\Http\Controllers\RecursController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\SexeController;
 use App\Http\Controllers\TipusAlertantController;
 use App\Http\Controllers\TipusIncidenciaController;
+use App\Http\Controllers\TipusRecursController;
+use App\Http\Controllers\UsuariController;
+use App\Http\Controllers\UserLogController;
+use App\Models\Alertant;
+use App\Models\Recurs;
+use App\Models\Municipi;
+use App\Models\Tipus_recurs;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,19 +64,20 @@ Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
 
-
 Route::get('/infoRecursEincidencia', function () {
     $recurso = Recurs::all();
     $municipios = Municipi::all();
     $alertantes = Alertant::all();
     $tipo_recurso = Tipus_recurs::all();
-    $userLogued = Auth::user();
-
-    return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso', 'userLogued' ));
+    return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
 });
 
 Route::get('/videos', function (){
     return view ('paginas.videos.indexVue');
+});
+
+Route::get('/paginaPrincipalA', function () {
+    return view('paginas.Admin.paginaPrincipal');
 });
 
 Route::get('/login',function(){
@@ -85,7 +85,7 @@ Route::get('/login',function(){
 });
 Route::post('/login', [UserLogController::class, 'login'] );
 Route::get('/logout', [UserLogController::class, 'logout']);
-
+Route::get('/formulario-incidencias', [IncidenciaController::class,'index']);
 
 
 Route::resource('afectat',                  AfectatController::class);
