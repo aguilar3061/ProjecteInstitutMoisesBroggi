@@ -2614,8 +2614,8 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false
     },
-    comarcas: {
-      type: Array,
+    userLogued: {
+      type: Object,
       required: false
     }
   },
@@ -2629,16 +2629,6 @@ __webpack_require__.r(__webpack_exports__);
       miMunicipio: [],
       misMunicipios: [],
       relleno: false,
-      userLogued: {
-        id: 1,
-        username: 'Pepe',
-        contrasenya: 'aaaaaaaaaa',
-        email: 'aaaaaaaaaaaa@aaaaa.com',
-        nom: 'PEPE',
-        cognoms: 'AAAAA',
-        rols_id: 3,
-        recursos_id: 2
-      },
       HoraMovilizacion: '',
       HoraAsistencia: '',
       HoraInicioTranporte: '',
@@ -3053,20 +3043,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {},
   data: function data() {
     return {
+      correctas: 0,
+      incorrectas: 0,
+      noRespondidas: 0,
       videoStop: false,
+      videoFalse: false,
+      checkQuiz1Video1: false,
+      checkQuiz2Video1: false,
+      checkQuiz3Video1: false,
+      checkQuiz4Video1: false,
+      video1End: false,
       video1: 'media\\clip1.MOV',
       video2: 'media\\clip2.MOV',
       video3: 'media\\clip3.MOV',
       video: '',
-      quizVideo1: {
+      quiz1Video1: {
         pregunta: '¿Cuál es el primer paso a realizar?',
         respuestas: {
           resp1: {
@@ -3080,8 +3075,68 @@ __webpack_require__.r(__webpack_exports__);
             "true": 1
           },
           resp3: {
-            name: 'preg2',
+            name: 'preg3',
             resp: 'Poner el DESA',
+            "true": 0
+          }
+        }
+      },
+      quiz2Video1: {
+        pregunta: '¿Cuál de las siguientes opciones es una característica de una RCP de calidad?',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: 'Evitar una ventilación excesiva',
+            "true": 1
+          },
+          resp2: {
+            name: 'preg2',
+            resp: 'Mantener un ritmo de compresiones frenético',
+            "true": 0
+          },
+          resp3: {
+            name: 'preg3',
+            resp: 'Iniciar las compresiones después de 10 segundos desde la identificación del paro cardiaco',
+            "true": 0
+          }
+        }
+      },
+      quiz3Video1: {
+        pregunta: '¿Qué es el método AVDI?',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: 'Es un método para determinar cuantas compresiones hay que realizar',
+            "true": 0
+          },
+          resp2: {
+            name: 'preg2',
+            resp: 'Es una variante de la RCP',
+            "true": 0
+          },
+          resp3: {
+            name: 'preg3',
+            resp: 'Es un método para evaluar el estado de conciencia de una persona',
+            "true": 1
+          }
+        }
+      },
+      quiz4Video1: {
+        pregunta: '¿A que distancia desciende el esternón en un niño entre uno y ocho años?',
+        respuestas: {
+          resp1: {
+            name: 'preg1',
+            resp: 'Debe descender de 5 a 6 cm',
+            "true": 0
+          },
+          resp2: {
+            name: 'preg2',
+            resp: 'Debe descender de 3 a 4 cm',
+            "true": 1
+          },
+          resp3: {
+            name: 'preg3',
+            resp: 'Debe descender de 2 a 3 cm',
             "true": 0
           }
         }
@@ -3157,7 +3212,7 @@ __webpack_require__.r(__webpack_exports__);
     openVideoModal: function openVideoModal(numVideo) {
       if (numVideo == 1) {
         this.video = this.video1;
-        this.quiz = this.quizVideo1;
+        this.quiz = this.quiz1Video1;
       }
 
       if (numVideo == 2) {
@@ -3170,10 +3225,10 @@ __webpack_require__.r(__webpack_exports__);
         this.quiz = this.quizVideo3;
       }
 
-      $('#videoModal').modal('show');
-      document.getElementById("respuestaCorrect").style.display = "none";
-      document.getElementById("respuestaIncorrect").style.display = "none";
-      var myVideo = document.getElementById("video-container"); //myVideo.play();
+      $('#videoModal').modal('show'); //document.getElementById("respuestaCorrect").style.display = "none"
+      //document.getElementById("respuestaIncorrect").style.display = "none"
+      //var myVideo = document.getElementById("video-container");
+      //myVideo.play();
 
       if (this.videoStop == true) {
         this.videoStop = false;
@@ -3182,13 +3237,74 @@ __webpack_require__.r(__webpack_exports__);
     iniciar: function iniciar() {
       setInterval(this.contador, 1000);
     },
+    openVideoModalVideo1: function openVideoModalVideo1() {
+      this.video = this.video1;
+      this.quiz = this.quiz1Video1;
+      this.videoFalse = true;
+      this.video1End = false;
+      this.setQuizToFalse();
+      this.setAnswersTo0();
+      $('#videoModal').modal('show');
+    },
     contador: function contador() {
       var medio = document.getElementById('video-container');
 
-      if (medio.currentTime > medio.duration / 2 && this.videoStop == false) {
-        document.getElementById("form").style.display = "block";
-        this.videoStop = true;
-        medio.pause();
+      if (this.videoFalse == true) {
+        if (medio.currentTime >= 50 && medio.currentTime <= 51 && this.checkQuiz1Video1 == false) {
+          document.getElementById("form").style.display = "block";
+          this.checkQuiz1Video1 = true; //this.videoStop = true;
+
+          medio.pause();
+        }
+
+        if (medio.currentTime >= 101 && medio.currentTime <= 102 && this.checkQuiz2Video1 == false) {
+          this.quiz = this.quiz2Video1;
+          document.getElementById("form").style.display = "block";
+          this.checkQuiz2Video1 = true; //this.videoStop = true;
+
+          medio.pause();
+        }
+
+        if (medio.currentTime >= 151 && medio.currentTime <= 152 && this.checkQuiz3Video1 == false) {
+          this.quiz = this.quiz3Video1;
+          document.getElementById("form").style.display = "block";
+          this.checkQuiz3Video1 = true; //this.videoStop = true;
+
+          medio.pause();
+        }
+
+        if (medio.currentTime >= 202 && medio.currentTime <= 203 && this.checkQuiz4Video1 == false) {
+          this.quiz = this.quiz4Video1;
+          document.getElementById("form").style.display = "block"; //this.videoStop = true;
+
+          this.checkQuiz4Video1 = true;
+          medio.pause();
+        }
+
+        if (medio.currentTime >= 216 && medio.currentTime <= 217) {
+          if (this.video1End == false) {
+            if (this.correctas > 0) {
+              this.crearAlertCorrect();
+            }
+
+            if (this.incorrectas > 0) {
+              this.crearAlertIncorrect();
+            }
+
+            if (this.noRespondidas > 0) {
+              this.crearAlertNoRespuesta();
+            }
+
+            this.video1End = true;
+            medio.pause();
+          }
+        }
+      } else {
+        if (medio.currentTime > medio.duration / 2 && this.videoStop == false) {
+          document.getElementById("form").style.display = "block";
+          this.videoStop = true;
+          medio.pause();
+        }
       }
     },
     respuesta: function respuesta() {
@@ -3200,40 +3316,172 @@ __webpack_require__.r(__webpack_exports__);
       var alertCorrect = document.getElementById("respuestaCorrect");
       var alertIncorrect = document.getElementById("respuestaIncorrect");
 
-      if (resposta1.value == 1 && resposta1.checked == true) {
-        alertCorrect.style.display = "block";
-        alertIncorrect.style.display = "none";
-        form.style.display = "none";
-        medio.play();
-      } else if (resposta2.value == 1 && resposta2.checked == true) {
-        alertCorrect.style.display = "block";
-        alertIncorrect.style.display = "none";
-        form.style.display = "none";
-        medio.play();
-      } else if (resposta3.value == 1 && resposta3.checked == true) {
-        alertCorrect.style.display = "block";
-        alertIncorrect.style.display = "none";
-        form.style.display = "none";
-        medio.play();
+      if (this.videoFalse == true) {
+        if (resposta1.value == 1 && resposta1.checked == true) {
+          this.correctas = this.correctas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta2.value == 1 && resposta2.checked == true) {
+          this.correctas = this.correctas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta3.value == 1 && resposta3.checked == true) {
+          this.correctas = this.correctas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta1.value == 0 && resposta1.checked == true) {
+          this.incorrectas = this.incorrectas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta2.value == 0 && resposta2.checked == true) {
+          this.incorrectas = this.incorrectas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta3.value == 0 && resposta3.checked == true) {
+          this.incorrectas = this.incorrectas + 1;
+          form.style.display = "none";
+          medio.play();
+        } else {
+          this.noRespuesta();
+        }
       } else {
-        alertCorrect.style.display = "none";
-        alertIncorrect.style.display = "block";
-        this.noRespuesta();
+        if (resposta1.value == 1 && resposta1.checked == true) {
+          this.crearAlertCorrect();
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta2.value == 1 && resposta2.checked == true) {
+          this.crearAlertCorrect();
+          form.style.display = "none";
+          medio.play();
+        } else if (resposta3.value == 1 && resposta3.checked == true) {
+          this.crearAlertCorrect();
+          form.style.display = "none";
+          medio.play();
+        } else {
+          this.crearAlertIncorrect();
+          this.noRespuesta();
+        }
       }
+
+      this.uncheck();
     },
     noRespuesta: function noRespuesta() {
       document.getElementById("form").style.display = "none";
       var medio = document.getElementById('video-container');
-      medio.currentTime = 0;
-      medio.play();
       this.videoStop = false;
+
+      if (this.videoFalse == true) {
+        this.noRespondidas = this.noRespondidas + 1;
+        medio.play();
+      } else {
+        medio.currentTime = 0;
+        medio.play();
+      }
+
+      this.uncheck();
     },
     cerrarVideo: function cerrarVideo() {
-      var medio = document.getElementById('video-container');
-      document.getElementById("respuestaCorrect").style.display = "none";
-      document.getElementById("respuestaIncorrect").style.display = "none";
+      var medio = document.getElementById('video-container'); //document.getElementById("respuestaCorrect").style.display = "none"
+      //document.getElementById("respuestaIncorrect").style.display = "none"
+
       medio.pause();
       medio.currentTime = 0;
+      this.uncheck();
+    },
+    crearAlertCorrect: function crearAlertCorrect() {
+      var div = document.getElementById("Alert");
+      var p = document.createElement('div');
+      p.setAttribute("id", "respuestaCorrect");
+      p.setAttribute("class", "alert alert-success");
+      p.setAttribute("role", "alert");
+
+      if (this.videoFalse == true) {
+        var t = document.createTextNode("Has acertado un total de " + this.correctas + " preguntas.");
+      } else {
+        var t = document.createTextNode("Respuesta correcta!!!");
+      }
+
+      var button = document.createElement("button");
+      button.setAttribute("type", "button");
+      button.setAttribute("class", "close");
+      button.setAttribute("data-dismiss", "alert");
+      button.setAttribute("aria-label", "Close");
+      var span = document.createElement("span");
+      span.setAttribute("aria-hidden", "true");
+      var t2 = document.createTextNode("X");
+      span.appendChild(t2);
+      button.appendChild(span);
+      p.appendChild(t);
+      p.appendChild(button);
+      div.appendChild(p);
+    },
+    crearAlertIncorrect: function crearAlertIncorrect() {
+      var div = document.getElementById("Alert");
+      var p = document.createElement('div');
+      p.setAttribute("id", "respuestaIncorrect");
+      p.setAttribute("class", "alert alert-danger");
+      p.setAttribute("role", "alert");
+
+      if (this.videoFalse == true) {
+        var t = document.createTextNode("Has fallado un total de " + this.incorrectas + " preguntas.");
+      } else {
+        var t = document.createTextNode("Respuesta incorrecta :c ...");
+      }
+
+      var button = document.createElement("button");
+      button.setAttribute("type", "button");
+      button.setAttribute("class", "close");
+      button.setAttribute("data-dismiss", "alert");
+      button.setAttribute("aria-label", "Close");
+      var span = document.createElement("span");
+      span.setAttribute("aria-hidden", "true");
+      var t2 = document.createTextNode("X");
+      span.appendChild(t2);
+      button.appendChild(span);
+      p.appendChild(t);
+      p.appendChild(button);
+      div.appendChild(p);
+    },
+    crearAlertNoRespuesta: function crearAlertNoRespuesta() {
+      var num = this.noRespondidas;
+
+      if (num > 0) {
+        var div = document.getElementById("Alert");
+        var p = document.createElement('div');
+        p.setAttribute("id", "respuestaNoRespuesta");
+        p.setAttribute("class", "alert alert-dark");
+        p.setAttribute("role", "alert");
+        var t = document.createTextNode("No has respondido " + num + " preguntas.");
+        var button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.setAttribute("class", "close");
+        button.setAttribute("data-dismiss", "alert");
+        button.setAttribute("aria-label", "Close");
+        var span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        var t2 = document.createTextNode("X");
+        span.appendChild(t2);
+        button.appendChild(span);
+        p.appendChild(t);
+        p.appendChild(button);
+        div.appendChild(p);
+      }
+    },
+    setQuizToFalse: function setQuizToFalse() {
+      this.checkQuiz1Video1 = false;
+      this.checkQuiz2Video1 = false;
+      this.checkQuiz3Video1 = false;
+      this.checkQuiz4Video1 = false;
+    },
+    setAnswersTo0: function setAnswersTo0() {
+      this.correctas = 0;
+      this.incorrectas = 0;
+      this.noRespondidas = 0;
+    },
+    uncheck: function uncheck() {
+      document.getElementById('preg1').checked = false;
+      document.getElementById('preg2').checked = false;
+      document.getElementById('preg3').checked = false;
     }
   }
 });
@@ -40641,7 +40889,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -40668,14 +40916,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraMovilizacion()
+                                      return _vm.remove1HoraMovilizacion()
                                     }
                                   }
                                 })
@@ -40739,7 +40987,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "Añadir",
                                     width: "100%",
                                     height: "100%"
@@ -40766,14 +41014,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraAsistencia()
+                                      return _vm.remove1HoraAsistencia()
                                     }
                                   }
                                 })
@@ -40910,7 +41158,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -40937,14 +41185,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraInicioTranporte()
+                                      return _vm.remove1HoraInicioTranporte()
                                     }
                                   }
                                 })
@@ -41008,7 +41256,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41035,14 +41283,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraLlegadaHospital()
+                                      return _vm.remove1HoraLlegadaHospital()
                                     }
                                   }
                                 })
@@ -41106,7 +41354,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41133,14 +41381,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraTransferencia()
+                                      return _vm.remove1HoraTransferencia()
                                     }
                                   }
                                 })
@@ -41204,7 +41452,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41231,7 +41479,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41563,7 +41811,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.openVideoModal(1)
+                          return _vm.openVideoModalVideo1()
                         }
                       }
                     },
@@ -41686,13 +41934,14 @@ var render = function() {
                         [_vm._v("Pregunta")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-10" }, [
-                        _c("input", {
-                          staticClass: "form-control-plaintext",
-                          attrs: { type: "text", readonly: "", id: "pregunta" },
-                          domProps: { value: _vm.quiz.pregunta }
-                        })
-                      ])
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-10 col-form-label",
+                          attrs: { id: "pregunta" }
+                        },
+                        [_vm._v(_vm._s(_vm.quiz.pregunta))]
+                      )
                     ]),
                     _vm._v(" "),
                     _vm._l(_vm.quiz.respuestas, function(respuesta) {
@@ -41759,33 +42008,7 @@ var render = function() {
                   2
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "alert alert-success",
-                    staticStyle: { display: "none" },
-                    attrs: { role: "alert", id: "respuestaCorrect" }
-                  },
-                  [
-                    _vm._v(
-                      "\r\n                        Respuesta correcta!!!\r\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "alert alert-danger",
-                    staticStyle: { display: "none" },
-                    attrs: { role: "alert", id: "respuestaIncorrect" }
-                  },
-                  [
-                    _vm._v(
-                      "\r\n                        Respuesta incorrecta :c ...\r\n                    "
-                    )
-                  ]
-                )
+                _c("div", { attrs: { id: "Alert" } })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
