@@ -27,16 +27,13 @@ class UserLogController extends Controller
         if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
             if($rols_id == $user->rols_id){
                 Auth::login($user);
-                $response =  view('paginas.Admin.paginaPrincipal');
+                $response =  redirect('/administrador');
             }elseif($user->rols_id == '3'){
-
-
-
                 Auth::login($user);
-                 $response = redirect('/infoRecursEincidencia');
+                 $response = redirect('/recurso');
             }else{
                 Auth::login($user);
-                $response = app(IncidenciaController::class)->index();
+                $response = redirect('/crearIncidencia');
 
             }
         }

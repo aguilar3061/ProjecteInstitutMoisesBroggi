@@ -1,5 +1,5 @@
 
-@extends('index')
+@extends('plantillas.navbar')
 @section('cuerpo')
 @include('partials.mensajes')
 <div class="container" style="padding-left:25%; padding-top:2%;
