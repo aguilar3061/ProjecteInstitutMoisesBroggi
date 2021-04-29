@@ -113,7 +113,7 @@ class UsuariController extends Controller
     {
 
         $usuari->username = $request->input('nombreUsuario');
-        $usuari->contrasenya = $request->input('contrasena');
+        $usuari->contrasenya = Hash::make($request->input('contrasena'));
         $usuari->email = $request->input('correo');
         $usuari->nom = $request->input('nombre');
         $usuari->cognoms = $request->input('apellidos');
