@@ -12,6 +12,8 @@ use App\Models\Recurs;
 use App\Models\Municipi;
 use App\Models\Tipus_recurs;
 
+
+
 class UserLogController extends Controller
 {
     public function login(Request $request)
@@ -35,9 +37,15 @@ class UserLogController extends Controller
                 $tipo_recurso = Tipus_recurs::all();
 
                 Auth::login($user);
+<<<<<<< Updated upstream
                 $_SESSION["user"]=Auth::user($user);
 
                 $response = redirect('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
+=======
+
+
+                $response = redirect('/infoRecursEincidencia');
+>>>>>>> Stashed changes
             }else{
                 Auth::login($user);
                 app(IncidenciaController::class)->index();

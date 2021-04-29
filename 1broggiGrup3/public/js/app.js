@@ -2614,8 +2614,8 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false
     },
-    comarcas: {
-      type: Array,
+    userLogued: {
+      type: Object,
       required: false
     }
   },
@@ -2629,16 +2629,6 @@ __webpack_require__.r(__webpack_exports__);
       miMunicipio: [],
       misMunicipios: [],
       relleno: false,
-      userLogued: {
-        id: 1,
-        username: 'Pepe',
-        contrasenya: 'aaaaaaaaaa',
-        email: 'aaaaaaaaaaaa@aaaaa.com',
-        nom: 'PEPE',
-        cognoms: 'AAAAA',
-        rols_id: 3,
-        recursos_id: 1
-      },
       HoraMovilizacion: '',
       HoraAsistencia: '',
       HoraInicioTranporte: '',
@@ -2956,8 +2946,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -41946,13 +41934,14 @@ var render = function() {
                         [_vm._v("Pregunta")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-10" }, [
-                        _c("input", {
-                          staticClass: "form-control-plaintext",
-                          attrs: { type: "text", readonly: "", id: "pregunta" },
-                          domProps: { value: _vm.quiz.pregunta }
-                        })
-                      ])
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-10 col-form-label",
+                          attrs: { id: "pregunta" }
+                        },
+                        [_vm._v(_vm._s(_vm.quiz.pregunta))]
+                      )
                     ]),
                     _vm._v(" "),
                     _vm._l(_vm.quiz.respuestas, function(respuesta) {

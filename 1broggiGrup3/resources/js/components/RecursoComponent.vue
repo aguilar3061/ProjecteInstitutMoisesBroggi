@@ -190,8 +190,9 @@
                 type:Array,
                 required:false
             },
-            comarcas:{
-                type:Array,
+
+            userLogued:{
+                type:Object,
                 required:false
             }
         },
@@ -207,17 +208,7 @@
                 misMunicipios: [],
                 relleno: false,
 
-                userLogued:{
-                    id: 1,
-                    username: 'Pepe',
-                    contrasenya: 'aaaaaaaaaa',
-                    email: 'aaaaaaaaaaaa@aaaaa.com',
-                    nom:'PEPE' ,
-                    cognoms: 'AAAAA',
-                    rols_id: 3,
-                    recursos_id: 1
 
-                },
 
                 HoraMovilizacion: '',
                 HoraAsistencia: '',

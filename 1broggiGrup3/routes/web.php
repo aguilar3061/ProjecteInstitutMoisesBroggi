@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\AfectatController;
-use App\Http\Controllers\AlertantController;
-use App\Http\Controllers\ComarcaController;
-use App\Http\Controllers\IncidenciaController;
-use App\Http\Controllers\MunicipiController;
-use App\Http\Controllers\ProvinciaController;
-use App\Http\Controllers\RecursController;
-use App\Http\Controllers\RolController;
-use App\Http\Controllers\SexeController;
-use App\Http\Controllers\TipusAlertantController;
-use App\Http\Controllers\TipusIncidenciaController;
-use App\Http\Controllers\TipusRecursController;
-use App\Http\Controllers\UsuariController;
-use App\Http\Controllers\UserLogController;
-use App\Models\Alertant;
 use App\Models\Recurs;
+use App\Models\Alertant;
 use App\Models\Municipi;
 use App\Models\Tipus_recurs;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\SexeController;
+use App\Http\Controllers\RecursController;
+use App\Http\Controllers\UsuariController;
+use App\Http\Controllers\AfectatController;
+use App\Http\Controllers\ComarcaController;
+use App\Http\Controllers\UserLogController;
+use App\Http\Controllers\AlertantController;
+use App\Http\Controllers\MunicipiController;
+use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\IncidenciaController;
+use App\Http\Controllers\TipusRecursController;
+use App\Http\Controllers\TipusAlertantController;
+use App\Http\Controllers\TipusIncidenciaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,7 @@ Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
 
+<<<<<<< Updated upstream
 // Route::get('/infoRecursEincidencia', function () {
 //     $recurso = Recurs::all();
 //     $municipios = Municipi::all();
@@ -71,6 +73,18 @@ Route::get('/modificar_recurso', function () {
 //     $tipo_recurso = Tipus_recurs::all();
 //     return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
 // });
+=======
+Route::get('/infoRecursEincidencia', function () {
+    $recurso = Recurs::all();
+    $municipios = Municipi::all();
+    $alertantes = Alertant::all();
+    $tipo_recurso = Tipus_recurs::all();
+    $userLogued = Auth::user();
+    // var_dump($userLogued);
+    // die;
+    return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso', 'userLogued' ));
+});
+>>>>>>> Stashed changes
 
 Route::get('/videos', function (){
     return view ('paginas.videos.indexVue');
