@@ -27,7 +27,7 @@ class UserLogController extends Controller
         if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
             if($rols_id == $user->rols_id){
                 Auth::login($user);
-                $response =  redirect('paginas.Admin.paginaPrincipal');
+                $response =  view('paginas.Admin.paginaPrincipal');
             }elseif($user->rols_id == '3'){
 
 
@@ -37,18 +37,10 @@ class UserLogController extends Controller
                 $tipo_recurso = Tipus_recurs::all();
 
                 Auth::login($user);
-<<<<<<< Updated upstream
-                $_SESSION["user"]=Auth::user($user);
-
-                $response = redirect('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
-=======
-
-
-                $response = redirect('/infoRecursEincidencia');
->>>>>>> Stashed changes
+                 $response = view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
             }else{
                 Auth::login($user);
-                app(IncidenciaController::class)->index();
+                $response = app(IncidenciaController::class)->index();
 
             }
         }
