@@ -31,13 +31,9 @@ class UserLogController extends Controller
             }elseif($user->rols_id == '3'){
 
 
-                $recurso = Recurs::all();
-                $municipios = Municipi::all();
-                $alertantes = Alertant::all();
-                $tipo_recurso = Tipus_recurs::all();
 
                 Auth::login($user);
-                 $response = view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
+                 $response = redirect('/infoRecursEincidencia');
             }else{
                 Auth::login($user);
                 $response = app(IncidenciaController::class)->index();

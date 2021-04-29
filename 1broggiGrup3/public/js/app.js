@@ -40889,7 +40889,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -40916,14 +40916,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraMovilizacion()
+                                      return _vm.remove1HoraMovilizacion()
                                     }
                                   }
                                 })
@@ -40987,7 +40987,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "Añadir",
                                     width: "100%",
                                     height: "100%"
@@ -41014,14 +41014,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraAsistencia()
+                                      return _vm.remove1HoraAsistencia()
                                     }
                                   }
                                 })
@@ -41158,7 +41158,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41185,14 +41185,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraInicioTranporte()
+                                      return _vm.remove1HoraInicioTranporte()
                                     }
                                   }
                                 })
@@ -41256,7 +41256,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41283,14 +41283,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraLlegadaHospital()
+                                      return _vm.remove1HoraLlegadaHospital()
                                     }
                                   }
                                 })
@@ -41354,7 +41354,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41381,14 +41381,14 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.removeHoraTransferencia()
+                                      return _vm.remove1HoraTransferencia()
                                     }
                                   }
                                 })
@@ -41452,7 +41452,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\loop.png",
+                                    src: "img\\loop1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"
@@ -41479,7 +41479,7 @@ var render = function() {
                               [
                                 _c("img", {
                                   attrs: {
-                                    src: "img\\remove.png",
+                                    src: "img\\remove1.png",
                                     alt: "reset",
                                     width: "100%",
                                     height: "100%"

@@ -65,26 +65,16 @@ Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
 
-<<<<<<< Updated upstream
-// Route::get('/infoRecursEincidencia', function () {
-//     $recurso = Recurs::all();
-//     $municipios = Municipi::all();
-//     $alertantes = Alertant::all();
-//     $tipo_recurso = Tipus_recurs::all();
-//     return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
-// });
-=======
+
 Route::get('/infoRecursEincidencia', function () {
     $recurso = Recurs::all();
     $municipios = Municipi::all();
     $alertantes = Alertant::all();
     $tipo_recurso = Tipus_recurs::all();
     $userLogued = Auth::user();
-    // var_dump($userLogued);
-    // die;
+
     return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso', 'userLogued' ));
 });
->>>>>>> Stashed changes
 
 Route::get('/videos', function (){
     return view ('paginas.videos.indexVue');
