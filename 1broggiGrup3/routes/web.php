@@ -64,20 +64,16 @@ Route::get('/modificar_recurso', function () {
     return view('paginas.Admin.AddModifyRecurso');
 });
 
-Route::get('/infoRecursEincidencia', function () {
-    $recurso = Recurs::all();
-    $municipios = Municipi::all();
-    $alertantes = Alertant::all();
-    $tipo_recurso = Tipus_recurs::all();
-    return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
-});
+// Route::get('/infoRecursEincidencia', function () {
+//     $recurso = Recurs::all();
+//     $municipios = Municipi::all();
+//     $alertantes = Alertant::all();
+//     $tipo_recurso = Tipus_recurs::all();
+//     return view('paginas.Recurso.infoRecursEincidencia', compact('recurso', 'municipios', 'alertantes', 'tipo_recurso' ));
+// });
 
 Route::get('/videos', function (){
     return view ('paginas.videos.indexVue');
-});
-
-Route::get('/paginaPrincipalA', function () {
-    return view('paginas.Admin.paginaPrincipal');
 });
 
 Route::get('/login',function(){
@@ -85,7 +81,7 @@ Route::get('/login',function(){
 });
 Route::post('/login', [UserLogController::class, 'login'] );
 Route::get('/logout', [UserLogController::class, 'logout']);
-Route::get('/formulario-incidencias', [IncidenciaController::class,'index']);
+
 
 
 Route::resource('afectat',                  AfectatController::class);
