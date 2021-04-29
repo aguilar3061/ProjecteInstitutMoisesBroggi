@@ -6,6 +6,7 @@ use App\Models\Incidencia;
 use App\Models\Tipus_recurs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Afectat;
 use App\Models\Alertant;
 use App\Models\Municipi;
 use App\Models\Provincia;
@@ -22,6 +23,7 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
+        $afectats = Afectat::all();
         $alertants = Alertant::all();
         $tiporecursos = Tipus_recurs::all();
         $recursos = Recurs::all();
@@ -29,7 +31,7 @@ class IncidenciaController extends Controller
         $municipios = Municipi::all();
         $tipusalertants = Tipus_alertant::all();
         $tipusincidencies = Tipus_Incidencia::all();
-        return view('paginas.incidencias.indexVue', compact('recursos','tiporecursos','provincias','municipios','tipusalertants','tipusincidencies','alertants'));
+        return view('paginas.incidencias.indexVue', compact('afectats','recursos','tiporecursos','provincias','municipios','tipusalertants','tipusincidencies','alertants'));
 
     }
 

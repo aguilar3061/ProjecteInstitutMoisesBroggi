@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <label for="telefonAlertant" class="col-3 col-form-label">Telefono</label>
                         <div class="col-9">
-                            <input class="form-control" type="number" id="telefonAlertant"  v-on:change="busacarAlertante()" name="telefonAlertant" v-model="incidencia.telefon_alertant">
+                            <input class="form-control" type="number" id="telefonAlertant" v-on:change="busacarAlertante()" name="telefonAlertant" v-model="incidencia.telefon_alertant">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -106,7 +106,30 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" v-on:click="addToAfectats" class="btn btn-primary" >Añadir afectado</button>
+
+                    <div style=" text-align: center;">
+                        <button type="button" v-on:click="addToAfectats" class="btn-primary" style="width: 50%; " >Añadir afectado</button>
+                    </div>
+
+                    <table class="table col-12" id="tablaAfectat">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Nombre afectado</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">Cip</th>
+                                <th scope="col">Sexo</th>
+                                <!-- <th scope="col">Eliminar</th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+
                 </div>
             </div>
             <div class="card mt-2">
@@ -193,7 +216,7 @@
                         <label class="col-3">Prioritat: </label>
                         <div class="col-9">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat1" value="1">
+                                <input class="form-check-input" type="radio" name="radioPrioritat" id="prioritat1" value="1" checked>
                                 <label class="form-check-label" for="radioPrioritat">1</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -213,9 +236,28 @@
                                 <label class="form-check-label" for="radioPrioritat">5</label>
                             </div>
                         </div>
-                        <button type="button" v-on:click="addToRecursos"  class="btn btn-primary" >Añadir recurso</button>
-
                     </div>
+
+                    <div style="text-align: center;">
+                        <button type="button" v-on:click="addToRecursos" class="btn-primary" style="width: 50%;" >Añadir recurso</button>
+                    </div>
+
+                    <table class="table col-12" id="tablaRecursos">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Codigo del recurso</th>
+                                <th scope="col">Tipo de recurso</th>
+                                <th scope="col">Prioridad</th>
+                                <!-- <th scope="col">Eliminar</th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
@@ -252,6 +294,10 @@
 <script>
     export default {
         props: {
+            afectats: {
+                type: Array,
+                required: false
+            },
             alertants: {
                 type: Array,
                 required: false
@@ -288,13 +334,13 @@
                 type: Array,
                 default: () => []
             }
-       
+
         },
         data(){
             return {
                 incidencia: {
                     id:'',
-                    num_incident:99,
+                    num_incident:"",
                     data:'',
                     telefon_alertant:'',
                     adreca:'',
@@ -313,35 +359,20 @@
                     tipus_alertants_idAlertant:'',
                     incidencia_has_recursos: this.recursosToSent,
                     incidencia_has_afectats: this.afectatToSent,
-                    alertantExist:false
+                    alertantExist:false,
                 },
-                sexes_idAfectat:'',
-                ayudaIngles: false
+                sexes_idAfectat:'1',
+                ayudaIngles: false,
             }
         },
         mounted() {
             console.log('Component mounted.')
+            // document.getElementById('radioMujer').checked = true;
         },
         created(){
 
         },
         methods: {
-            // addAfectat(){
-            //     this.errorMessage = '';
-            //     this.infoMessage = '';
-            //     let me = this;
-            //     axios
-            //         .post('api/afectats', me.afectats)
-            //         .then(function(response) {
-            //             console.log(response);
-            //             //Aqui hay que hacer un redirect
-            //         }).catch(function(error){
-            //             console.log(error.response.stats);
-            //             console.log(error.response.data);
-            //             me.errorMessage = error.response.data.error;
-            //         })
-
-            // },
             addIncidencia(){
                 this.errorMessage = '';
                 this.infoMessage = '';
@@ -359,26 +390,182 @@
                         me.errorMessage = error.response.data.error;
                     })
             },
-            addToRecursos() {
-                var recurs = {
-                    recursos_id: this.returnRecursId(),
-                    prioritat: this.returnPrioritat()
-                }
+            addToRecursos(){
+                var idRecu = this.returnRecursId();
+                var prioritatRecu = this.returnPrioritat()
+                var existe = false;
 
-                this.recursosToSent.push(recurs);
+                if(idRecu != null && prioritatRecu != null && idRecu != ""){
+                    this.recursosToSent.forEach(element => {
+                        if(element.recursos_id == idRecu){
+                            existe=true;
+                        }
+                    });
+                    if(!existe){
+                        var recurs = {
+                            recursos_id: idRecu,
+                            prioritat: prioritatRecu
+                        }
+                        this.recursosToSent.push(recurs);
+                        this.anyadirElementoTableR(recurs);
+
+                    }else{
+                        alert("Recurso ya añadido");
+                    }
+                }
             },
+            anyadirElementoTableR(recurs){
+
+                var tableR = document.getElementById("tablaRecursos");
+                var row1             = tableR.insertRow(1);
+
+                var punto           = row1.insertCell(0)
+                var codiRecurso     = row1.insertCell(1)
+                var tipoRecurso     = row1.insertCell(2);
+                var prioridad       = row1.insertCell(3);
+                var btnDelete       = row1.insertCell(4);
+
+
+                punto.innerHTML = "<div> <p style='margin-bottom: 0px;'>" + "·" + "</p> </div>";
+
+                this.recursos.forEach(recu => {
+                    if(recu.id == recurs.recursos_id){
+                        codiRecurso.innerHTML = "<div> <p style='margin-bottom: 0px;'>" + recu.codi + "</p> </div>";
+                    }
+                });
+
+                this.tiporecursos.forEach(tipo => {
+                    if(tipo.id == document.getElementById("idTipoRecurso").value){
+                        tipoRecurso.innerHTML = "<div> <p style='margin-bottom: 0px;'>" + tipo.tipus + "</p> </div>";
+                    }
+                });
+
+                prioridad.innerHTML     = "<div> <p style='margin-bottom: 0px;'>" + recurs.prioritat + "</p> </div>";
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" @click="eliminarRecurso()">##</button> </div>'
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" v-on:click="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" onclick="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
+
+            },
+            // eliminarRecurso(dfgdfg){
+            //     var cont = 0;
+            //     var pos = null;
+
+            //     this.recursosToSent.forEach( element => {
+            //         if (dfgdfg == element.idRecu) {
+            //             pos = cont;
+            //         }
+            //         cont++;
+            //     });
+
+            //     recursosToSent.splice(pos,1);
+            // },
             addToAfectats() {
 
-                var afectat = {
-                    telefonAfectat: document.getElementById('telefonAfectat').value,
-                    cipAfectat:     document.getElementById('cip').value,
-                    nomAfectat:     document.getElementById('nomAfectat').value,
-                    cognomsAfectat: document.getElementById('cognomsAfectat').value,
-                    edatAfectat:    document.getElementById('edadAfectat').value,
-                    sexes_idAfectat:this.sexes_idAfectat
+                var tel = document.getElementById('telefonAfectat').value;
+                var cip = document.getElementById('cip').value;
+                var nom = document.getElementById('nomAfectat').value;
+                var cognom = document.getElementById('cognomsAfectat').value;
+                var edat = document.getElementById('edadAfectat').value;
+
+                var existe = false;
+                var existeEnLaBD = false;
+
+                if(tel != "" || cip != "" || nom != "" || cognom != "" || edat != "" || this.sexes_idAfectat != null){
+
+                    if(cip != ""){
+                        this.afectatToSent.forEach(element => {
+                            if(element.cipAfectat == cip){
+                                existe=true;
+                            }
+                        });
+                        if(!existe){
+                            this.afectats.forEach(element => {
+                                if(element.cip == cip){
+                                    existeEnLaBD=true;
+                                }
+                            });
+                        }
+                    }
+
+                    if(!existe){
+                        var afectat = {
+                            telefonAfectat: tel,
+                            cipAfectat:     document.getElementById('cip').value,
+                            nomAfectat:     document.getElementById('nomAfectat').value,
+                            cognomsAfectat: document.getElementById('cognomsAfectat').value,
+                            edatAfectat:    document.getElementById('edadAfectat').value,
+                            sexes_idAfectat:this.sexes_idAfectat,
+
+                        }
+
+                        if(existeEnLaBD){
+                            afectat.afectantExist= true;
+                        }else{
+                            afectat.afectantExist= false;
+                        }
+
+                        this.afectatToSent.push(afectat);
+                        this.anyadirElementoTableA(afectat);
+                        this.vacaciarCaposAfectado();
+
+                    }else{
+                        alert("Afectante ya añadido");
+                    }
+
+                }
+            },
+            anyadirElementoTableA(afectat){
+
+                var tableA = document.getElementById("tablaAfectat");
+                var row2 = tableA.insertRow(1);
+
+                var punto           = row2.insertCell(0);
+                var nomAfectat      = row2.insertCell(1);
+                var cognomsAfectat  = row2.insertCell(2);
+                var telefonAfectat  = row2.insertCell(3);
+                var cipAfectat      = row2.insertCell(4);
+                var sexo            = row2.insertCell(5);
+                //var btnDelete       = row.insertCell(6);
+                var sexoNom ;
+
+                if(afectat.nomAfectat == ""){
+                    afectat.nomAfectat = "---"
+                }
+                if(afectat.cognomsAfectat == ""){
+                    afectat.cognomsAfectat = "---"
+                }
+                if(afectat.telefonAfectat == ""){
+                    afectat.telefonAfectat = "---"
+                }
+                if(afectat.cipAfectat == ""){
+                    afectat.cipAfectat = "---"
+                }
+                if(afectat.sexes_idAfectat == 1){
+                    sexoNom = "Hombre"
+                }else{
+                    sexoNom = "Mujer"
                 }
 
-                this.afectatToSent.push(afectat);
+
+                punto.innerHTML             = "<div> <p style='margin-bottom: 0px;'>" + "·" + "</p> </div>";
+                nomAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + afectat.nomAfectat + "</p> </div>";
+                cognomsAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + afectat.cognomsAfectat + "</p> </div>";
+                telefonAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + afectat.telefonAfectat + "</p> </div>";
+                cipAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + afectat.cipAfectat + "</p> </div>";
+                sexo.innerHTML              = "<div> <p style='margin-bottom: 0px;'>" + sexoNom + "</p> </div>";
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" @click="eliminarRecurso()">##</button> </div>'
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" v-on:click="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
+                //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" onclick="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
+
+            },
+            vacaciarCaposAfectado(){
+
+                document.getElementById('telefonAfectat').value = "";
+                document.getElementById('cip').value = "";
+                document.getElementById('nomAfectat').value = "";
+                document.getElementById('cognomsAfectat').value = "";
+                document.getElementById('edadAfectat').value = "";
+
             },
             returnRecursId(){
                 var medicalitzadaMike = document.getElementById('selectMedicalitzadaMike');
@@ -492,9 +679,12 @@
                     this.ayudaIngles = false;
                 }
 
+            
             },
             busacarAlertante(){
+
                 var busqueda = false;
+
                 var telefonAlertant = document.getElementById('telefonAlertant').value;
 
                 var nomAlertant = document.getElementById('nomAlertant');
@@ -503,20 +693,28 @@
                 var municipis_id_Alertant = document.getElementById('municipis_id_Alertant');
                 var tipus_alertants_id = document.getElementById('tipus_alertants_id');
 
+
                 this.alertants.forEach(alertant => {
+
                     if(alertant.telefon == telefonAlertant){
-                        nomAlertant.value = alertant.nom;
-                        nomAlertant.disabled = true;
-                        cognomsAlertant.value = alertant.cognoms;
-                        cognomsAlertant.disabled = true;
-                        adrecaAlertant.value = alertant.adreca;
-                        adrecaAlertant.disabled = true;
-                        municipis_id_Alertant.value = alertant.municipis_id;
-                        municipis_id_Alertant.disabled = true;
-                        tipus_alertants_id.value = alertant.tipus_alertants_id;
-                        tipus_alertants_id.disabled = true;
-                        busqueda=true;
-                        this.incidencia.alertantExist = true;
+
+                        this.incidencia.telefon_alertant            =alertant.telefon
+                        this.incidencia.nomAlertant                 =alertant.nom;
+                        this.incidencia.cognomsAlertant             =alertant.cognoms;
+                        this.incidencia.adrecaAlertant              =alertant.adreca;
+                        this.incidencia.municipis_idAlertant        =alertant.municipis_id;
+                        this.incidencia.tipus_alertants_idAlertant  =alertant.tipus_alertants_id;
+
+
+                        nomAlertant.disabled            = true;
+                        cognomsAlertant.disabled        = true;
+                        adrecaAlertant.disabled         = true;
+                        municipis_id_Alertant.disabled  = true;
+                        tipus_alertants_id.disabled     = true;
+                        busqueda                        = true;
+                        this.incidencia.alertantExist   = true;
+                        this.incidencia.idAlertant      = alertant.id;
+
                     }
                 });
                 if(!busqueda){
@@ -528,9 +726,9 @@
                     busqueda=false;
                     this.incidencia.alertantExist = false;
                 }
-       
+
             }
-          
+
         }
     }
 

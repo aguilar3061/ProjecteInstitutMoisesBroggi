@@ -120,8 +120,8 @@ class IncidenciaController extends Controller
 
             DB::beginTransaction();
 
-            
-            $af = Alertant::with('alertants')->find($request->input('telefon_alertant'));
+
+            //$af = Alertant::with('alertants')->find($request->input('telefon_alertant'));
 
 
             if (!$request->input('alertantExist')){
@@ -141,7 +141,6 @@ class IncidenciaController extends Controller
 
             $incidencia = new Incidencia();
 
-            $incidencia->id =                   $request->input('id');
             //comprobar que no se repita ++ extra
             $incidencia->num_incident=          random_int(0, 2000);
             $incidencia->data=                  $request->input('data');
@@ -152,7 +151,11 @@ class IncidenciaController extends Controller
             $incidencia->descripcio=            $request->input('descripcio');
             $incidencia->nom_metge=             $request->input('nom_metge');
             $incidencia->tipus_incidencies_id=  $request->input('tipus_incidencies_id');
-            $incidencia->alertants_id=          $alertant->id;
+            if (!$request->input('alertantExist')){
+                $incidencia->alertants_id=$alertant->id;
+            }else{
+                $incidencia->alertants_id=$request->input('idAlertant');
+            }
             $incidencia->municipis_id=          $request->input('municipis_id');
             $incidencia->usuaris_id=            $request->input('usuaris_id');
 
@@ -188,45 +191,60 @@ class IncidenciaController extends Controller
 
             foreach ($listaAfectados as $af ) {
 
-                $afectat = new Afectat();
+                if($af['afectantExist']){
 
-                $afectat->telefon=  $af['telefonAfectat'];
-                $afectat->cip=      $af['cipAfectat'];
-                $afectat->nom=      $af['nomAfectat'];
-                $afectat->cognoms=  $af['cognomsAfectat'];
-                $afectat->edat=     $af['edatAfectat'];
-                $afectat->sexes_id= $af['sexes_idAfectat'];
+                    $incidencieHasAfectat = new IncidenciesHasAfectats();
 
-                if($af['cipAfectat'] == null){
-                    $afectat->te_cip= false;
+                    $afectadooo = Afectat::where('cip',$af['cipAfectat'])->first();
+
+                    $incidencieHasAfectat->afectats_id= $afectadooo->id;
+                    $incidencieHasAfectat->incidencies_id= $idReal;
+
+                    $incidencieHasAfectat->save();
+
                 }else{
-                    $afectat->te_cip= true;
+
+                    $afectat = new Afectat();
+
+                    $afectat->telefon=  $af['telefonAfectat'];
+                    $afectat->cip=      $af['cipAfectat'];
+                    $afectat->nom=      $af['nomAfectat'];
+                    $afectat->cognoms=  $af['cognomsAfectat'];
+                    $afectat->edat=     $af['edatAfectat'];
+                    $afectat->sexes_id= $af['sexes_idAfectat'];
+
+                    if($af['cipAfectat'] == null){
+                        $afectat->te_cip= false;
+                    }else{
+                        $afectat->te_cip= true;
+                    }
+                    $afectat->save();
+
+                    $incidencieHasAfectat = new IncidenciesHasAfectats();
+                    $incidencieHasAfectat->afectats_id= $afectat->id;
+                    $incidencieHasAfectat->incidencies_id= $idReal;
+
+                    $incidencieHasAfectat->save();
+
                 }
-                $afectat->save();
-
-                $incidencieHasAfectat = new IncidenciesHasAfectats();
-                $incidencieHasAfectat->afectats_id= $afectat->id;
-                $incidencieHasAfectat->incidencies_id= $idReal;
-
-                $incidencieHasAfectat->save();
-
             }
             // $listaAfectados = $request->input('afectats');
             // foreach ($listaAfectados as $afectat ) {
             //}
 
+
             DB::commit();
-
-            $alertant->refresh();
-            $incidencia->refresh();
-
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
 
+            header("Refresh:0");
+ 
         } catch (QueryException $ex) {
 
 			DB::rollBack();
+
             $mensaje = Utilidad::errorMessage($ex);
             $response = \response()->json(['error' => $mensaje], 400);
+           // $request->session()->flash('error', $mensaje);
         }
 
 
