@@ -26,11 +26,7 @@
                             ADMIN USUARIOS
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="{{ url('/incidencia') }}" id="." role="button"  aria-haspopup="true" aria-expanded="false">
-                            ADMIN INCIDENCIAS
-                        </a>
-                    </li>
+
                 @endif
             </ul>
         </div>

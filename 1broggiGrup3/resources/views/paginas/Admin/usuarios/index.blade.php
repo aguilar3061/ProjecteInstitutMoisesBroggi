@@ -3,9 +3,9 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-<div class="card mt-4 col-12">
+<div class="card mt-4 col-12" style="border-color: #0edcd8 !important;">
     <div class="card-body  col-12">
-      <h5 class="card-title">Usuaris</h5>
+      <h5 class="card-title"  style="color: #2780e3; font-weight: bold; font-size:20px;">Usuaris</h5>
       @if ($usuaris->isEmpty())
         <div class="alert alert-light" role="alert">
             No hay ningun usuario en la base de datos.
@@ -14,12 +14,12 @@
         <table class="table col-12">
             <thead>
                 <tr>
-                <th scope="col">Nombre de usuario</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Recurso</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Nombre de usuario</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Correo</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Nombre</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Apellidos</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Rol</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Recurso</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>

@@ -68,7 +68,7 @@
                                             <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraMovilizacion()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraMovilizacion()">
+                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraMovilizacion()">
                                         </div>
                                     </div>
 
@@ -79,7 +79,7 @@
                                             <img src="img\loop1.png" alt="Añadir" width="100%" height="100%" @click="selectHoraAsistencia()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraAsistencia()">
+                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraAsistencia()">
                                         </div>
                                     </div>
 
@@ -101,7 +101,7 @@
                                             <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraInicioTranporte()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraInicioTranporte()">
+                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraInicioTranporte()">
                                         </div>
                                     </div>
 
@@ -112,7 +112,7 @@
                                             <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraLlegadaHospital()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraLlegadaHospital()">
+                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraLlegadaHospital()">
                                         </div>
                                     </div>
 
@@ -123,7 +123,7 @@
                                             <img src="img\loop1.png" alt="reset" width="100%" height="100%" @click="selectHoraTransferencia()">
                                         </div>
                                         <div style="height:33px; width:33px; margin-left: 20px; cursor: pointer;">
-                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="remove1HoraTransferencia()">
+                                            <img src="img\remove1.png" alt="reset" width="100%" height="100%" @click="removeHoraTransferencia()">
                                         </div>
                                     </div>
 

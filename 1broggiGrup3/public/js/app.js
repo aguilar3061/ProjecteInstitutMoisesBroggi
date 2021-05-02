@@ -39520,7 +39520,7 @@ var render = function() {
                   }
                 }
               }),
-              _vm._v(" Ayuda Ingles\n            ")
+              _vm._v(" Ayuda Ingles\r\n            ")
             ])
           ]
         ),
@@ -41375,7 +41375,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.remove1HoraMovilizacion()
+                                      return _vm.removeHoraMovilizacion()
                                     }
                                   }
                                 })
@@ -41473,7 +41473,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.remove1HoraAsistencia()
+                                      return _vm.removeHoraAsistencia()
                                     }
                                   }
                                 })
@@ -41644,7 +41644,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.remove1HoraInicioTranporte()
+                                      return _vm.removeHoraInicioTranporte()
                                     }
                                   }
                                 })
@@ -41742,7 +41742,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.remove1HoraLlegadaHospital()
+                                      return _vm.removeHoraLlegadaHospital()
                                     }
                                   }
                                 })
@@ -41840,7 +41840,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.remove1HoraTransferencia()
+                                      return _vm.removeHoraTransferencia()
                                     }
                                   }
                                 })
@@ -42000,11 +42000,7 @@ var render = function() {
         },
         attrs: { id: "noIncidencia", role: "alert" }
       },
-      [
-        _vm._v(
-          "\r\n            No hay incidencias asignadas a tu recurso\r\n    "
-        )
-      ]
+      [_vm._v("\n            No hay incidencias asignadas a tu recurso\n    ")]
     )
   ])
 }
@@ -42042,7 +42038,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("p", { attrs: { id: "info_recurso" } }, [
-            _vm._v("\r\n            Info\r\n        ")
+            _vm._v("\n            Info\n        ")
           ])
         ])
       ]

@@ -3,9 +3,9 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-<div class="card mt-4 col-12">
+<div class="card mt-4 col-12" style="border-color: #0edcd8 !important;">
     <div class="card-body  col-12">
-      <h5 class="card-title">Alertantes</h5>
+      <h5 class="card-title" style="color: #2780e3; font-weight: bold; font-size:20px;">Alertantes</h5>
       @if ($alertants->isEmpty())
         <div class="alert alert-light" role="alert">
             No hay ningun alertante en la base de datos.
@@ -14,12 +14,12 @@
         <table class="table col-12">
             <thead>
                 <tr>
-                <th scope="col">Telefono</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Dirección</th>
-                <th scope="col">Municipio</th>
-                <th scope="col">Tipo alertante</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Telefono</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Nombre</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Apellidos</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Dirección</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Municipio</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Tipo alertante</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>

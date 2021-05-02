@@ -2,29 +2,25 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-<div style="text-align:center; padding-top:10em">
-    <br>
-    <h2 class="text-primary" style="font-weight: bold"> Bienvenido a la Administracion del 061 </h2>
+<div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; border-color: #0edcd8 !important; margin-left: 25%; margin-right: 25%; width: 685px;">
 
-    <div style="list-style-type:none;">
-        <li>
-            <ul>
-                <form action="{{ url('/alertant') }}">
-                    <button type="submit" class="btn btn-primary btn-lg" style="border-radius: 20px; margin-top: 2%">Administrar Alertantes</button>
-                </form>
-            </ul>
-            <ul>
-                <form action="{{ url('/recurs') }}">
-                    <button class="btn btn-primary btn-lg" style="border-radius: 20px; margin-top: 2%">Administrar Recursos</button>
-                </form>
-            </ul>
-            <ul>
-                <form action="{{ url('/usuari') }}">
-                    <button class="btn btn-primary btn-lg" style="border-radius: 20px; margin-top: 2%">Administrar Usuarios</button>
-                </form>
-            </ul>
-        </li>
+    <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Administración</div>
+
+        <div class="card-body">
+
+            <a class="btn btn-primary btn-lg" href="{{ url('/alertant') }}" style="border-radius: 20px; margin-top: 2%">
+                Administrar Alertantes
+            </a>
+            <a class="btn btn-primary btn-lg" href="{{ url('/recurs') }}" style="border-radius: 20px; margin-top: 2%">
+                Administrar Recursos
+            </a>
+            <a class="btn btn-primary btn-lg" href="{{ url('/usuari') }}" style="border-radius: 20px; margin-top: 2%">
+                Administrar Usuarios
+            </a>
+
+        </div>
+
     </div>
-</div>
-  {{-- paginaPrincipalA --}}
+
+
 @endsection

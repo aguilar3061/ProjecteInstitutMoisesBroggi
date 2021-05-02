@@ -2,9 +2,9 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-<div class="card mt-4 col-12">
+<div class="card mt-4 col-12" style="border-color: #0edcd8 !important;">
     <div class="card-body  col-12">
-      <h5 class="card-title">Recursos</h5>
+      <h5 class="card-title" style="color: #2780e3; font-weight: bold; font-size:20px;">Recursos</h5>
       @if ($recursos->isEmpty())
         <div class="alert alert-light" role="alert">
             No hay ningun usuario en la base de datos.
@@ -13,9 +13,9 @@
         <table class="table col-12">
             <thead>
                 <tr>
-                <th scope="col">Tipo de recurso</th> 
-                <th scope="col">Codigo del recurso</th>
-                <th scope="col">Activo</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Tipo de recurso</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Codigo del recurso</th>
+                <th scope="col" style="color: #d53677; font-weight: bold;">Activo</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>
@@ -23,13 +23,13 @@
             <tbody>
                 @foreach ($recursos as $recurso)
                 <tr>
-                    <td>{{ $recurso->tipus_recurs->tipus }}</td> 
+                    <td>{{ $recurso->tipus_recurs->tipus }}</td>
                     <td>{{ $recurso->codi }}</td>
                     <td>
                         @if ($recurso->actiu == true)
                             <input class="check" type="checkbox" value="0" id="CheckedActiu" checked disabled>
                         @else
-                            <input class="check" type="checkbox" value="1" id="CheckedActiu" disabled> 
+                            <input class="check" type="checkbox" value="1" id="CheckedActiu" disabled>
                         @endif
                     </td>
                     <td>

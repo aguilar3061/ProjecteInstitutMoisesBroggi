@@ -5,8 +5,8 @@
 
 @include('partials.mensajes')
 
-  <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
-    <div class="card-header">Usuario</div>
+  <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; border-color: #0edcd8 !important;">
+    <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Usuario</div>
     <div class="card-body">
         <form action="{{ action([App\Http\Controllers\UsuariController::class, 'update'], ['usuari' => $usuari->id ]) }}" method="POST">
             @csrf
@@ -14,7 +14,7 @@
             <fieldset>
 
               <div class="form-group row">
-                <label for="nombreUsuario" class="col-4 col-form-label">Nombre Usuario</label>
+                <label for="nombreUsuario" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Nombre Usuario</label>
                 <div class="col-8">
                 <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Nombre usuario" @if (old('nombreUsuario') ==null)
                     value="{{ $usuari->username }}"
@@ -26,7 +26,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="contrasena" class="col-4 col-form-label">Contraseña</label>
+                <label for="contrasena" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Contraseña</label>
                 <div class="col-8">
                 <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="contraseña" @if (old('contrasena') ==null)
                     value="{{ $usuari->contrasenya }}"
@@ -38,7 +38,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="correo" class="col-4 col-form-label">Correo</label>
+                <label for="correo" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Correo</label>
                 <div class="col-8">
                 <input type="email" class="form-control" id="correo"  name="correo" placeholder="Correo" @if (old('correo') ==null)
                     value="{{ $usuari->email }}"
@@ -50,7 +50,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="nombre" class="col-4 col-form-label">Nombre</label>
+                <label for="nombre" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Nombre</label>
                 <div class="col-8">
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  @if (old('nombre') ==null)
                     value="{{ $usuari->nom }}"
@@ -62,7 +62,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="apellidos" class="col-4 col-form-label">Apellidos</label>
+                <label for="apellidos" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Apellidos</label>
                 <div class="col-8">
                 <input type="text" class="form-control" id="apellidos" name="apellidos"  placeholder="Apellidos" @if (old('apellidos') ==null)
                 value="{{ $usuari->cognoms }}"
@@ -75,7 +75,7 @@
 
 
               <div class="form-group row">
-                <label for="rol" class="col-4 col-form-label">Rol</label>
+                <label for="rol" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;">Rol</label>
                 <div class="col-8">
                 <select class="form-control" id="rol" name="rol"  onchange="mostrarOnoRecursos()">
 
@@ -101,20 +101,20 @@
               </div>
 
               <div class="form-group row">
-                <label id="labelRecurso" for="recurs" class="col-4 col-form-label" 
+                <label id="labelRecurso" for="recurs" class="col-4 col-form-label"  style="color: #d53677; font-weight: bold;"
                     @if($usuari->recursos_id == null)
-                        style="display:none"     
+                        style="display:none"
                     @else
-                        style="display:block"          
+                        style="display:block"
                     @endif
                 >Recurso</label>
 
                 <div class="col-8">
-                    <select class="form-control" id="recurs" name="recurs" 
+                    <select class="form-control" id="recurs" name="recurs"
                         @if($usuari->recursos_id == null)
-                            style="display:none"     
+                            style="display:none"
                         @else
-                            style="display:block"          
+                            style="display:block"
                         @endif
                     >
                         @if (old('recurs') == null)
@@ -134,12 +134,12 @@
                                 @endif
                             @endforeach
                         @endif
-                        <option id="sinAsignar"for="recurs" value="" 
+                        <option id="sinAsignar"for="recurs" value=""
                             @if($usuari->recursos_id == null)
                                 style="display:block"
-                                selected        
+                                selected
                             @else
-                                style="display:none"            
+                                style="display:none"
                             @endif
                         >Sin assignar</option>
 
@@ -162,23 +162,22 @@
 
 <script>
     function mostrarOnoRecursos() {
-  
+
       if(document.getElementById("rol").value != 3){
-  
+
         document.getElementById("labelRecurso").style.display='none';
         document.getElementById("sinAsignar").selected = true;
         document.getElementById("sinAsignar").style.display='block'
         document.getElementById("recurs").style.display='none';
-  
+
       }else{
-  
+
         document.getElementById("recurs").style.display='block';
         document.getElementById("sinAsignar").selected = false;
         document.getElementById("sinAsignar").style.display='none'
         document.getElementById("labelRecurso").style.display='block';
-  
+
       }
-  
+
     }
   </script>
-    

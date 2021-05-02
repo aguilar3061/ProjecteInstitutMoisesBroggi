@@ -2,8 +2,8 @@
 @section('cuerpo')
 @include('partials.mensajes')
 
-  <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%;">
-    <div class="card-header">Modificar recurso</div>
+  <div class="card border-primary mb-3" style="margin-top: 2%; margin-right: 5%; margin-left: 5%; border-color: #0edcd8 !important;">
+    <div class="card-header" style="color: #2780e3; font-weight: bold; font-size:20px;">Modificar recurso</div>
     <div class="card-body">
         <form action="{{ action([App\Http\Controllers\RecursController::class, 'update'], ['recur' => $recur->id ]) }}" method="POST">
             @csrf
@@ -11,7 +11,7 @@
             <fieldset>
 
                 <div class="form-group row">
-                <label for="codiID" class="col-4 col-form-label">Numero de identificación</label>
+                <label for="codiID" class="col-4 col-form-label" style="color: #d53677; font-weight: bold;">Numero de identificación</label>
                     <div class="col-8">
                         <input type="text" class="form-control" id="codiID" name="codiID" placeholder="Numero de identificación"
                             @if (old('codiID') == null)
@@ -25,7 +25,7 @@
 
 
                 <div class="form-group row">
-                    <label for="tipusRecurs" class="col-4 col-form-label">Recurso</label>
+                    <label for="tipusRecurs" class="col-4 col-form-label" style="color: #d53677; font-weight: bold;">Recurso</label>
                     <div class="col-8">
                         <select class="form-control" id="tipusRecurs" name="tipusRecurs">
 
@@ -55,13 +55,13 @@
                     <label for="checkboxActiu" class="col-4 col-form-label"></label>
                     <div class="col-8">
                         <div class="form-check">
-                        
+
                             <input class="check" type="checkbox" id="checkboxActiu" name="checkboxActiu"
                             @if ($recur->actiu == true)
-                                value="1" 
+                                value="1"
                                 checked
                             @else
-                                value="0" 
+                                value="0"
                             @endif
                             >
 
