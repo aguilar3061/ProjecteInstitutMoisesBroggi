@@ -259,25 +259,25 @@
         </div>
     </form>
     <audio id="frase1">
-          <source src="media/sonido.mp3">
+          <source src="media/1.mp3">
     </audio>
     <audio id="frase2">
-          <source src="media/sonido.mp3">
+          <source src="media/2.mp3">
     </audio>
     <audio id="frase3">
-          <source src="media/sonido.mp3">
+          <source src="media/3.mp3">
     </audio>
     <audio id="frase4">
-          <source src="media/sonido.mp3">
+          <source src="media/4.mp3">
     </audio>
     <audio id="frase5">
-          <source src="media/sonido.mp3">
+          <source src="media/5.mp3">
     </audio>
     <audio id="frase6">
-          <source src="media/sonido.mp3">
+          <source src="media/6.mp3">
     </audio>
     <audio id="frase7">
-          <source src="media/sonido.mp3">
+          <source src="media/7.mp3">
     </audio>
 
 </div>
