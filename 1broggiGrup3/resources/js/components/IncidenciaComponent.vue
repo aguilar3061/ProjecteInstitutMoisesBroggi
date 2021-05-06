@@ -518,34 +518,38 @@
                 var telefonAfectat  = row2.insertCell(3);
                 var cipAfectat      = row2.insertCell(4);
                 var sexo            = row2.insertCell(5);
-                //var btnDelete       = row.insertCell(6);
-                var sexoNom ;
 
-                if(afectat.nomAfectat == ""){
-                    afectat.nomAfectat = "---"
+                var AsexoNom;
+                var AnomAfectat = afectat.nomAfectat;
+                var AcognomsAfectat =  afectat.cognomsAfectat;
+                var AtelefonAfectat = afectat.telefonAfectat;
+                var AcipAfectat = afectat.cipAfectat;
+
+                if(AnomAfectat == ""){
+                    AnomAfectat = "---";
                 }
-                if(afectat.cognomsAfectat == ""){
-                    afectat.cognomsAfectat = "---"
+                if(AcognomsAfectat == ""){
+                    AcognomsAfectat = "---";
                 }
-                if(afectat.telefonAfectat == ""){
-                    afectat.telefonAfectat = "---"
+                if(AtelefonAfectat == ""){
+                    afectat.telefonAfectat=0;
+                    AtelefonAfectat = "---";
                 }
-                if(afectat.cipAfectat == ""){
-                    afectat.cipAfectat = "---"
+                if(AcipAfectat == ""){
+                    AcipAfectat = "---";
                 }
                 if(afectat.sexes_idAfectat == 1){
-                    sexoNom = "Hombre"
+                    AsexoNom = "Hombre";
                 }else{
-                    sexoNom = "Mujer"
+                    AsexoNom = "Mujer";
                 }
 
-
                 punto.innerHTML             = "<div> <p style='margin-bottom: 0px;'>" + "·" + "</p> </div>";
-                nomAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + afectat.nomAfectat + "</p> </div>";
-                cognomsAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + afectat.cognomsAfectat + "</p> </div>";
-                telefonAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + afectat.telefonAfectat + "</p> </div>";
-                cipAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + afectat.cipAfectat + "</p> </div>";
-                sexo.innerHTML              = "<div> <p style='margin-bottom: 0px;'>" + sexoNom + "</p> </div>";
+                nomAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + AnomAfectat + "</p> </div>";
+                cognomsAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + AcognomsAfectat + "</p> </div>";
+                telefonAfectat.innerHTML    = "<div> <p style='margin-bottom: 0px;'>" + AtelefonAfectat + "</p> </div>";
+                cipAfectat.innerHTML        = "<div> <p style='margin-bottom: 0px;'>" + AcipAfectat + "</p> </div>";
+                sexo.innerHTML              = "<div> <p style='margin-bottom: 0px;'>" + AsexoNom + "</p> </div>";
                 //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" @click="eliminarRecurso()">##</button> </div>'
                 //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" v-on:click="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
                 //btnDelete.innerHTML     = '<div> <button type="button" class="btn btn-primary" id="btnDelete" onclick="eliminarRecurso('+ recurs.recursos_id +')">##</button> </div>'
@@ -672,7 +676,7 @@
                     this.ayudaIngles = false;
                 }
 
-            
+
             },
             busacarAlertante(){
 

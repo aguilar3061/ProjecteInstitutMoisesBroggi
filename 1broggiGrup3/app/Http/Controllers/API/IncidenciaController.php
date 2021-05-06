@@ -205,8 +205,12 @@ class IncidenciaController extends Controller
                 }else{
 
                     $afectat = new Afectat();
+                    if($af['telefonAfectat'] == "---") {
+                        $afectat->telefon= 0;
+                    } else{
+                        $afectat->telefon=  $af['telefonAfectat'];
+                    }
 
-                    $afectat->telefon=  $af['telefonAfectat'];
                     $afectat->cip=      $af['cipAfectat'];
                     $afectat->nom=      $af['nomAfectat'];
                     $afectat->cognoms=  $af['cognomsAfectat'];
@@ -237,7 +241,7 @@ class IncidenciaController extends Controller
             $response = (new IncidenciaResource($incidencia))->response()->setStatusCode(201);
 
             header("Refresh:0");
- 
+
         } catch (QueryException $ex) {
 
 			DB::rollBack();
