@@ -4,6 +4,14 @@
 -- ------------------------------------------------------
 -- Server version	10.4.6-MariaDB
 
+
+DROP DATABASE if exists broggi;
+CREATE DATABASE broggi;
+USE broggi;
+
+
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
